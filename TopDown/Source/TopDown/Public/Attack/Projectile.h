@@ -7,7 +7,7 @@
 #include "Projectile.generated.h"\
 
 class UBoxComponent;
-
+class UProjectileMovementComponent;
 UCLASS()
 class TOPDOWN_API AProjectile : public AActor
 {
@@ -26,6 +26,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* ItemMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	UProjectileMovementComponent* ProjectileMovementComponent;
 
 public:	
 	virtual void Tick(float DeltaTime) override;

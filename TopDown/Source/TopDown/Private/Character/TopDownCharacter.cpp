@@ -113,7 +113,7 @@ void ATopDownCharacter::SpawnProjectile()
 		UWorld* World = GetWorld();
 		if (World)
 		{
-			World->SpawnActor<AProjectile>(
+			AProjectile* SpawnProjectile = World->SpawnActor<AProjectile>(
 				ProjectileClass,
 				GetTransform().GetLocation(),
 				GetActorForwardVector().Rotation(),
@@ -121,6 +121,8 @@ void ATopDownCharacter::SpawnProjectile()
 				);
 
 			UE_LOG(LogTemp, Warning, TEXT("SpawnAttack"));
+
+			SpawnProjectile->SetLifeSpan(10.f);
 		}
 	}
 }
