@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Attack/Projectile.h"
 
 ATopDownCharacter::ATopDownCharacter()
 {
@@ -45,6 +46,7 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Move);
+		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Attack);
 
 	}
 }
@@ -86,6 +88,40 @@ void ATopDownCharacter::ShowMouseCurser()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("ShowCurser"));
 		TopDownController->bShowMouseCursor = true;
+	}
+}
+
+void ATopDownCharacter::Attack()
+{
+	UE_LOG(LogTemp, Warning, TEXT("AttackButton"));
+
+	SpawnProjectile();
+}
+
+void ATopDownCharacter::SpawnProjectile()
+{
+	UE_LOG(LogTemp, Warning, TEXT("FuncIn"));
+
+	if (ProjectileClass)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("IfStattion"));
+
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = GetOwner();
+		SpawnParams.Instigator = this;
+
+		UWorld* World = GetWorld();
+		if (World)
+		{
+			World->SpawnActor<AProjectile>(
+				ProjectileClass,
+				GetTransform().GetLocation(),
+				GetActorForwardVector().Rotation(),
+				SpawnParams
+				);
+
+			UE_LOG(LogTemp, Warning, TEXT("SpawnAttack"));
+		}
 	}
 }
 

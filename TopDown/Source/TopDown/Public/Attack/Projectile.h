@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Projectile.generated.h"
+#include "Projectile.generated.h"\
+
+class UBoxComponent;
 
 UCLASS()
 class TOPDOWN_API AProjectile : public AActor
@@ -12,15 +14,20 @@ class TOPDOWN_API AProjectile : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	AProjectile();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+
+	UPROPERTY(EditAnywhere)
+	UBoxComponent* CollisionBox;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* ItemMesh;
+
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 };

@@ -12,6 +12,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class APlayerController;
+class AProjectile;
 
 UCLASS()
 class TOPDOWN_API ATopDownCharacter : public ACharacter
@@ -34,8 +35,14 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* MovementAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* AttackAction;
+
 	void Move(const FInputActionValue& Value);
 	void ShowMouseCurser();
+
+	void Attack();
+	void SpawnProjectile();
 
 
 private:
@@ -45,7 +52,11 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* ViewCamera;
 
+	UPROPERTY()
 	APlayerController* TopDownController;
+
+	UPROPERTY(EditAnywhere, Category = "Projectile Class")
+	TSubclassOf<AProjectile> ProjectileClass;
 
 public:	
 
