@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Attack/Projectile.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ATopDownCharacter::ATopDownCharacter()
 {
@@ -109,14 +110,28 @@ void ATopDownCharacter::SpawnProjectile()
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = GetOwner();
 		SpawnParams.Instigator = this;
+		
+		FHitResult HitResult;
+		FVector ToTarget;
+		FRotator HitRotation;
+		if (TopDownController)
+		{
+			TopDownController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
+		}
 
+		if (HitResult.bBlockingHit)
+		{
+			ToTarget = HitResult.Location - GetActorLocation();
+			HitRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), HitResult.Location);
+
+		}
 		UWorld* World = GetWorld();
 		if (World)
 		{
 			AProjectile* SpawnProjectile = World->SpawnActor<AProjectile>(
 				ProjectileClass,
 				GetTransform().GetLocation(),
-				GetActorForwardVector().Rotation(),
+				HitRotation,
 				SpawnParams
 				);
 
