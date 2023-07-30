@@ -38,7 +38,7 @@ ATopDownCharacter::ATopDownCharacter()
 void ATopDownCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	Attack();
 }
 
 void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -94,9 +94,13 @@ void ATopDownCharacter::ShowMouseCurser()
 
 void ATopDownCharacter::Attack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("AttackButton"));
-
-	SpawnProjectile();
+	if (bCanAttack)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AttackButton"));
+		bCanAttack = false;
+		StartAttackTimer();
+		SpawnProjectile();
+	}
 }
 
 void ATopDownCharacter::SpawnProjectile()
@@ -111,27 +115,13 @@ void ATopDownCharacter::SpawnProjectile()
 		SpawnParams.Owner = GetOwner();
 		SpawnParams.Instigator = this;
 		
-		FHitResult HitResult;
-		FVector ToTarget;
-		FRotator HitRotation;
-		if (TopDownController)
-		{
-			TopDownController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
-		}
-
-		if (HitResult.bBlockingHit)
-		{
-			ToTarget = HitResult.Location - GetActorLocation();
-			HitRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), HitResult.Location);
-
-		}
 		UWorld* World = GetWorld();
 		if (World)
 		{
 			AProjectile* SpawnProjectile = World->SpawnActor<AProjectile>(
 				ProjectileClass,
 				GetTransform().GetLocation(),
-				HitRotation,
+				GetActorForwardVector().Rotation(),
 				SpawnParams
 				);
 
@@ -140,6 +130,23 @@ void ATopDownCharacter::SpawnProjectile()
 			SpawnProjectile->SetLifeSpan(10.f);
 		}
 	}
+}
+
+void ATopDownCharacter::StartAttackTimer()
+{
+	GetWorldTimerManager().SetTimer(
+		AttackTimer,
+		this,
+		&ATopDownCharacter::AttackTimerFinished,
+		1.f
+	);
+}
+
+void ATopDownCharacter::AttackTimerFinished()
+{
+	bCanAttack = true;
+	Attack();
+
 }
 
 
