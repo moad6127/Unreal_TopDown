@@ -2,12 +2,16 @@
 
 
 #include "Enemy/Enemy.h"
+#include "Components/SkeletalMeshComponent.h"
+
 
 AEnemy::AEnemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	
+	GetMesh()->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
+	GetMesh()->SetGenerateOverlapEvents(true);
 }
 
 void AEnemy::BeginPlay()
