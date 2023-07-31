@@ -3,6 +3,9 @@
 
 #include "Enemy/Enemy.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Character/TopDownCharacter.h"
+#include "AIController.h"
+#include "Kismet/GameplayStatics.h"
 
 
 AEnemy::AEnemy()
@@ -18,6 +21,17 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	EnemyController = Cast<AAIController>(GetController());
+	PlayerCharacter = Cast<ATopDownCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (EnemyController && PlayerCharacter)
+	{
+		EnemyController->SetFocus(PlayerCharacter);
+		FAIMoveRequest MoveRequest;
+		MoveRequest.SetGoalActor(PlayerCharacter);
+		MoveRequest.SetAcceptanceRadius(15.f);
+		FNavPathSharedPtr NavPath;
+		EnemyController->MoveTo(MoveRequest, &NavPath);
+	}
 }
 
 void AEnemy::Tick(float DeltaTime)

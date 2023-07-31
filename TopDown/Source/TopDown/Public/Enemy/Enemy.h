@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
+class AAIController;
+class ATopDownCharacter;
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter
 {
@@ -18,6 +20,17 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+	/**
+	* AI Controll
+	*/
+	UPROPERTY()
+	AAIController* EnemyController;
+
+	UPROPERTY()
+	ATopDownCharacter* PlayerCharacter;
+
+private:
 
 public:	
 
