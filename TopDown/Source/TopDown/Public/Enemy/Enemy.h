@@ -33,5 +33,5 @@ protected:
 private:
 
 public:	
-
+	AAIController* GetEnemyController() { return EnemyController; }
 };
