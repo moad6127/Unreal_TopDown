@@ -2,6 +2,7 @@
 
 
 #include "Character/TopDownCharacter.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -9,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "Attack/Projectile.h"
 #include "Kismet/KismetMathLibrary.h"
+
 
 ATopDownCharacter::ATopDownCharacter()
 {
@@ -32,6 +34,13 @@ ATopDownCharacter::ATopDownCharacter()
 
 	ViewCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ViewCamera"));
 	ViewCamera->SetupAttachment(SpringArm);
+
+	EnemyRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("EnemyRadiusSphereComponent"));
+	EnemyRadiusSphereComponent->SetupAttachment(GetRootComponent());
+	EnemyRadiusSphereComponent->SetSphereRadius(1000.f);
+	EnemyRadiusSphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	EnemyRadiusSphereComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+
 
 }
 
@@ -63,7 +72,10 @@ void ATopDownCharacter::BeginPlay()
 			SubSystem->AddMappingContext(CharacterContext, 0);
 		}
 	}
+	EnemyRadiusSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ATopDownCharacter::BeginOverlap);
+	EnemyRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &ATopDownCharacter::EndOverlap);
 	ShowMouseCurser();
+
 }
 
 
@@ -87,7 +99,6 @@ void ATopDownCharacter::ShowMouseCurser()
 	TopDownController = Cast<APlayerController>(GetController());
 	if (TopDownController)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ShowCurser"));
 		TopDownController->bShowMouseCursor = true;
 	}
 }
@@ -96,36 +107,44 @@ void ATopDownCharacter::Attack()
 {
 	if (bCanAttack)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AttackButton"));
 		bCanAttack = false;
 		StartAttackTimer();
+		SetCombatTarget();
 		SpawnProjectile();
 	}
 }
 
 void ATopDownCharacter::SpawnProjectile()
 {
-	UE_LOG(LogTemp, Warning, TEXT("FuncIn"));
 
 	if (ProjectileClass)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("IfStattion"));
 
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = GetOwner();
 		SpawnParams.Instigator = this;
+
+		FVector StartPoint = GetTransform().GetLocation();
+		FRotator AttackRotation;
+		if (CombatTarget)
+		{
+			FVector Target = CombatTarget->GetActorTransform().GetLocation() - StartPoint;
+			AttackRotation = Target.Rotation();
+		}
+		else
+		{
+			AttackRotation = GetActorForwardVector().Rotation();
+		}
 		
 		UWorld* World = GetWorld();
 		if (World)
 		{
 			AProjectile* SpawnProjectile = World->SpawnActor<AProjectile>(
 				ProjectileClass,
-				GetTransform().GetLocation(),
-				GetActorForwardVector().Rotation(),
+				StartPoint,
+				AttackRotation,
 				SpawnParams
 				);
-
-			UE_LOG(LogTemp, Warning, TEXT("SpawnAttack"));
 
 			SpawnProjectile->SetLifeSpan(10.f);
 		}
@@ -147,6 +166,47 @@ void ATopDownCharacter::AttackTimerFinished()
 	bCanAttack = true;
 	Attack();
 
+}
+
+void ATopDownCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->ActorHasTag(FName("Enemy")))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("RangeInEnemy , %d"),OtherActor->GetUniqueID());
+		EnemyInRange.AddUnique(OtherActor);
+	}
+
+}
+
+void ATopDownCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor->ActorHasTag(FName("Enemy")))
+	{
+		EnemyInRange.Remove(OtherActor);
+		UE_LOG(LogTemp, Warning, TEXT("RangeOutEnemy , %d"), OtherActor->GetUniqueID());
+
+	}
+	if (CombatTarget == OtherActor)
+	{
+		CombatTarget = nullptr;
+	}
+}
+
+void ATopDownCharacter::SetCombatTarget()
+{
+	const FVector Location = GetActorLocation();
+	FVector ClosestEnmeyLocationDistance(1000.f);
+	AActor* ClosestEnemy{};
+	for (auto Enemy : EnemyInRange)
+	{
+		FVector DistanceToEnemy = Location - Enemy->GetActorLocation();
+		if (DistanceToEnemy.Length() < ClosestEnmeyLocationDistance.Length())
+		{
+			ClosestEnemy = Enemy;
+			ClosestEnmeyLocationDistance = DistanceToEnemy;
+		}
+	}
+	CombatTarget = ClosestEnemy;
 }
 
 

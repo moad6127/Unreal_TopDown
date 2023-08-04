@@ -32,6 +32,7 @@ void AEnemy::BeginPlay()
 		FNavPathSharedPtr NavPath;
 		EnemyController->MoveTo(MoveRequest, &NavPath);
 	}
+	Tags.Add(FName("Enemy"));
 }
 
 void AEnemy::Tick(float DeltaTime)

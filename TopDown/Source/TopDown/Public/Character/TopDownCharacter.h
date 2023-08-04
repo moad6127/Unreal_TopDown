@@ -13,6 +13,8 @@ class UInputMappingContext;
 class UInputAction;
 class APlayerController;
 class AProjectile;
+class USphereComponent;
+class AEnemy;
 
 UCLASS()
 class TOPDOWN_API ATopDownCharacter : public ACharacter
@@ -52,6 +54,14 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* ViewCamera;
 
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* EnemyRadiusSphereComponent;
+
+	TArray<AActor*> EnemyInRange;
+
+	UPROPERTY(VisibleAnywhere)
+	AActor* CombatTarget;
+
 	UPROPERTY()
 	APlayerController* TopDownController;
 
@@ -63,6 +73,15 @@ private:
 
 	void StartAttackTimer();
 	void AttackTimerFinished();
+
+	UFUNCTION()
+	virtual void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	virtual void EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	void SetCombatTarget();
+
 public:	
 
 };
