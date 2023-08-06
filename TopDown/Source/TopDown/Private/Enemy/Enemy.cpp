@@ -6,7 +6,7 @@
 #include "Character/TopDownCharacter.h"
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
-
+#include "DrawDebugHelpers.h"
 
 AEnemy::AEnemy()
 {
@@ -35,6 +35,15 @@ void AEnemy::BeginPlay()
 	Tags.Add(FName("Enemy"));
 }
 
+void AEnemy::PlayHitReactMontage()
+{
+	UAnimInstance* AnimInstace = GetMesh()->GetAnimInstance();
+	if (AnimInstace && HitReactMontage)
+	{
+		AnimInstace->Montage_Play(HitReactMontage);
+	}
+}
+
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -49,5 +58,8 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::GetHit(const FVector& ImpactPoint)
 {
+	UE_LOG(LogTemp, Warning, TEXT("GetHit"));
+	DrawDebugPoint(GetWorld(), ImpactPoint, 10, FColor::Red, true, -1);
+	PlayHitReactMontage();
 }
 

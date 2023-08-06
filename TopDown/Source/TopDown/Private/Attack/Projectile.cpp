@@ -4,6 +4,7 @@
 #include "Attack/Projectile.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Interface/HitInterface.h"
 
 AProjectile::AProjectile()
 {
@@ -37,9 +38,14 @@ void AProjectile::BeginPlay()
 
 void AProjectile::CollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("AttackOverlap"));
+	IHitInterface* HitInterface = Cast<IHitInterface>(OtherActor);
+	if (HitInterface)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AttackOverlap"));
+		HitInterface->GetHit(SweepResult.ImpactPoint);
+		Destroy();
+	}
 
-	Destroy();
 }
 
 void AProjectile::Tick(float DeltaTime)

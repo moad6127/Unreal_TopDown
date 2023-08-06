@@ -9,6 +9,7 @@
 
 class AAIController;
 class ATopDownCharacter;
+class UAnimMontage;
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
 {
@@ -24,6 +25,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	void PlayHitReactMontage();
+
 	/**
 	* AI Controll
 	*/
@@ -34,7 +37,8 @@ protected:
 	ATopDownCharacter* PlayerCharacter;
 
 private:
-
+	UPROPERTY(EditDefaultsOnly, Category = Montage)
+	UAnimMontage* HitReactMontage;
 public:	
 	AAIController* GetEnemyController() { return EnemyController; }
 };
