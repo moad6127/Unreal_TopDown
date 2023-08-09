@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Interface/HitInterface.h"
+#include "Kismet/Gameplaystatics.h"
 
 AProjectile::AProjectile()
 {
@@ -43,6 +44,15 @@ void AProjectile::CollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, 
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AttackOverlap"));
 		HitInterface->GetHit(SweepResult.ImpactPoint);
+
+		UGameplayStatics::ApplyDamage(
+			OtherActor,
+			Damage,
+			GetInstigator()->GetController(),
+			this,
+			UDamageType::StaticClass()
+		);
+
 		Destroy();
 	}
 

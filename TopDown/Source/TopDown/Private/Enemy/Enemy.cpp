@@ -63,3 +63,9 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 	PlayHitReactMontage();
 }
 
+float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+
+	return 0.0f;
+}
+
