@@ -10,6 +10,7 @@
 class AAIController;
 class ATopDownCharacter;
 class UAnimMontage;
+class UAttributeComponent;
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
 {
@@ -38,8 +39,16 @@ protected:
 	ATopDownCharacter* PlayerCharacter;
 
 private:
+	
+	UPROPERTY(VisibleAnywhere)
+	UAttributeComponent* Attributes;
+
+	
 	UPROPERTY(EditDefaultsOnly, Category = Montage)
 	UAnimMontage* HitReactMontage;
+
+
+
 public:	
 	AAIController* GetEnemyController() { return EnemyController; }
 };
