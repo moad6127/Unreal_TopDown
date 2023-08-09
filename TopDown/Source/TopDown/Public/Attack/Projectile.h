@@ -34,11 +34,11 @@ private:
 	UProjectileMovementComponent* ProjectileMovementComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Properties")
-	float Damage = 15.f;
+	float Damage;
 
 	UFUNCTION()
 	void CollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 public:	
-
+	FORCEINLINE void SetDamage(float GetDamage) { Damage = GetDamage; }
 };

@@ -75,7 +75,7 @@ void ATopDownCharacter::BeginPlay()
 	EnemyRadiusSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ATopDownCharacter::BeginOverlap);
 	EnemyRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &ATopDownCharacter::EndOverlap);
 	ShowMouseCurser();
-
+	Tags.Add(FName("PlayerCharacter"));
 }
 
 
@@ -116,13 +116,13 @@ void ATopDownCharacter::Attack()
 
 void ATopDownCharacter::SpawnProjectile()
 {
-
 	if (ProjectileClass)
 	{
-
+		APawn* InstigatorPawn = Cast<APawn>(GetOwner());
 		FActorSpawnParameters SpawnParams;
-		SpawnParams.Owner = GetOwner();
-		SpawnParams.Instigator = this;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = InstigatorPawn;
+		
 
 		FVector StartPoint = GetTransform().GetLocation();
 		FRotator AttackRotation;
@@ -145,8 +145,12 @@ void ATopDownCharacter::SpawnProjectile()
 				AttackRotation,
 				SpawnParams
 				);
+			if (SpawnProjectile)
+			{
+				SpawnProjectile->SetLifeSpan(10.f);
+				SpawnProjectile->SetDamage(AttackDamage);
 
-			SpawnProjectile->SetLifeSpan(10.f);
+			}
 		}
 	}
 }

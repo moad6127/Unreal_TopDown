@@ -4,6 +4,7 @@
 #include "Attack/Projectile.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameFramework/Character.h"
 #include "Interface/HitInterface.h"
 #include "Kismet/Gameplaystatics.h"
 
@@ -40,22 +41,23 @@ void AProjectile::BeginPlay()
 void AProjectile::CollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	IHitInterface* HitInterface = Cast<IHitInterface>(OtherActor);
+	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
 	if (HitInterface)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AttackOverlap"));
 		HitInterface->GetHit(SweepResult.ImpactPoint);
-
-		UGameplayStatics::ApplyDamage(
-			OtherActor,
-			Damage,
-			GetInstigator()->GetController(),
-			this,
-			UDamageType::StaticClass()
-		);
-
-		Destroy();
+	}
+	if (OwnerCharacter)
+	{
+		AController* OwnerController = OwnerCharacter->Controller;
+		if (OwnerController)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("ApplyDamage : %f"),Damage);
+			UGameplayStatics::ApplyDamage(OtherActor, Damage, OwnerController, this, UDamageType::StaticClass());
+		}
 	}
 
+	Destroy();
 }
 
 void AProjectile::Tick(float DeltaTime)

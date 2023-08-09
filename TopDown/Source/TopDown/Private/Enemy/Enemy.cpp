@@ -69,6 +69,11 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 
-	return 0.0f;
+	if (Attributes)
+	{
+		Attributes->ReceiveDamage(DamageAmount);
+		UE_LOG(LogTemp, Warning, TEXT("TakeDamage : %f"),DamageAmount);
+	}
+	return DamageAmount;
 }
 

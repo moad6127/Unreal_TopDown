@@ -68,6 +68,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Projectile Class")
 	TSubclassOf<AProjectile> ProjectileClass;
 
+	float AttackDamage = 15.f;
+
 	FTimerHandle AttackTimer;
 	bool bCanAttack = true;
 
