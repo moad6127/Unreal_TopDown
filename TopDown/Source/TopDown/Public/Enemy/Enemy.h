@@ -11,6 +11,7 @@ class AAIController;
 class ATopDownCharacter;
 class UAnimMontage;
 class UAttributeComponent;
+class UWidgetComponent;
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
 {
@@ -42,6 +43,9 @@ private:
 	
 	UPROPERTY(VisibleAnywhere)
 	UAttributeComponent* Attributes;
+
+	UPROPERTY(VisibleAnywhere)
+	UWidgetComponent* HealthBarWidget;
 
 	
 	UPROPERTY(EditDefaultsOnly, Category = Montage)
