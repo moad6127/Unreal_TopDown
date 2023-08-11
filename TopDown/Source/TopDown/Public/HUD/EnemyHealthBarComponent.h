@@ -9,9 +9,17 @@
 /**
  * 
  */
+class UHealthBar;
 UCLASS()
 class TOPDOWN_API UEnemyHealthBarComponent : public UWidgetComponent
 {
 	GENERATED_BODY()
 	
+public:
+
+	void SetHealthPercent(float Percent);
+
+private:
+	UPROPERTY()
+	UHealthBar* HealthBarWidget;
 };

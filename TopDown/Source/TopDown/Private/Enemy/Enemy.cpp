@@ -6,9 +6,9 @@
 #include "Character/TopDownCharacter.h"
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
-#include "DrawDebugHelpers.h"
 #include "Component/AttributeComponent.h"
-#include "Components/WidgetComponent.h"
+#include "HUD/EnemyHealthBarComponent.h"
+#include "DrawDebugHelpers.h"
 
 AEnemy::AEnemy()
 {
@@ -20,7 +20,7 @@ AEnemy::AEnemy()
 
 	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributesComponent"));
 
-	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBar"));
+	HealthBarWidget = CreateDefaultSubobject<UEnemyHealthBarComponent>(TEXT("HealthBar"));
 	HealthBarWidget->SetupAttachment(GetRootComponent());
 
 
@@ -41,6 +41,10 @@ void AEnemy::BeginPlay()
 		MoveRequest.SetAcceptanceRadius(15.f);
 		FNavPathSharedPtr NavPath;
 		EnemyController->MoveTo(MoveRequest, &NavPath);
+	}
+	if (HealthBarWidget && Attributes)
+	{
+		HealthBarWidget->SetHealthPercent(Attributes->GetHealthPercent());
 	}
 	Tags.Add(FName("Enemy"));
 }
@@ -76,9 +80,10 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 
-	if (Attributes)
+	if (Attributes && HealthBarWidget)
 	{
 		Attributes->ReceiveDamage(DamageAmount);
+		HealthBarWidget->SetHealthPercent(Attributes->GetHealthPercent());
 		UE_LOG(LogTemp, Warning, TEXT("TakeDamage : %f"),DamageAmount);
 	}
 	return DamageAmount;
