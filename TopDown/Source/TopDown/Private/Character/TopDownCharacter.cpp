@@ -30,6 +30,7 @@ ATopDownCharacter::ATopDownCharacter()
 	SpringArm->bInheritRoll = false;
 	SpringArm->bInheritYaw = false;
 	SpringArm->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f));
+	SpringArm->bDoCollisionTest = false;
 
 
 	ViewCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ViewCamera"));

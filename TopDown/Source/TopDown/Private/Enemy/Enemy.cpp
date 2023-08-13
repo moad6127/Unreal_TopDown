@@ -3,6 +3,7 @@
 
 #include "Enemy/Enemy.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Character/TopDownCharacter.h"
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
@@ -48,8 +49,13 @@ void AEnemy::BeginPlay()
 
 void AEnemy::Die()
 {
-	//TODO Play DeathMontage
 	PlayDeathMontage();
+
+	EnemyController->StopMovement();
+	EnemyController->ClearFocus(EAIFocusPriority::Gameplay);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	SetLifeSpan(3.f);
 }
 
 void AEnemy::PlayHitReactMontage()
