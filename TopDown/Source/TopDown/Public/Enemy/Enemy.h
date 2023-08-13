@@ -28,7 +28,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	void Die();
+
 	void PlayHitReactMontage();
+
+	void PlayDeathMontage();
 
 	/**
 	* AI Controll
@@ -51,7 +55,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Montage)
 	UAnimMontage* HitReactMontage;
 
-
+	UPROPERTY(EditDefaultsOnly, Category = Montage)
+	UAnimMontage* DeathMontage;
 
 public:	
 	AAIController* GetEnemyController() { return EnemyController; }

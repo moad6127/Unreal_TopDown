@@ -42,20 +42,23 @@ void AProjectile::CollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, 
 {
 	IHitInterface* HitInterface = Cast<IHitInterface>(OtherActor);
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
-	if (HitInterface)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AttackOverlap"));
-		HitInterface->GetHit(SweepResult.ImpactPoint);
-	}
+
 	if (OwnerCharacter)
 	{
 		AController* OwnerController = OwnerCharacter->Controller;
 		if (OwnerController)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("ApplyDamage : %f"),Damage);
+			UE_LOG(LogTemp, Warning, TEXT("ApplyDamage : %f"), Damage);
 			UGameplayStatics::ApplyDamage(OtherActor, Damage, OwnerController, this, UDamageType::StaticClass());
 		}
 	}
+
+	if (HitInterface)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AttackOverlap"));
+		HitInterface->GetHit(SweepResult.ImpactPoint);
+	}
+
 
 	Destroy();
 }

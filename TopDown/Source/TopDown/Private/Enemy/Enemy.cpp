@@ -49,12 +49,27 @@ void AEnemy::BeginPlay()
 	Tags.Add(FName("Enemy"));
 }
 
+void AEnemy::Die()
+{
+	//TODO Play DeathMontage
+	PlayDeathMontage();
+}
+
 void AEnemy::PlayHitReactMontage()
 {
 	UAnimInstance* AnimInstace = GetMesh()->GetAnimInstance();
 	if (AnimInstace && HitReactMontage)
 	{
 		AnimInstace->Montage_Play(HitReactMontage);
+	}
+}
+
+void AEnemy::PlayDeathMontage()
+{
+	UAnimInstance* AnimInstace = GetMesh()->GetAnimInstance();
+	if (AnimInstace && DeathMontage)
+	{
+		AnimInstace->Montage_Play(DeathMontage);
 	}
 }
 
@@ -73,8 +88,14 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AEnemy::GetHit(const FVector& ImpactPoint)
 {
 	UE_LOG(LogTemp, Warning, TEXT("GetHit"));
-	DrawDebugPoint(GetWorld(), ImpactPoint, 10, FColor::Red, true, -1);
-	PlayHitReactMontage();
+	if (Attributes && Attributes->IsAlive())
+	{
+		PlayHitReactMontage();
+	}
+	else
+	{
+		Die();
+	}
 }
 
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
