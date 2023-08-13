@@ -22,9 +22,6 @@ AEnemy::AEnemy()
 
 	HealthBarWidget = CreateDefaultSubobject<UEnemyHealthBarComponent>(TEXT("HealthBar"));
 	HealthBarWidget->SetupAttachment(GetRootComponent());
-
-
-	 
 }
 
 void AEnemy::BeginPlay()
@@ -69,6 +66,7 @@ void AEnemy::PlayDeathMontage()
 	UAnimInstance* AnimInstace = GetMesh()->GetAnimInstance();
 	if (AnimInstace && DeathMontage)
 	{
+		DeathPose = EDeathPose::EDP_Death;
 		AnimInstace->Montage_Play(DeathMontage);
 	}
 }

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Interface/HitInterface.h"
+#include "Character/CharacterType.h"
 #include "Enemy.generated.h"
 
 class AAIController;
@@ -12,6 +13,8 @@ class ATopDownCharacter;
 class UAnimMontage;
 class UAttributeComponent;
 class UEnemyHealthBarComponent;
+
+
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
 {
@@ -43,6 +46,9 @@ protected:
 	UPROPERTY()
 	ATopDownCharacter* PlayerCharacter;
 
+	UPROPERTY(BlueprintReadOnly)
+	EDeathPose DeathPose = EDeathPose::EDP_Alive;
+
 private:
 	
 	UPROPERTY(VisibleAnywhere)
@@ -60,4 +66,5 @@ private:
 
 public:	
 	AAIController* GetEnemyController() { return EnemyController; }
+	EDeathPose GetDeathPose() { return DeathPose; }
 };

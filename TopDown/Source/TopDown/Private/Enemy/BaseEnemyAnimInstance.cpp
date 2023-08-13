@@ -32,4 +32,6 @@ void UBaseEnemyAnimInstance::NativeUpdateAnimation(float DeltaTime)
 	Velocity.Z = 0.f;
 	Speed = Velocity.Size();
 
+	EnemyDeathPose = Enemy->GetDeathPose();
+
 }
