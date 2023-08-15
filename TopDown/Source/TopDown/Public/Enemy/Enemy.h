@@ -36,6 +36,7 @@ protected:
 	void PlayHitReactMontage();
 
 	void PlayDeathMontage();
+	void MoveToCharacter();
 
 	/**
 	* AI Controll

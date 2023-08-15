@@ -29,20 +29,10 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	EnemyController = Cast<AAIController>(GetController());
-	PlayerCharacter = Cast<ATopDownCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-	if (EnemyController && PlayerCharacter)
+	MoveToCharacter();
+	if (HealthBarWidget)
 	{
-		EnemyController->SetFocus(PlayerCharacter);
-		FAIMoveRequest MoveRequest;
-		MoveRequest.SetGoalActor(PlayerCharacter);
-		MoveRequest.SetAcceptanceRadius(15.f);
-		FNavPathSharedPtr NavPath;
-		EnemyController->MoveTo(MoveRequest, &NavPath);
-	}
-	if (HealthBarWidget && Attributes)
-	{
-		HealthBarWidget->SetHealthPercent(Attributes->GetHealthPercent());
+		HealthBarWidget->SetVisibility(false);
 	}
 	Tags.Add(FName("Enemy"));
 }
@@ -53,9 +43,13 @@ void AEnemy::Die()
 
 	EnemyController->StopMovement();
 	EnemyController->ClearFocus(EAIFocusPriority::Gameplay);
+	if (HealthBarWidget)
+	{
+		HealthBarWidget->SetVisibility(false);
+	}
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	SetLifeSpan(3.f);
+	SetLifeSpan(1.f);
 }
 
 void AEnemy::PlayHitReactMontage()
@@ -77,10 +71,35 @@ void AEnemy::PlayDeathMontage()
 	}
 }
 
+void AEnemy::MoveToCharacter()
+{
+	if (EnemyController == nullptr)
+	{
+		EnemyController = Cast<AAIController>(GetController());
+	}
+	if (PlayerCharacter == nullptr)
+	{
+		PlayerCharacter = Cast<ATopDownCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	}
+
+	if (EnemyController && PlayerCharacter)
+	{
+		EnemyController->SetFocus(PlayerCharacter);
+		FAIMoveRequest MoveRequest;
+		MoveRequest.SetGoalActor(PlayerCharacter);
+		MoveRequest.SetAcceptanceRadius(15.f);
+		FNavPathSharedPtr NavPath;
+		EnemyController->MoveTo(MoveRequest, &NavPath);
+	}
+}
+
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if (DeathPose == EDeathPose::EDP_Alive)
+	{
+		MoveToCharacter();
+	}
 }
 
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -92,6 +111,10 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AEnemy::GetHit(const FVector& ImpactPoint)
 {
 	UE_LOG(LogTemp, Warning, TEXT("GetHit"));
+	if (HealthBarWidget)
+	{
+		HealthBarWidget->SetVisibility(true);
+	}
 	if (Attributes && Attributes->IsAlive())
 	{
 		PlayHitReactMontage();
