@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "Attack/Projectile.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Component/AttributeComponent.h"
 
 
 ATopDownCharacter::ATopDownCharacter()
@@ -42,7 +43,7 @@ ATopDownCharacter::ATopDownCharacter()
 	EnemyRadiusSphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	EnemyRadiusSphereComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 
-
+	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributesComponent"));
 }
 
 void ATopDownCharacter::Tick(float DeltaTime)
@@ -60,6 +61,21 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Attack);
 
 	}
+}
+
+float ATopDownCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	if (Attributes)
+	{
+		Attributes->ReceiveDamage(DamageAmount);
+		UE_LOG(LogTemp, Warning, TEXT("CharacterTakeDamage : %f"), DamageAmount);
+	}
+	return DamageAmount;
+}
+
+void ATopDownCharacter::GetHit(const FVector& ImpactPoint)
+{
+
 }
 
 void ATopDownCharacter::BeginPlay()
@@ -177,7 +193,6 @@ void ATopDownCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 {
 	if (OtherActor->ActorHasTag(FName("Enemy")))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("RangeInEnemy , %d"),OtherActor->GetUniqueID());
 		EnemyInRange.AddUnique(OtherActor);
 	}
 
@@ -188,8 +203,6 @@ void ATopDownCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	if (OtherActor->ActorHasTag(FName("Enemy")))
 	{
 		EnemyInRange.Remove(OtherActor);
-		UE_LOG(LogTemp, Warning, TEXT("RangeOutEnemy , %d"), OtherActor->GetUniqueID());
-
 	}
 	if (CombatTarget == OtherActor)
 	{

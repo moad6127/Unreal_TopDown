@@ -31,4 +31,5 @@ public:
 	void ReceiveDamage(float Damage);
 	float GetHealthPercent();
 	bool IsAlive();
+	void SetHealth(float SetMaxHealth);
 };

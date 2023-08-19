@@ -13,7 +13,7 @@ class ATopDownCharacter;
 class UAnimMontage;
 class UAttributeComponent;
 class UEnemyHealthBarComponent;
-
+class USphereComponent;
 
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
@@ -33,10 +33,13 @@ protected:
 
 	void Die();
 
+	void Attack();
+
 	void PlayHitReactMontage();
 
 	void PlayDeathMontage();
 	void MoveToCharacter();
+
 
 	/**
 	* AI Controll
@@ -58,12 +61,32 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UEnemyHealthBarComponent* HealthBarWidget;
 
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* AttackDamageRange;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Montage)
 	UAnimMontage* HitReactMontage;
 
 	UPROPERTY(EditDefaultsOnly, Category = Montage)
 	UAnimMontage* DeathMontage;
+
+	UPROPERTY(VisibleAnywhere)
+	AActor* CombatTarget;
+
+	UPROPERTY(EditAnywhere, Category = Combat)
+	float AttackDamage = 15.f;
+
+	FTimerHandle AttackTimer;
+	bool bCanAttack = true;
+
+	void StartAttackTimer();
+	void AttackTimerFinished();
+
+	UFUNCTION()
+	virtual void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	virtual void EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 public:	
 	AAIController* GetEnemyController() { return EnemyController; }

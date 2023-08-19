@@ -4,6 +4,7 @@
 #include "Enemy/Enemy.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 #include "Character/TopDownCharacter.h"
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
@@ -23,6 +24,13 @@ AEnemy::AEnemy()
 
 	HealthBarWidget = CreateDefaultSubobject<UEnemyHealthBarComponent>(TEXT("HealthBar"));
 	HealthBarWidget->SetupAttachment(GetRootComponent());
+
+	AttackDamageRange = CreateDefaultSubobject<USphereComponent>(TEXT("EnemyRadiusSphereComponent"));
+	AttackDamageRange->SetupAttachment(GetRootComponent());
+	AttackDamageRange->SetSphereRadius(15.f);
+	AttackDamageRange->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	AttackDamageRange->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+
 }
 
 void AEnemy::BeginPlay()
@@ -34,7 +42,10 @@ void AEnemy::BeginPlay()
 	{
 		HealthBarWidget->SetVisibility(false);
 	}
+	AttackDamageRange->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::BeginOverlap);
+	AttackDamageRange->OnComponentEndOverlap.AddDynamic(this, &AEnemy::EndOverlap);
 	Tags.Add(FName("Enemy"));
+
 }
 
 void AEnemy::Die()
@@ -50,6 +61,17 @@ void AEnemy::Die()
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SetLifeSpan(1.f);
+}
+
+void AEnemy::Attack()
+{
+	if (bCanAttack && CombatTarget)
+	{
+		bCanAttack = false;
+		StartAttackTimer();
+		UE_LOG(LogTemp, Warning, TEXT("CharacterGetDamage : %f"), AttackDamage);
+		UGameplayStatics::ApplyDamage(CombatTarget, AttackDamage, GetController(), this, UDamageType::StaticClass());
+	}
 }
 
 void AEnemy::PlayHitReactMontage()
@@ -87,10 +109,46 @@ void AEnemy::MoveToCharacter()
 		EnemyController->SetFocus(PlayerCharacter);
 		FAIMoveRequest MoveRequest;
 		MoveRequest.SetGoalActor(PlayerCharacter);
-		MoveRequest.SetAcceptanceRadius(15.f);
+		MoveRequest.SetAcceptanceRadius(30.f);
 		FNavPathSharedPtr NavPath;
 		EnemyController->MoveTo(MoveRequest, &NavPath);
 	}
+}
+
+void AEnemy::StartAttackTimer()
+{
+	if (CombatTarget)
+	{
+		GetWorldTimerManager().SetTimer(
+			AttackTimer,
+			this,
+			&AEnemy::AttackTimerFinished,
+			0.5f
+		);
+	}
+}
+
+void AEnemy::AttackTimerFinished()
+{
+	bCanAttack = true;
+	Attack();
+}
+
+void AEnemy::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->ActorHasTag("PlayerCharacter"))
+	{
+		CombatTarget = OtherActor;
+		UE_LOG(LogTemp, Warning, TEXT("CharacterInEnemyAttackRange"));
+
+		Attack();
+	}
+}
+
+void AEnemy::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	CombatTarget = nullptr;
+	UE_LOG(LogTemp, Warning, TEXT("CharacterOutEnemyAttackRange"));
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -110,7 +168,6 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::GetHit(const FVector& ImpactPoint)
 {
-	UE_LOG(LogTemp, Warning, TEXT("GetHit"));
 	if (HealthBarWidget)
 	{
 		HealthBarWidget->SetVisibility(true);
@@ -127,7 +184,6 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-
 	if (Attributes && HealthBarWidget)
 	{
 		Attributes->ReceiveDamage(DamageAmount);

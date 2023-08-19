@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Interface/HitInterface.h"
 #include "TopDownCharacter.generated.h"
 
 
@@ -15,9 +16,10 @@ class APlayerController;
 class AProjectile;
 class USphereComponent;
 class AEnemy;
+class UAttributeComponent;
 
 UCLASS()
-class TOPDOWN_API ATopDownCharacter : public ACharacter
+class TOPDOWN_API ATopDownCharacter : public ACharacter, public IHitInterface
 {
 	GENERATED_BODY()
 
@@ -27,6 +29,8 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	virtual void GetHit(const FVector& ImpactPoint) override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -57,6 +61,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* EnemyRadiusSphereComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	UAttributeComponent* Attributes;
+
 	TArray<AActor*> EnemyInRange;
 
 	UPROPERTY(VisibleAnywhere)
@@ -68,6 +75,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Projectile Class")
 	TSubclassOf<AProjectile> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category = Combat)
 	float AttackDamage = 15.f;
 
 	FTimerHandle AttackTimer;

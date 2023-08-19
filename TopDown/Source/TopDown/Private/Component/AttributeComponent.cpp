@@ -31,6 +31,12 @@ bool UAttributeComponent::IsAlive()
 	return Health > 0.f;
 }
 
+void UAttributeComponent::SetHealth(float SetMaxHealth)
+{
+	MaxHealth = SetMaxHealth;
+	Health = MaxHealth;
+}
+
 
 void UAttributeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
