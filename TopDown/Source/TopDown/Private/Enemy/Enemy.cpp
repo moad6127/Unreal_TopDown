@@ -115,6 +115,14 @@ void AEnemy::MoveToCharacter()
 	}
 }
 
+void AEnemy::SpawnParticle(const FVector& ImpactPoint)
+{
+	if (HitParticles && GetWorld())
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticles, ImpactPoint);
+	}
+}
+
 void AEnemy::StartAttackTimer()
 {
 	if (CombatTarget)
@@ -175,6 +183,7 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 	if (Attributes && Attributes->IsAlive())
 	{
 		PlayHitReactMontage();
+		SpawnParticle(ImpactPoint);
 	}
 	else
 	{

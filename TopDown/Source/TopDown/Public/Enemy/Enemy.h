@@ -40,7 +40,7 @@ protected:
 	void PlayDeathMontage();
 	void MoveToCharacter();
 
-
+	void SpawnParticle(const FVector& ImpactPoint);
 	/**
 	* AI Controll
 	*/
@@ -63,6 +63,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* AttackDamageRange;
+
+
+	UPROPERTY(EditAnywhere, Category = VisualEffects)
+	UParticleSystem* HitParticles;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Montage)
 	UAnimMontage* HitReactMontage;
