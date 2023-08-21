@@ -31,7 +31,7 @@ bool UAttributeComponent::IsAlive()
 	return Health > 0.f;
 }
 
-void UAttributeComponent::SetHealth(float SetMaxHealth)
+void UAttributeComponent::SetMaxHealth(float SetMaxHealth)
 {
 	MaxHealth = SetMaxHealth;
 	Health = MaxHealth;
