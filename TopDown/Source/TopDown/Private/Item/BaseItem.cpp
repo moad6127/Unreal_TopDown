@@ -19,6 +19,7 @@ ABaseItem::ABaseItem()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	Sphere->SetupAttachment(GetRootComponent());
+	Sphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	ItemEffect = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Embers"));
 	ItemEffect->SetupAttachment(GetRootComponent());
@@ -33,18 +34,22 @@ void ABaseItem::BeginPlay()
 
 void ABaseItem::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+
 }
 
 void ABaseItem::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+
 }
 
 void ABaseItem::SpawnPickupSystem()
 {
+
 }
 
 void ABaseItem::SpawnPickupSound()
 {
+
 }
 
 void ABaseItem::Tick(float DeltaTime)
