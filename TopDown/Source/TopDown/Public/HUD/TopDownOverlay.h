@@ -9,9 +9,38 @@
 /**
  * 
  */
+class UProgressBar;
+class UTextBlock;
 UCLASS()
 class TOPDOWN_API UTopDownOverlay : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+	void SetHealthBarPercent(float Percent);
+	void SetEXPBarPercent(float Percent);
+	void SetMAXEXP(float MAXEXP);
+	void SetEXP(float EXP);
+	void SetMaxHealt(float MaxHealth);
+	void SetHealth(float Health);
+private:
+	UPROPERTY(meta = (BindWidget))
+	UProgressBar* HealthProgressBar;
+
+	UPROPERTY(meta = (BindWidget))
+	UProgressBar* EXPProgressBar;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* MAXEXPBlock;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* EXPBlock;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* HealthBlock;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* MaxHealthBlock;
+
+
 };
