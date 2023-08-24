@@ -21,7 +21,7 @@ void UAttributeComponent::ReceiveDamage(float Damage)
 	Health = FMath::Clamp(Health - Damage, 0.f, MaxHealth);
 }
 
-void UAttributeComponent::GetEXP(float GetEXPPoint)
+void UAttributeComponent::GetEXPPoint(float GetEXPPoint)
 {
 	EXP = FMath::Clamp(EXP + GetEXPPoint, 0.f, MaxEXP);
 }

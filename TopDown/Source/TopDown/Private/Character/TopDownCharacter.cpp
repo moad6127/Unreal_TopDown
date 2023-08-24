@@ -61,15 +61,16 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	{
 		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Move);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Attack);
-
 	}
 }
 
 float ATopDownCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	if (Attributes)
+	if (Attributes &&TopDownOverlay)
 	{
 		Attributes->ReceiveDamage(DamageAmount);
+		TopDownOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
+		TopDownOverlay->SetHealth(Attributes->GetHealth());
 		UE_LOG(LogTemp, Warning, TEXT("CharacterTakeDamage : %f"), DamageAmount);
 	}
 	return DamageAmount;
@@ -114,6 +115,10 @@ void ATopDownCharacter::InitializeTopDownOverlay()
 			{
 				TopDownOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
 				TopDownOverlay->SetEXPBarPercent(Attributes->GetEXPPercent());
+				TopDownOverlay->SetHealth(Attributes->GetHealth());
+				TopDownOverlay->SetMaxHealt(Attributes->GetMaxHealth());
+				TopDownOverlay->SetEXP(Attributes->GetEXP());
+				TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
 			}
 		}
 	}
@@ -190,7 +195,6 @@ void ATopDownCharacter::SpawnProjectile()
 			{
 				SpawnProjectile->SetLifeSpan(10.f);
 				SpawnProjectile->SetDamage(AttackDamage);
-
 			}
 		}
 	}

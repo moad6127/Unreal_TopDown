@@ -35,11 +35,16 @@ private:
 public:	
 
 	void ReceiveDamage(float Damage);
-	void GetEXP(float GetEXPPoint);
+	void GetEXPPoint(float GetEXPPoint);
 	float GetHealthPercent();
 	float GetEXPPercent();
 	bool IsAlive();
 	bool LevelUp();
 	void SetMaxHealth(float SetMaxHealth);
 	void SetMaxEXP(float SetMaxEXP);
+
+	FORCEINLINE float GetHealth() const { return Health; }
+	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
+	FORCEINLINE float GetEXP() const { return EXP; }
+	FORCEINLINE float GetMaxEXP() const { return MaxEXP; }
 };
