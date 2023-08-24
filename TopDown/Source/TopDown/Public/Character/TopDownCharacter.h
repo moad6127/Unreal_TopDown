@@ -17,6 +17,7 @@ class AProjectile;
 class USphereComponent;
 class AEnemy;
 class UAttributeComponent;
+class UTopDownOverlay;
 
 UCLASS()
 class TOPDOWN_API ATopDownCharacter : public ACharacter, public IHitInterface
@@ -34,6 +35,8 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+	void InitializeTopDownOverlay();
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputMappingContext* CharacterContext;
@@ -71,6 +74,9 @@ private:
 
 	UPROPERTY()
 	APlayerController* TopDownController;
+
+	UPROPERTY()
+	UTopDownOverlay* TopDownOverlay;
 
 	UPROPERTY(EditAnywhere, Category = "Projectile Class")
 	TSubclassOf<AProjectile> ProjectileClass;

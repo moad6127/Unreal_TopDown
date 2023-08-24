@@ -25,4 +25,8 @@ private:
 
 	UPROPERTY()
 	UTopDownOverlay* TopDownOverlay;
+
+public:
+	FORCEINLINE UTopDownOverlay* GetTopDownOverlay() const { return TopDownOverlay; }
 };
+

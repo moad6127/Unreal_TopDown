@@ -26,10 +26,20 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
 	float MaxHealth;
 
+	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
+	float EXP;
+
+	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
+	float MaxEXP;
+
 public:	
 
 	void ReceiveDamage(float Damage);
+	void GetEXP(float GetEXPPoint);
 	float GetHealthPercent();
+	float GetEXPPercent();
 	bool IsAlive();
+	bool LevelUp();
 	void SetMaxHealth(float SetMaxHealth);
+	void SetMaxEXP(float SetMaxEXP);
 };

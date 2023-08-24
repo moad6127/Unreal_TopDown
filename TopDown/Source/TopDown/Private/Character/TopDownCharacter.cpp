@@ -11,6 +11,8 @@
 #include "Attack/Projectile.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Component/AttributeComponent.h"
+#include "HUD/TopDownHUD.h"
+#include "HUD/TopDownOverlay.h"
 
 
 ATopDownCharacter::ATopDownCharacter()
@@ -93,6 +95,28 @@ void ATopDownCharacter::BeginPlay()
 	EnemyRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &ATopDownCharacter::EndOverlap);
 	ShowMouseCurser();
 	Tags.Add(FName("PlayerCharacter"));
+	InitializeTopDownOverlay();
+}
+
+void ATopDownCharacter::InitializeTopDownOverlay()
+{
+	if (TopDownController == nullptr)
+	{
+		TopDownController = Cast<APlayerController>(GetController());
+	}
+	if (TopDownController)
+	{
+		ATopDownHUD* TopDownHUD = Cast<ATopDownHUD>(TopDownController->GetHUD());
+		if (TopDownHUD)
+		{
+			TopDownOverlay = TopDownHUD->GetTopDownOverlay();
+			if (TopDownOverlay && Attributes)
+			{
+				TopDownOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
+				TopDownOverlay->SetEXPBarPercent(Attributes->GetEXPPercent());
+			}
+		}
+	}
 }
 
 
