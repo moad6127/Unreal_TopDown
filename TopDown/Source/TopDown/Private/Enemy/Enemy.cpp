@@ -60,6 +60,7 @@ void AEnemy::Die()
 	}
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	AttackDamageRange->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SetLifeSpan(1.f);
 }
 
