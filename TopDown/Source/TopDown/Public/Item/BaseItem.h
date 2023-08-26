@@ -4,21 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interface/PickupInterface.h"
 #include "BaseItem.generated.h"
 
 
 class USphereComponent;
 class UNiagaraSystem;
 class UNiagaraComponent;
-
+class ATopDownCharacter;
 UCLASS()
-class TOPDOWN_API ABaseItem : public AActor
+class TOPDOWN_API ABaseItem : public AActor, public IPickupInterface
 {
 	GENERATED_BODY()
 	
 public:	
 	ABaseItem();
 	virtual void Tick(float DeltaTime) override;
+	virtual void Pickup(ATopDownCharacter* PlayerCharacter) override;
 protected:
 	virtual void BeginPlay() override;
 

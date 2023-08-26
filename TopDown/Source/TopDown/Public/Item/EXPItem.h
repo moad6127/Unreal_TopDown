@@ -9,16 +9,23 @@
 /**
  * 
  */
+class ATopDownCharacter;
+
 UCLASS()
 class TOPDOWN_API AEXPItem : public ABaseItem
 {
 	GENERATED_BODY()
+public:
+	virtual void Pickup(ATopDownCharacter* PlayerCharacter) override;
 	
-
 private:
+
+	void EXPUp(ATopDownCharacter* PlayerCharacter);
 
 	UPROPERTY(EditAnywhere)
 	float EXP;
+
+	
 public:
 
 };

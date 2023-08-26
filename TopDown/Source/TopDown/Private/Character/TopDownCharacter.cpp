@@ -13,6 +13,7 @@
 #include "Component/AttributeComponent.h"
 #include "HUD/TopDownHUD.h"
 #include "HUD/TopDownOverlay.h"
+#include "Interface/PickupInterface.h"
 
 
 ATopDownCharacter::ATopDownCharacter()
@@ -44,6 +45,13 @@ ATopDownCharacter::ATopDownCharacter()
 	EnemyRadiusSphereComponent->SetSphereRadius(1000.f);
 	EnemyRadiusSphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	EnemyRadiusSphereComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+
+	PickupSphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("PickupSphereComponent"));
+	PickupSphereComponent->SetupAttachment(GetRootComponent());
+	PickupSphereComponent->SetSphereRadius(150.f);
+	PickupSphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	PickupSphereComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Overlap);
+
 
 	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributesComponent"));
 }
@@ -81,6 +89,16 @@ void ATopDownCharacter::GetHit(const FVector& ImpactPoint)
 
 }
 
+void ATopDownCharacter::GetEXPPoint(float EXPPoint)
+{
+	if (Attributes && TopDownOverlay)
+	{
+		Attributes->GetEXPPoint(EXPPoint);
+		TopDownOverlay->SetEXP(Attributes->GetEXP());
+		TopDownOverlay->SetEXPBarPercent(Attributes->GetEXPPercent());
+	}
+}
+
 void ATopDownCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -94,6 +112,8 @@ void ATopDownCharacter::BeginPlay()
 	}
 	EnemyRadiusSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ATopDownCharacter::BeginOverlap);
 	EnemyRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &ATopDownCharacter::EndOverlap);
+	PickupSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ATopDownCharacter::PickupCompBeginOverlap);
+
 	ShowMouseCurser();
 	Tags.Add(FName("PlayerCharacter"));
 	InitializeTopDownOverlay();
@@ -223,7 +243,16 @@ void ATopDownCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 	{
 		EnemyInRange.AddUnique(OtherActor);
 	}
+}
 
+void ATopDownCharacter::PickupCompBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	IPickupInterface* PickupItem = Cast<IPickupInterface>(OtherActor);
+	if (PickupItem)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ItemOverlap"));
+		PickupItem->Pickup(this);
+	}
 }
 
 void ATopDownCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)

@@ -32,7 +32,7 @@ public:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	virtual void GetHit(const FVector& ImpactPoint) override;
-
+	void GetEXPPoint(float EXPPoint);
 protected:
 	virtual void BeginPlay() override;
 
@@ -65,6 +65,9 @@ private:
 	USphereComponent* EnemyRadiusSphereComponent;
 
 	UPROPERTY(VisibleAnywhere)
+	USphereComponent* PickupSphereComponent;
+
+	UPROPERTY(VisibleAnywhere)
 	UAttributeComponent* Attributes;
 
 	TArray<AActor*> EnemyInRange;
@@ -92,6 +95,9 @@ private:
 
 	UFUNCTION()
 	virtual void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	virtual void PickupCompBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
 	virtual void EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);

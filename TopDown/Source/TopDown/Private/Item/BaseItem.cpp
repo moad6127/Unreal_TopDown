@@ -14,6 +14,7 @@ ABaseItem::ABaseItem()
 	ItemMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	ItemMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
+	ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 	ItemMesh->SetSimulatePhysics(true);
 	RootComponent = ItemMesh;
 
@@ -56,5 +57,13 @@ void ABaseItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ABaseItem::Pickup(ATopDownCharacter* PlayerCharacter)
+{
+	UE_LOG(LogTemp, Warning, TEXT("BaseItemPickupFuncCall"));
+	SpawnPickupSound();
+	SpawnPickupSystem();
+	Destroy();
 }
 
