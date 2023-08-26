@@ -20,7 +20,7 @@ class UAttributeComponent;
 class UTopDownOverlay;
 
 UCLASS()
-class TOPDOWN_API ATopDownCharacter : public ACharacter, public IHitInterface
+class TOPDOWN_API ATopDownCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -31,7 +31,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
-	virtual void GetHit(const FVector& ImpactPoint) override;
 	void GetEXPPoint(float EXPPoint);
 protected:
 	virtual void BeginPlay() override;

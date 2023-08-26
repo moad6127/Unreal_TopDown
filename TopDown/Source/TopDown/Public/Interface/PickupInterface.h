@@ -21,6 +21,6 @@ class TOPDOWN_API IPickupInterface
 	GENERATED_BODY()
 
 public:
-
+	UFUNCTION()
 	virtual void Pickup(ATopDownCharacter* PlayerCharacter);
 };

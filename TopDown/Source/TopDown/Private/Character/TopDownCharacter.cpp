@@ -84,10 +84,6 @@ float ATopDownCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	return DamageAmount;
 }
 
-void ATopDownCharacter::GetHit(const FVector& ImpactPoint)
-{
-
-}
 
 void ATopDownCharacter::GetEXPPoint(float EXPPoint)
 {
