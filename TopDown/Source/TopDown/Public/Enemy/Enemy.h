@@ -14,6 +14,7 @@ class UAnimMontage;
 class UAttributeComponent;
 class UEnemyHealthBarComponent;
 class USphereComponent;
+class AEXPItem;
 
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
@@ -41,6 +42,7 @@ protected:
 	void MoveToCharacter();
 
 	void SpawnParticle(const FVector& ImpactPoint);
+	void SpawnEXP();
 	/**
 	* AI Controll
 	*/
@@ -64,6 +66,11 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* AttackDamageRange;
 
+	UPROPERTY(EditAnywhere, Category = EXPClass)
+	TSubclassOf<AEXPItem> EXPClass;
+
+	UPROPERTY(EditAnywhere, Category = EXPClass)
+	float EnemyEXP = 30.f;
 
 	UPROPERTY(EditAnywhere, Category = VisualEffects)
 	UParticleSystem* HitParticles;
@@ -79,6 +86,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	float AttackDamage = 15.f;
+
+
 
 	FTimerHandle AttackTimer;
 	bool bCanAttack = true;

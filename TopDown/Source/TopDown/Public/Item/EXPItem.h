@@ -27,5 +27,5 @@ private:
 
 	
 public:
-
+	FORCEINLINE void SetEXP(float EXPPoint) { EXP = EXPPoint; }
 };

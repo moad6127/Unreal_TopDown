@@ -10,7 +10,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "Component/AttributeComponent.h"
 #include "HUD/EnemyHealthBarComponent.h"
+#include "Item/EXPItem.h"
 #include "DrawDebugHelpers.h"
+
 
 AEnemy::AEnemy()
 {
@@ -122,6 +124,22 @@ void AEnemy::SpawnParticle(const FVector& ImpactPoint)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticles, ImpactPoint);
 	}
+}
+
+void AEnemy::SpawnEXP()
+{
+	UWorld* World = GetWorld();
+	if (World && EXPClass)
+	{
+		const FVector SpawnLocation = GetActorLocation() + FVector(0.f, 0.f, 50.f);
+		AEXPItem* EXP = World->SpawnActor<AEXPItem>(EXPClass, SpawnLocation, GetActorRotation());
+		if (EXP)
+		{
+			EXP->SetEXP(EnemyEXP);
+			EXP->SetOwner(this);
+		}
+	}
+
 }
 
 void AEnemy::StartAttackTimer()
