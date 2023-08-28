@@ -8,6 +8,7 @@
 
 class UBoxComponent;
 class UProjectileMovementComponent;
+class USoundBase;
 UCLASS()
 class TOPDOWN_API AProjectile : public AActor
 {
@@ -30,6 +31,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* ItemMesh;
 
+	UPROPERTY(EditAnywhere)
+	USoundBase* AttckSound;
+
 	UPROPERTY(VisibleAnywhere)
 	UProjectileMovementComponent* ProjectileMovementComponent;
 
@@ -39,6 +43,7 @@ private:
 	UFUNCTION()
 	void CollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	void PlayAttackSound();
 public:	
 	FORCEINLINE void SetDamage(float GetDamage) { Damage = GetDamage; }
 };

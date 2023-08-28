@@ -35,6 +35,7 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	PlayAttackSound();
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this,&AProjectile::CollisionBoxOverlap);
 }
 
@@ -60,6 +61,17 @@ void AProjectile::CollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, 
 			HitInterface->GetHit(SweepResult.ImpactPoint);
 		}
 		Destroy();
+	}
+}
+
+void AProjectile::PlayAttackSound()
+{
+	if (AttckSound)
+	{
+		UGameplayStatics::SpawnSoundAtLocation(
+			this,
+			AttckSound,
+			GetActorLocation());
 	}
 }
 
