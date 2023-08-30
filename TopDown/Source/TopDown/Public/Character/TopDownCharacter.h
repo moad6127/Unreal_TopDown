@@ -84,9 +84,15 @@ private:
 	TSubclassOf<AProjectile> ProjectileClass;
 
 	UPROPERTY(EditAnywhere, Category = Combat)
+	float AttackMaxCount = 2.f;
+
+	float AttackDelay = 2.f;
+
+	UPROPERTY(EditAnywhere, Category = Combat)
 	float AttackDamage = 15.f;
 
 	FTimerHandle AttackTimer;
+	FTimerHandle AttackCountTimer;
 	bool bCanAttack = true;
 
 	void StartAttackTimer();

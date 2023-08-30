@@ -47,13 +47,11 @@ void AEnemy::BeginPlay()
 	AttackDamageRange->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::BeginOverlap);
 	AttackDamageRange->OnComponentEndOverlap.AddDynamic(this, &AEnemy::EndOverlap);
 	Tags.Add(FName("Enemy"));
-
 }
 
 void AEnemy::Die()
 {
 	PlayDeathMontage();
-
 	EnemyController->StopMovement();
 	EnemyController->ClearFocus(EAIFocusPriority::Gameplay);
 	if (HealthBarWidget)
@@ -220,5 +218,10 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 		UE_LOG(LogTemp, Warning, TEXT("TakeDamage : %f"),DamageAmount);
 	}
 	return DamageAmount;
+}
+
+void AEnemy::OnSpawn()
+{
+	MoveToCharacter();
 }
 

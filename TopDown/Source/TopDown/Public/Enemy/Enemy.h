@@ -28,7 +28,7 @@ public:
 
 	virtual void GetHit(const FVector& ImpactPoint) override;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
-
+	void OnSpawn();
 protected:
 	virtual void BeginPlay() override;
 
@@ -46,13 +46,13 @@ protected:
 	/**
 	* AI Controll
 	*/
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	AAIController* EnemyController;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	ATopDownCharacter* PlayerCharacter;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	EDeathPose DeathPose = EDeathPose::EDP_Alive;
 
 private:

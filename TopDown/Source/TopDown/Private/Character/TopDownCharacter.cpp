@@ -185,7 +185,6 @@ void ATopDownCharacter::SpawnProjectile()
 		SpawnParams.Owner = this;
 		SpawnParams.Instigator = InstigatorPawn;
 		
-
 		FVector StartPoint = GetTransform().GetLocation();
 		FRotator AttackRotation;
 		if (CombatTarget)
@@ -222,7 +221,7 @@ void ATopDownCharacter::StartAttackTimer()
 		AttackTimer,
 		this,
 		&ATopDownCharacter::AttackTimerFinished,
-		1.f
+		AttackDelay
 	);
 }
 
