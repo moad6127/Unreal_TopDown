@@ -33,6 +33,7 @@ AEnemy::AEnemy()
 	AttackDamageRange->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	AttackDamageRange->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 
+	SetAIController();
 }
 
 void AEnemy::BeginPlay()
@@ -52,8 +53,11 @@ void AEnemy::BeginPlay()
 void AEnemy::Die()
 {
 	PlayDeathMontage();
-	EnemyController->StopMovement();
-	EnemyController->ClearFocus(EAIFocusPriority::Gameplay);
+	if (EnemyController)
+	{
+		EnemyController->StopMovement();
+		EnemyController->ClearFocus(EAIFocusPriority::Gameplay);
+	}
 	if (HealthBarWidget)
 	{
 		HealthBarWidget->SetVisibility(false);
@@ -63,6 +67,22 @@ void AEnemy::Die()
 	AttackDamageRange->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SpawnEXP();
 	SetLifeSpan(1.f);
+}
+
+void AEnemy::SetAIController()
+{
+	if (GetController() == nullptr)
+	{
+		SpawnDefaultController();
+	}
+	if (EnemyController == nullptr)
+	{
+		EnemyController = Cast<AAIController>(GetController());
+		if (EnemyController)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("EnemyController Create"));
+		}
+	}
 }
 
 void AEnemy::Attack()
@@ -97,10 +117,7 @@ void AEnemy::PlayDeathMontage()
 
 void AEnemy::MoveToCharacter()
 {
-	if (EnemyController == nullptr)
-	{
-		EnemyController = Cast<AAIController>(GetController());
-	}
+	SetAIController();
 	if (PlayerCharacter == nullptr)
 	{
 		PlayerCharacter = Cast<ATopDownCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
@@ -222,6 +239,15 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 
 void AEnemy::OnSpawn()
 {
+	SetAIController();
 	MoveToCharacter();
+}
+
+void AEnemy::SetController(AController* InputController)
+{
+	if (EnemyController == nullptr)
+	{
+		EnemyController = Cast<AAIController>(InputController);
+	}
 }
 

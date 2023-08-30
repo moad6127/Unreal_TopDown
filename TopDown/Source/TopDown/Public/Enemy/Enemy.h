@@ -29,11 +29,12 @@ public:
 	virtual void GetHit(const FVector& ImpactPoint) override;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	void OnSpawn();
+	void SetController(AController* InputController);
 protected:
 	virtual void BeginPlay() override;
 
 	void Die();
-
+	void SetAIController();
 	void Attack();
 
 	void PlayHitReactMontage();
