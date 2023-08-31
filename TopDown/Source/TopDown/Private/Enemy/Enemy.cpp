@@ -33,6 +33,7 @@ AEnemy::AEnemy()
 	AttackDamageRange->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	AttackDamageRange->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	SetAIController();
 }
 
@@ -71,10 +72,6 @@ void AEnemy::Die()
 
 void AEnemy::SetAIController()
 {
-	if (GetController() == nullptr)
-	{
-		SpawnDefaultController();
-	}
 	if (EnemyController == nullptr)
 	{
 		EnemyController = Cast<AAIController>(GetController());
