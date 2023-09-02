@@ -23,6 +23,7 @@ public:
 	void SetEXP(float EXP);
 	void SetMaxHealt(float MaxHealth);
 	void SetHealth(float Health);
+	void SetLevel(int32 PlayerLevel);
 private:
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar* HealthProgressBar;
@@ -42,5 +43,6 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* MaxHealthBlock;
 
-
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* CharacterLevelBlock;
 };

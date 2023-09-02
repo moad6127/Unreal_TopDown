@@ -107,6 +107,7 @@ void ATopDownCharacter::LevelUp()
 		const float nowMaxEXP = Attributes->GetMaxEXP();
 		Attributes->SetMaxEXP(nowMaxEXP * 1.5f);
 		TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
+		TopDownOverlay->SetLevel(PlayerLevel);
 	}
 }
 
@@ -150,6 +151,7 @@ void ATopDownCharacter::InitializeTopDownOverlay()
 				TopDownOverlay->SetMaxHealt(Attributes->GetMaxHealth());
 				TopDownOverlay->SetEXP(Attributes->GetEXP());
 				TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
+				TopDownOverlay->SetLevel(PlayerLevel);
 			}
 		}
 	}

@@ -60,3 +60,13 @@ void UTopDownOverlay::SetHealth(float Health)
 		HealthBlock->SetText(Text);
 	}
 }
+
+void UTopDownOverlay::SetLevel(int32 PlayerLevel)
+{
+	if (CharacterLevelBlock)
+	{
+		const FString String = FString::Printf(TEXT("%d"), PlayerLevel);
+		const FText Text = FText::FromString(String);
+		CharacterLevelBlock->SetText(Text);
+	}
+}
