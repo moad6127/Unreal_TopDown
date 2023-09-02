@@ -90,8 +90,23 @@ void ATopDownCharacter::GetEXPPoint(float EXPPoint)
 	if (Attributes && TopDownOverlay)
 	{
 		Attributes->GetEXPPoint(EXPPoint);
+		if (Attributes->IsLevelUp())
+		{
+			LevelUp();
+		}
 		TopDownOverlay->SetEXP(Attributes->GetEXP());
 		TopDownOverlay->SetEXPBarPercent(Attributes->GetEXPPercent());
+	}
+}
+
+void ATopDownCharacter::LevelUp()
+{
+	PlayerLevel = FMath::Clamp(PlayerLevel + 1, 1, 1000);
+	if (Attributes && TopDownOverlay)
+	{
+		const float nowMaxEXP = Attributes->GetMaxEXP();
+		Attributes->SetMaxEXP(nowMaxEXP * 1.5f);
+		TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
 	}
 }
 

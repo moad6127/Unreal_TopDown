@@ -41,7 +41,7 @@ bool UAttributeComponent::IsAlive()
 	return Health > 0.f;
 }
 
-bool UAttributeComponent::LevelUp()
+bool UAttributeComponent::IsLevelUp()
 {
 	return EXP == MaxEXP;
 }

@@ -32,6 +32,8 @@ public:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	void GetEXPPoint(float EXPPoint);
+
+	void LevelUp();
 protected:
 	virtual void BeginPlay() override;
 
@@ -68,6 +70,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UAttributeComponent* Attributes;
+
+	int32 PlayerLevel = 1;
 
 	TArray<AActor*> EnemyInRange;
 

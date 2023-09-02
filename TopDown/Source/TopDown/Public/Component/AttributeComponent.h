@@ -39,7 +39,7 @@ public:
 	float GetHealthPercent();
 	float GetEXPPercent();
 	bool IsAlive();
-	bool LevelUp();
+	bool IsLevelUp();
 	void SetMaxHealth(float SetMaxHealth);
 	void SetMaxEXP(float SetMaxEXP);
 
