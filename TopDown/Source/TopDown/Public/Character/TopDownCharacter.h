@@ -54,7 +54,7 @@ protected:
 	void Attack();
 	void SpawnProjectile();
 
-
+	void SetTime();
 private:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArm;
@@ -94,6 +94,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	float AttackDamage = 15.f;
+
+	UPROPERTY(VisibleAnywhere)
+	uint32 CountDownInt = 0;
 
 	FTimerHandle AttackTimer;
 	FTimerHandle AttackCountTimer;

@@ -60,6 +60,7 @@ void ATopDownCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	Attack();
+	SetTime();
 }
 
 void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -230,6 +231,20 @@ void ATopDownCharacter::SpawnProjectile()
 			}
 		}
 	}
+}
+
+void ATopDownCharacter::SetTime()
+{
+	uint32 MatchTime = FMath::CeilToInt(GetWorld()->GetTimeSeconds());
+
+	if (CountDownInt != MatchTime)
+	{
+		if (TopDownOverlay)
+		{
+			TopDownOverlay->SetMatchCountDown(GetWorld()->GetTimeSeconds());
+		}
+	}
+	CountDownInt = MatchTime;
 }
 
 void ATopDownCharacter::StartAttackTimer()

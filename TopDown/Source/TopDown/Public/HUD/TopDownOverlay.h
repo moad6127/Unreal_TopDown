@@ -24,6 +24,7 @@ public:
 	void SetMaxHealt(float MaxHealth);
 	void SetHealth(float Health);
 	void SetLevel(int32 PlayerLevel);
+	void SetMatchCountDown(float CountDownTime);
 private:
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar* HealthProgressBar;
@@ -45,4 +46,7 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* CharacterLevelBlock;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* MatchCountDownText;
 };

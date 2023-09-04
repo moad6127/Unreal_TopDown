@@ -70,3 +70,16 @@ void UTopDownOverlay::SetLevel(int32 PlayerLevel)
 		CharacterLevelBlock->SetText(Text);
 	}
 }
+
+void UTopDownOverlay::SetMatchCountDown(float CountDownTime)
+{
+	if (MatchCountDownText)
+	{
+		int32 Minutes = FMath::FloorToInt(CountDownTime / 60.f);
+		int32 Seconds = CountDownTime - Minutes * 60;
+
+		const FString String = FString::Printf(TEXT("%02d:%02d"),Minutes,Seconds);
+		const FText Text = FText::FromString(String);
+		MatchCountDownText->SetText(Text);
+	}
+}
