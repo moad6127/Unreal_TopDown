@@ -83,3 +83,13 @@ void UTopDownOverlay::SetMatchCountDown(float CountDownTime)
 		MatchCountDownText->SetText(Text);
 	}
 }
+
+void UTopDownOverlay::SetGoldText(int32 Gold)
+{
+	if (GoldText)
+	{
+		const FString String = FString::Printf(TEXT("%d"), Gold);
+		const FText Text = FText::FromString(String);
+		GoldText->SetText(Text);
+	}
+}

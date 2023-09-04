@@ -32,6 +32,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
 	float MaxEXP;
 
+	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
+	int32 Gold;
+
 public:	
 
 	void ReceiveDamage(float Damage);
@@ -40,6 +43,7 @@ public:
 	float GetEXPPercent();
 	bool IsAlive();
 	bool IsLevelUp();
+	void SetGold(int32 GoldCount);
 	void SetMaxHealth(float SetMaxHealth);
 	void SetMaxEXP(float SetMaxEXP);
 
@@ -47,4 +51,5 @@ public:
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	FORCEINLINE float GetEXP() const { return EXP; }
 	FORCEINLINE float GetMaxEXP() const { return MaxEXP; }
+	FORCEINLINE int32 GetGold() const { return Gold; }
 };

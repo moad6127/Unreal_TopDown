@@ -46,6 +46,11 @@ bool UAttributeComponent::IsLevelUp()
 	return EXP == MaxEXP;
 }
 
+void UAttributeComponent::SetGold(int32 GoldCount)
+{
+	Gold = FMath::Clamp(Gold + GoldCount, 0, 9999);
+}
+
 void UAttributeComponent::SetMaxHealth(float SetMaxHealth)
 {
 	MaxHealth = SetMaxHealth;

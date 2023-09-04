@@ -25,6 +25,7 @@ public:
 	void SetHealth(float Health);
 	void SetLevel(int32 PlayerLevel);
 	void SetMatchCountDown(float CountDownTime);
+	void SetGoldText(int32 Gold);
 private:
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar* HealthProgressBar;
@@ -49,4 +50,7 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* MatchCountDownText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* GoldText;
 };

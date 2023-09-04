@@ -100,6 +100,16 @@ void ATopDownCharacter::GetEXPPoint(float EXPPoint)
 	}
 }
 
+void ATopDownCharacter::GetGold(int32 GoldCount)
+{
+	if (Attributes && TopDownOverlay)
+	{
+		Attributes->SetGold(GoldCount);
+		int32 Gold = Attributes->GetGold();
+		TopDownOverlay->SetGoldText(Gold);
+	}
+}
+
 void ATopDownCharacter::LevelUp()
 {
 	PlayerLevel = FMath::Clamp(PlayerLevel + 1, 1, 1000);
@@ -153,6 +163,7 @@ void ATopDownCharacter::InitializeTopDownOverlay()
 				TopDownOverlay->SetEXP(Attributes->GetEXP());
 				TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
 				TopDownOverlay->SetLevel(PlayerLevel);
+				TopDownOverlay->SetGoldText(0);
 			}
 		}
 	}
