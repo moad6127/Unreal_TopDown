@@ -51,7 +51,7 @@ ATopDownCharacter::ATopDownCharacter()
 	PickupSphereComponent->SetSphereRadius(150.f);
 	PickupSphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	PickupSphereComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Overlap);
-
+	PickupSphereComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 
 	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributesComponent"));
 }

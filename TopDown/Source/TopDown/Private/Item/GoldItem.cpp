@@ -16,6 +16,6 @@ void AGoldItem::GetGold(ATopDownCharacter* PlayerCharacter)
 {
 	if (PlayerCharacter)
 	{
-		
+		PlayerCharacter->GetGold(Gold);
 	}
 }
