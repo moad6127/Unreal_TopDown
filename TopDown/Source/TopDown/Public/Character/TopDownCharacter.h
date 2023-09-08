@@ -34,6 +34,9 @@ public:
 	void GetEXPPoint(float EXPPoint);
 	void GetGold(int32 GoldCount);
 	void LevelUp();
+
+	void InitPlayerData();
+	void SaveGame();
 protected:
 	virtual void BeginPlay() override;
 
@@ -70,6 +73,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UAttributeComponent* Attributes;
+
+	/*
+	* SaveGame
+	*/
+	UPROPERTY(VisibleAnywhere)
+	FString SaveSlotName = TEXT("Player");
 
 	int32 PlayerLevel = 1;
 
@@ -115,6 +124,8 @@ private:
 	virtual void EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	void SetCombatTarget();
+
+
 
 public:	
 

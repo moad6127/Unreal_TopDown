@@ -10,11 +10,12 @@
 #include "EnhancedInputComponent.h"
 #include "Attack/Projectile.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "Component/AttributeComponent.h"
 #include "HUD/TopDownHUD.h"
 #include "HUD/TopDownOverlay.h"
 #include "Interface/PickupInterface.h"
-
+#include "SaveGame/TopDownSaveGame.h"
 
 ATopDownCharacter::ATopDownCharacter()
 {
@@ -108,6 +109,7 @@ void ATopDownCharacter::GetGold(int32 GoldCount)
 		int32 Gold = Attributes->GetGold();
 		TopDownOverlay->SetGoldText(Gold);
 	}
+	SaveGame();
 }
 
 void ATopDownCharacter::LevelUp()
@@ -137,8 +139,9 @@ void ATopDownCharacter::BeginPlay()
 	EnemyRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &ATopDownCharacter::EndOverlap);
 	PickupSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ATopDownCharacter::PickupCompBeginOverlap);
 
-	ShowMouseCurser();
 	Tags.Add(FName("PlayerCharacter"));
+	InitPlayerData();
+	ShowMouseCurser();
 	InitializeTopDownOverlay();
 }
 
@@ -163,7 +166,7 @@ void ATopDownCharacter::InitializeTopDownOverlay()
 				TopDownOverlay->SetEXP(Attributes->GetEXP());
 				TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
 				TopDownOverlay->SetLevel(PlayerLevel);
-				TopDownOverlay->SetGoldText(0);
+				TopDownOverlay->SetGoldText(Attributes->GetGold());
 			}
 		}
 	}
@@ -320,6 +323,43 @@ void ATopDownCharacter::SetCombatTarget()
 		}
 	}
 	CombatTarget = ClosestEnemy;
+}
+
+void ATopDownCharacter::InitPlayerData()
+{
+
+	UE_LOG(LogTemp, Warning, TEXT("InitData"));
+
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, 0));
+	if (TopDownSaveGame == nullptr)
+	{
+		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
+	}
+	if (Attributes)
+	{
+		Attributes->SetGold(TopDownSaveGame->Gold);
+		UE_LOG(LogTemp, Warning, TEXT("InitData"));
+	}
+	SaveGame();
+}
+
+void ATopDownCharacter::SaveGame()
+{
+	UTopDownSaveGame* NewData = NewObject<UTopDownSaveGame>();
+	if (Attributes)
+	{
+		NewData->Gold = Attributes->GetGold();
+	}
+
+	if (UGameplayStatics::SaveGameToSlot(NewData, SaveSlotName, 0))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SaveData"));
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SaveDataFail!!!"));
+	}
 }
 
 
