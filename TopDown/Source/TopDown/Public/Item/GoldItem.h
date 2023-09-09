@@ -25,4 +25,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	int32 Gold;
+public:
+
+	FORCEINLINE void SetGold(int32 GoldSet) { Gold = GoldSet; }
 };

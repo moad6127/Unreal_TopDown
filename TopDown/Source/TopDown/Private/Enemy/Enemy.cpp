@@ -11,6 +11,7 @@
 #include "Component/AttributeComponent.h"
 #include "HUD/EnemyHealthBarComponent.h"
 #include "Item/EXPItem.h"
+#include "Item/GoldItem.h"
 #include "DrawDebugHelpers.h"
 
 
@@ -66,7 +67,7 @@ void AEnemy::Die()
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	AttackDamageRange->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	SpawnEXP();
+	SpawnDrop();
 	SetLifeSpan(1.f);
 }
 
@@ -75,10 +76,6 @@ void AEnemy::SetAIController()
 	if (EnemyController == nullptr)
 	{
 		EnemyController = Cast<AAIController>(GetController());
-		if (EnemyController)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("EnemyController Create"));
-		}
 	}
 }
 
@@ -88,7 +85,6 @@ void AEnemy::Attack()
 	{
 		bCanAttack = false;
 		StartAttackTimer();
-		UE_LOG(LogTemp, Warning, TEXT("CharacterGetDamage : %f"), AttackDamage);
 		UGameplayStatics::ApplyDamage(CombatTarget, AttackDamage, GetController(), this, UDamageType::StaticClass());
 	}
 }
@@ -155,6 +151,40 @@ void AEnemy::SpawnEXP()
 
 }
 
+void AEnemy::SpawnGold()
+{
+	UWorld* World = GetWorld();
+	if (World && GoldClass)
+	{
+		const FVector SpawnLocation = GetActorLocation() + FVector(0.f, 0.f, 50.f);
+		AGoldItem* Gold = World->SpawnActor<AGoldItem>(GoldClass, SpawnLocation, GetActorRotation());
+
+		if (Gold)
+		{
+			Gold->SetGold(EnemyGold);
+			Gold->SetOwner(this);
+		}
+	}
+}
+
+void AEnemy::SpawnDrop()
+{
+	int32 RandomValue = FMath::RandRange(0, 100);
+	UE_LOG(LogTemp, Warning, TEXT("RandomValue : %d"),RandomValue);
+	if (RandomValue <= 5)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SpawnGold"));
+
+		SpawnGold();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Spawn EXP"));
+
+		SpawnEXP();
+	}
+}
+
 void AEnemy::StartAttackTimer()
 {
 	if (CombatTarget)
@@ -179,7 +209,6 @@ void AEnemy::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 	if (OtherActor->ActorHasTag("PlayerCharacter"))
 	{
 		CombatTarget = OtherActor;
-		UE_LOG(LogTemp, Warning, TEXT("CharacterInEnemyAttackRange"));
 
 		Attack();
 	}
@@ -188,7 +217,6 @@ void AEnemy::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 void AEnemy::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	CombatTarget = nullptr;
-	UE_LOG(LogTemp, Warning, TEXT("CharacterOutEnemyAttackRange"));
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -229,7 +257,6 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	{
 		Attributes->ReceiveDamage(DamageAmount);
 		HealthBarWidget->SetHealthPercent(Attributes->GetHealthPercent());
-		UE_LOG(LogTemp, Warning, TEXT("TakeDamage : %f"),DamageAmount);
 	}
 	return DamageAmount;
 }

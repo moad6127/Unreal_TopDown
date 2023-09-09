@@ -15,6 +15,7 @@ class UAttributeComponent;
 class UEnemyHealthBarComponent;
 class USphereComponent;
 class AEXPItem;
+class AGoldItem;
 
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
@@ -44,6 +45,9 @@ protected:
 
 	void SpawnParticle(const FVector& ImpactPoint);
 	void SpawnEXP();
+	void SpawnGold();
+	void SpawnDrop();
+
 	/**
 	* AI Controll
 	*/
@@ -67,11 +71,17 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* AttackDamageRange;
 
-	UPROPERTY(EditAnywhere, Category = EXPClass)
+	UPROPERTY(EditAnywhere, Category = DropItem)
 	TSubclassOf<AEXPItem> EXPClass;
 
-	UPROPERTY(EditAnywhere, Category = EXPClass)
+	UPROPERTY(EditAnywhere, Category = DropItem)
+	TSubclassOf<AGoldItem> GoldClass;
+
+	UPROPERTY(EditAnywhere, Category = DropItem)
 	float EnemyEXP = 30.f;
+
+	UPROPERTY(EditAnywhere, Category = DropItem)
+	int32 EnemyGold = 1;
 
 	UPROPERTY(EditAnywhere, Category = VisualEffects)
 	UParticleSystem* HitParticles;
