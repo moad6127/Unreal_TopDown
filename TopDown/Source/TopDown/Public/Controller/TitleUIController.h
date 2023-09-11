@@ -9,9 +9,22 @@
 /**
  * 
  */
+
+class UUserWidget;
+
 UCLASS()
 class TOPDOWN_API ATitleUIController : public APlayerController
 {
 	GENERATED_BODY()
+	
+protected:
+
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UUserWidget> UIWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* UIWidgetInstance;
 	
 };
