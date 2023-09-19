@@ -15,8 +15,20 @@ UCLASS()
 class TOPDOWN_API UTitleWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
+protected:
+
+	virtual void NativeConstruct() override;
+
 private:
+	UFUNCTION()
+	void OnStartClicked();
+
+	UFUNCTION()
+	void OnUpgradeClicked();
+
+	UFUNCTION()
+	void OnExitClicked();
 
 
 	UPROPERTY(meta = (BindWidget))
