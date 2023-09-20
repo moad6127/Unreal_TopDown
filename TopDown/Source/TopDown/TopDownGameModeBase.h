@@ -13,5 +13,5 @@ UCLASS()
 class TOPDOWN_API ATopDownGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
 };

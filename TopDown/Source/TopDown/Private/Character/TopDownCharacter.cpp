@@ -70,10 +70,11 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("SetupPlayerInput"));
-
 		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Move);
+
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Attack);
 	}
+
 }
 
 float ATopDownCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -190,6 +191,8 @@ void ATopDownCharacter::Move(const FInputActionValue& Value)
 	const FVector DirectionRight = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	AddMovementInput(DirectionRight, MovementVector.X);
 }
+
+
 
 void ATopDownCharacter::ShowMouseCurser()
 {
