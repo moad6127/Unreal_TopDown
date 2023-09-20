@@ -17,7 +17,8 @@ class TOPDOWN_API UTitleWidget : public UUserWidget
 	GENERATED_BODY()
 
 protected:
-
+	virtual bool Initialize() override;
+	virtual void NativeDestruct() override;
 	virtual void NativeConstruct() override;
 
 private:

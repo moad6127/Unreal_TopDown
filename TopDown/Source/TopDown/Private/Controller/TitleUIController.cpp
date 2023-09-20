@@ -3,6 +3,7 @@
 
 #include "Controller/TitleUIController.h"
 #include "Blueprint/UserWidget.h"
+#include "HUD/TitleWidget.h"
 
 void ATitleUIController::BeginPlay()
 {
@@ -10,13 +11,14 @@ void ATitleUIController::BeginPlay()
 
 	if (UIWidgetClass)
 	{
-		UIWidgetInstance = CreateWidget<UUserWidget>(this, UIWidgetClass);
+		UIWidgetInstance = CreateWidget<UTitleWidget>(this, UIWidgetClass);
 		if (UIWidgetInstance)
 		{
 			UIWidgetInstance->AddToViewport();
 
 			FInputModeUIOnly Mode;
-			Mode.SetWidgetToFocus(UIWidgetInstance->GetCachedWidget());
+			Mode.SetWidgetToFocus(UIWidgetInstance->TakeWidget());
+			Mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 			SetInputMode(Mode);
 			bShowMouseCursor = true;
 		}

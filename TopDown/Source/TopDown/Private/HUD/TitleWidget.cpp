@@ -6,10 +6,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-void UTitleWidget::NativeConstruct()
+bool UTitleWidget::Initialize()
 {
-	Super::NativeConstruct();
-	
+	if (!Super::Initialize())
+	{
+		return false;
+	}
 	if (StartButton)
 	{
 		StartButton->OnClicked.AddDynamic(this, &UTitleWidget::OnStartClicked);
@@ -22,6 +24,18 @@ void UTitleWidget::NativeConstruct()
 	{
 		ExitButton->OnClicked.AddDynamic(this, &UTitleWidget::OnExitClicked);
 	}
+	return true;
+}
+
+void UTitleWidget::NativeDestruct()
+{
+	Super::NativeDestruct();
+}
+
+void UTitleWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+	
 }
 
 void UTitleWidget::OnStartClicked()

@@ -11,6 +11,7 @@
  */
 
 class UUserWidget;
+class UTitleWidget;
 
 UCLASS()
 class TOPDOWN_API ATitleUIController : public APlayerController
@@ -22,9 +23,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<UUserWidget> UIWidgetClass;
+	TSubclassOf<UTitleWidget> UIWidgetClass;
 
 	UPROPERTY()
-	UUserWidget* UIWidgetInstance;
+	UTitleWidget* UIWidgetInstance;
 	
 };
