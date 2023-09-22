@@ -78,8 +78,6 @@ private:
 	/*
 	* SaveGame
 	*/
-	UPROPERTY(VisibleAnywhere)
-	FString SaveSlotName = TEXT("Player");
 
 	int32 PlayerLevel = 1;
 

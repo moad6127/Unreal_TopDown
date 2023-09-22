@@ -5,6 +5,9 @@
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "SaveGame/TopDownSaveGame.h"
+#include "Component/AttributeComponent.h"
+#include "Components/TextBlock.h"
 
 bool UTitleWidget::Initialize()
 {
@@ -35,7 +38,25 @@ void UTitleWidget::NativeDestruct()
 void UTitleWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	
+
+	auto Attributes = GetDefault<UAttributeComponent>();
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(Attributes->GetSaveSlotName(), 0));
+	if (TopDownSaveGame == nullptr)
+	{
+		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
+	}
+	Gold = TopDownSaveGame->Gold;
+	SetGoldText();
+}
+
+void UTitleWidget::SetGoldText()
+{
+	if (GoldTextBlock)
+	{
+		const FString String = FString::Printf(TEXT("%d"), Gold);
+		const FText Text = FText::FromString(String);
+		GoldTextBlock->SetText(Text);
+	}
 }
 
 void UTitleWidget::OnStartClicked()

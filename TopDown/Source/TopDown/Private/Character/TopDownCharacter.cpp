@@ -112,7 +112,6 @@ void ATopDownCharacter::GetGold(int32 GoldCount)
 		int32 Gold = Attributes->GetGold();
 		TopDownOverlay->SetGoldText(Gold);
 	}
-	SaveGame();
 }
 
 void ATopDownCharacter::LevelUp()
@@ -178,8 +177,6 @@ void ATopDownCharacter::InitializeTopDownOverlay()
 
 void ATopDownCharacter::Move(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Move"));
-
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 
 	const FRotator ControlRotation = GetControlRotation();
@@ -333,34 +330,36 @@ void ATopDownCharacter::SetCombatTarget()
 
 void ATopDownCharacter::InitPlayerData()
 {
-
 	UE_LOG(LogTemp, Warning, TEXT("InitData"));
-
-	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, 0));
+	if (Attributes == nullptr)
+	{
+		return;
+	}
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(Attributes->GetSaveSlotName(), 0));
 	if (TopDownSaveGame == nullptr)
 	{
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
 	}
-	if (Attributes)
-	{
-		Attributes->SetGold(TopDownSaveGame->Gold);
-		UE_LOG(LogTemp, Warning, TEXT("InitData"));
-	}
+	UE_LOG(LogTemp, Warning, TEXT("InitData"));
 	SaveGame();
 }
 
 void ATopDownCharacter::SaveGame()
 {
-	UTopDownSaveGame* NewData = NewObject<UTopDownSaveGame>();
-	if (Attributes)
+	if (Attributes == nullptr)
 	{
-		NewData->Gold = Attributes->GetGold();
+		return;
 	}
-
-	if (UGameplayStatics::SaveGameToSlot(NewData, SaveSlotName, 0))
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(Attributes->GetSaveSlotName(), 0));
+	if (TopDownSaveGame == nullptr)
+	{
+		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
+	}
+	TopDownSaveGame->Gold += Attributes->GetGold();
+	UE_LOG(LogTemp, Warning, TEXT("SaveGold : %d "), TopDownSaveGame->Gold);
+	if (UGameplayStatics::SaveGameToSlot(TopDownSaveGame, Attributes->GetSaveSlotName(), 0))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("SaveData"));
-
 	}
 	else
 	{
