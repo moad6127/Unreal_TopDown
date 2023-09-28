@@ -37,6 +37,8 @@ public:
 
 	void InitPlayerData();
 	void SaveGame();
+	void Die();
+
 protected:
 	virtual void BeginPlay() override;
 

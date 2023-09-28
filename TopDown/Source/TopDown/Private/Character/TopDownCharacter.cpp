@@ -367,6 +367,11 @@ void ATopDownCharacter::SaveGame()
 	}
 }
 
+void ATopDownCharacter::Die()
+{
+
+}
+
 
 
 
