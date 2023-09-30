@@ -69,10 +69,10 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("SetupPlayerInput"));
 		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Move);
-
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Attack);
+		EnhancedInputComponent->BindAction(GamePauseAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::GamePause);
+
 	}
 
 }
@@ -161,6 +161,7 @@ void ATopDownCharacter::InitializeTopDownOverlay()
 			TopDownOverlay = TopDownHUD->GetTopDownOverlay();
 			if (TopDownOverlay && Attributes)
 			{
+				TopDownOverlay->AddToViewport(1);
 				TopDownOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
 				TopDownOverlay->SetEXPBarPercent(Attributes->GetEXPPercent());
 				TopDownOverlay->SetHealth(Attributes->GetHealth());
@@ -197,6 +198,18 @@ void ATopDownCharacter::ShowMouseCurser()
 	if (TopDownController)
 	{
 		TopDownController->bShowMouseCursor = true;
+	}
+}
+
+void ATopDownCharacter::GamePause()
+{
+	if (TopDownController == nullptr)
+	{
+		TopDownController = Cast<APlayerController>(GetController());
+	}
+	if (TopDownController)
+	{
+
 	}
 }
 

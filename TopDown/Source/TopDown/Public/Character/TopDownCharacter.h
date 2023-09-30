@@ -53,9 +53,13 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* AttackAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* GamePauseAction;
+
 	void Move(const FInputActionValue& Value);
 
 	void ShowMouseCurser();
+	void GamePause();
 
 	void Attack();
 	void SpawnProjectile();
