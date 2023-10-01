@@ -59,7 +59,6 @@ protected:
 	void Move(const FInputActionValue& Value);
 
 	void ShowMouseCurser();
-	void GamePause();
 
 	void Attack();
 	void SpawnProjectile();

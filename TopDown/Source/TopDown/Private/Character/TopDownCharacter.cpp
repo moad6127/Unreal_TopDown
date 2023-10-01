@@ -71,8 +71,6 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	{
 		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Move);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Attack);
-		EnhancedInputComponent->BindAction(GamePauseAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::GamePause);
-
 	}
 
 }
@@ -201,17 +199,6 @@ void ATopDownCharacter::ShowMouseCurser()
 	}
 }
 
-void ATopDownCharacter::GamePause()
-{
-	if (TopDownController == nullptr)
-	{
-		TopDownController = Cast<APlayerController>(GetController());
-	}
-	if (TopDownController)
-	{
-
-	}
-}
 
 void ATopDownCharacter::Attack()
 {

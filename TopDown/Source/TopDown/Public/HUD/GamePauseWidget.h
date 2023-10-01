@@ -9,9 +9,25 @@
 /**
  * 
  */
+class UButton;
 UCLASS()
 class TOPDOWN_API UGamePauseWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
+protected:
+
+	virtual void NativeConstruct() override;
+
+	UFUNCTION()
+	void ReturnButtonClicked();
+
+	UFUNCTION()
+	void TitleButtonClicked();
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* ReturnButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* TitleButton;
 };
