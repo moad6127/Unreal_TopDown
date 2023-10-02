@@ -23,5 +23,14 @@ void ATopDownCharacterController::SetupInputComponent()
 
 void ATopDownCharacterController::GamePause()
 {
-
+	UE_LOG(LogTemp, Warning, TEXT("GamePause!!"));
+	if (GamePauseWidgetClass)
+	{
+		GamePauseWidget = CreateWidget<UGamePauseWidget>(this, GamePauseWidgetClass);
+	}
+	if (GamePauseWidget)
+	{
+		GamePauseWidget->AddToViewport(3);
+		SetPause(true);
+	}
 }
