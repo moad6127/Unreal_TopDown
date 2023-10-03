@@ -3,7 +3,8 @@
 
 #include "HUD/GamePauseWidget.h"
 #include "Components/Button.h"
-
+#include "Controller/TopDownCharacterController.h"
+#include "Kismet/GameplayStatics.h"
 
 void UGamePauseWidget::NativeConstruct()
 {
@@ -21,9 +22,15 @@ void UGamePauseWidget::NativeConstruct()
 
 void UGamePauseWidget::ReturnButtonClicked()
 {
-
+	ATopDownCharacterController* Controller = Cast<ATopDownCharacterController>(GetOwningPlayer());
+	if (Controller)
+	{
+		RemoveFromParent();
+		Controller->SetPause(false);
+	}
 }
 
 void UGamePauseWidget::TitleButtonClicked()
 {
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("TitleMap"));
 }
