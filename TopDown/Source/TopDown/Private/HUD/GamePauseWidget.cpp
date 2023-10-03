@@ -4,6 +4,7 @@
 #include "HUD/GamePauseWidget.h"
 #include "Components/Button.h"
 #include "Controller/TopDownCharacterController.h"
+#include "Character/TopDownCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 void UGamePauseWidget::NativeConstruct()
@@ -32,5 +33,11 @@ void UGamePauseWidget::ReturnButtonClicked()
 
 void UGamePauseWidget::TitleButtonClicked()
 {
-	UGameplayStatics::OpenLevel(GetWorld(), TEXT("TitleMap"));
+	ATopDownCharacter* Character = Cast<ATopDownCharacter>(GetOwningPlayerPawn());
+	if (Character)
+	{
+		Character->SaveGame();
+		UGameplayStatics::OpenLevel(GetWorld(), TEXT("TitleMap"));
+	}
+
 }
