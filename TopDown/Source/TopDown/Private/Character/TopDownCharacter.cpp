@@ -385,6 +385,10 @@ void ATopDownCharacter::SaveGame()
 void ATopDownCharacter::Die()
 {
 	TopDownController = TopDownController == nullptr ? Cast<ATopDownCharacterController>(GetController()) : TopDownController;
+	if (TopDownController)
+	{
+		TopDownController->ShowResultWidget();
+	}
 }
 
 

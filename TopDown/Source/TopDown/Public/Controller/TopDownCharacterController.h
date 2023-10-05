@@ -22,7 +22,7 @@ class TOPDOWN_API ATopDownCharacterController : public APlayerController
 public:
 	virtual void PostInitializeComponents() override;
 	virtual void OnPossess(APawn* aPawn) override;
-	void ShowResultWidget(int32 Gold);
+	void ShowResultWidget();
 
 protected:
 	virtual void SetupInputComponent() override;

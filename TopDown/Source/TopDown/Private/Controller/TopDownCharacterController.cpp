@@ -3,6 +3,7 @@
 
 #include "Controller/TopDownCharacterController.h"
 #include "HUD/GamePauseWidget.h"
+#include "HUD/GameResultMenu.h"
 
 void ATopDownCharacterController::PostInitializeComponents()
 {
@@ -14,8 +15,19 @@ void ATopDownCharacterController::OnPossess(APawn* aPawn)
 	Super::OnPossess(aPawn);
 }
 
-void ATopDownCharacterController::ShowResultWidget(int32 Gold)
+void ATopDownCharacterController::ShowResultWidget()
 {
+	UE_LOG(LogTemp, Warning, TEXT("GameReuslt!!"));
+
+	if (GameResultWidgetClass)
+	{
+		GameResultWidget = CreateWidget<UGameResultMenu>(this, GameResultWidgetClass);
+		if (GameResultWidget)
+		{
+			GameResultWidget->AddToViewport(3);
+			SetPause(true);
+		}
+	}
 }
 
 void ATopDownCharacterController::SetupInputComponent()
