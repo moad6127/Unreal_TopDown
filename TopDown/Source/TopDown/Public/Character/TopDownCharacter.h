@@ -18,6 +18,7 @@ class USphereComponent;
 class AEnemy;
 class UAttributeComponent;
 class UTopDownOverlay;
+class ATopDownCharacterController;
 
 UCLASS()
 class TOPDOWN_API ATopDownCharacter : public ACharacter
@@ -86,19 +87,26 @@ private:
 
 	int32 PlayerLevel = 1;
 
+	/*
+	* Attack
+	*/
+
 	TArray<AActor*> EnemyInRange;
 
 	UPROPERTY(VisibleAnywhere)
 	AActor* CombatTarget;
 
+
 	UPROPERTY()
-	APlayerController* TopDownController;
+	ATopDownCharacterController* TopDownController;
 
 	UPROPERTY()
 	UTopDownOverlay* TopDownOverlay;
 
 	UPROPERTY(EditAnywhere, Category = "Projectile Class")
 	TSubclassOf<AProjectile> ProjectileClass;
+
+
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	float AttackMaxCount = 2.f;
@@ -132,5 +140,6 @@ private:
 
 
 public:	
+	int32 GetPlayerGold();
 
 };

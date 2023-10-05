@@ -9,9 +9,27 @@
 /**
  * 
  */
+class UButton;
+class UTextBlock;
+
 UCLASS()
 class TOPDOWN_API UGameResultMenu : public UUserWidget
 {
 	GENERATED_BODY()
-	
+protected:
+
+	virtual void NativeConstruct() override;
+
+	UFUNCTION()
+	void TitleButtonClicked();
+
+	void SetGoldText();
+
+private:
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* TitleButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* GoldText;
 };

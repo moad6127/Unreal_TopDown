@@ -11,6 +11,8 @@
  */
 
 class UGamePauseWidget;
+class UGameResultMenu;
+
 UCLASS()
 class TOPDOWN_API ATopDownCharacterController : public APlayerController
 {
@@ -20,15 +22,22 @@ class TOPDOWN_API ATopDownCharacterController : public APlayerController
 public:
 	virtual void PostInitializeComponents() override;
 	virtual void OnPossess(APawn* aPawn) override;
+	void ShowResultWidget(int32 Gold);
+
 protected:
-
 	virtual void SetupInputComponent() override;
-
-
 private:
 	void GamePause();
 
 	UPROPERTY(EditAnywhere, Category = HUD)
 	TSubclassOf<class UUserWidget> GamePauseWidgetClass;
+
+	UPROPERTY()
 	UGamePauseWidget* GamePauseWidget;
+
+	UPROPERTY(EditAnywhere, Category = HUD)
+	TSubclassOf<class UUserWidget> GameResultWidgetClass;
+	UPROPERTY()
+	UGameResultMenu* GameResultWidget;
+
 };

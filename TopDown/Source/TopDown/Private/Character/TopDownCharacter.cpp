@@ -16,6 +16,8 @@
 #include "HUD/TopDownOverlay.h"
 #include "Interface/PickupInterface.h"
 #include "SaveGame/TopDownSaveGame.h"
+#include "Controller/TopDownCharacterController.h"
+
 
 ATopDownCharacter::ATopDownCharacter()
 {
@@ -80,6 +82,10 @@ float ATopDownCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	if (Attributes &&TopDownOverlay)
 	{
 		Attributes->ReceiveDamage(DamageAmount);
+		if (!Attributes->IsAlive())
+		{
+			Die();
+		}
 		TopDownOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
 		TopDownOverlay->SetHealth(Attributes->GetHealth());
 		UE_LOG(LogTemp, Warning, TEXT("CharacterTakeDamage : %f"), DamageAmount);
@@ -149,7 +155,7 @@ void ATopDownCharacter::InitializeTopDownOverlay()
 {
 	if (TopDownController == nullptr)
 	{
-		TopDownController = Cast<APlayerController>(GetController());
+		TopDownController = Cast<ATopDownCharacterController>(GetController());
 	}
 	if (TopDownController)
 	{
@@ -192,7 +198,7 @@ void ATopDownCharacter::Move(const FInputActionValue& Value)
 
 void ATopDownCharacter::ShowMouseCurser()
 {
-	TopDownController = Cast<APlayerController>(GetController());
+	TopDownController = Cast<ATopDownCharacterController>(GetController());
 	if (TopDownController)
 	{
 		TopDownController->bShowMouseCursor = true;
@@ -328,6 +334,15 @@ void ATopDownCharacter::SetCombatTarget()
 	CombatTarget = ClosestEnemy;
 }
 
+int32 ATopDownCharacter::GetPlayerGold()
+{
+	if (Attributes)
+	{
+		return Attributes->GetGold();
+	}
+	return 0;
+}
+
 void ATopDownCharacter::InitPlayerData()
 {
 	UE_LOG(LogTemp, Warning, TEXT("InitData"));
@@ -369,7 +384,7 @@ void ATopDownCharacter::SaveGame()
 
 void ATopDownCharacter::Die()
 {
-
+	TopDownController = TopDownController == nullptr ? Cast<ATopDownCharacterController>(GetController()) : TopDownController;
 }
 
 

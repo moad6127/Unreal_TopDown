@@ -14,6 +14,10 @@ void ATopDownCharacterController::OnPossess(APawn* aPawn)
 	Super::OnPossess(aPawn);
 }
 
+void ATopDownCharacterController::ShowResultWidget(int32 Gold)
+{
+}
+
 void ATopDownCharacterController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
