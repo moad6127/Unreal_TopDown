@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "Interface/HitInterface.h"
+#include "State/TopDownPlayerState.h"
 #include "TopDownCharacter.generated.h"
 
 
@@ -106,7 +107,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Projectile Class")
 	TSubclassOf<AProjectile> ProjectileClass;
 
-
+	/*
+	* CharacterState
+	*/
+	UPROPERTY()
+	FCharacterState CharacterState;
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	float AttackMaxCount = 2.f;
@@ -118,6 +123,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	uint32 CountDownInt = 0;
+
 
 	FTimerHandle AttackTimer;
 	FTimerHandle AttackCountTimer;
