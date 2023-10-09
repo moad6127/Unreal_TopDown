@@ -347,11 +347,12 @@ int32 ATopDownCharacter::GetPlayerGold()
 void ATopDownCharacter::InitPlayerData()
 {
 	UE_LOG(LogTemp, Warning, TEXT("InitData"));
-	if (Attributes == nullptr)
+	TopDownPlayerState = TopDownPlayerState == nullptr ? Cast<ATopDownPlayerState>(GetPlayerState()) : TopDownPlayerState;
+	if (TopDownPlayerState == nullptr)
 	{
 		return;
 	}
-	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(Attributes->GetSaveSlotName(), 0));
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(TopDownPlayerState->GetSaveSlotName(), 0));
 	if (TopDownSaveGame == nullptr)
 	{
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
@@ -362,18 +363,20 @@ void ATopDownCharacter::InitPlayerData()
 
 void ATopDownCharacter::SaveGame()
 {
-	if (Attributes == nullptr)
+	TopDownPlayerState = TopDownPlayerState == nullptr ? Cast<ATopDownPlayerState>(GetPlayerState()) : TopDownPlayerState;
+
+	if (TopDownPlayerState == nullptr)
 	{
 		return;
 	}
-	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(Attributes->GetSaveSlotName(), 0));
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(TopDownPlayerState->GetSaveSlotName(), 0));
 	if (TopDownSaveGame == nullptr)
 	{
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
 	}
 	TopDownSaveGame->Gold += Attributes->GetGold();
 	UE_LOG(LogTemp, Warning, TEXT("SaveGold : %d "), TopDownSaveGame->Gold);
-	if (UGameplayStatics::SaveGameToSlot(TopDownSaveGame, Attributes->GetSaveSlotName(), 0))
+	if (UGameplayStatics::SaveGameToSlot(TopDownSaveGame, TopDownPlayerState->GetSaveSlotName(), 0))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("SaveData"));
 	}

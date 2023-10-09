@@ -39,8 +39,13 @@ void UTitleWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	auto Attributes = GetDefault<UAttributeComponent>();
-	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(Attributes->GetSaveSlotName(), 0));
+	ATopDownPlayerState* PlayerCharacterState = Cast<ATopDownPlayerState>(GetOwningPlayerState());
+	if (PlayerCharacterState == nullptr)
+	{
+		return;
+	}
+
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(PlayerCharacterState->GetSaveSlotName(), 0));
 	if (TopDownSaveGame == nullptr)
 	{
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
@@ -68,6 +73,8 @@ void UTitleWidget::OnStartClicked()
 void UTitleWidget::OnUpgradeClicked()
 {
 	CharacterState.LevelUp();
+	ATopDownPlayerState* PlayerState = Cast<ATopDownPlayerState>(GetOwningPlayerState());
+	PlayerState->SaveCharacterState(CharacterState);
 }
 
 void UTitleWidget::OnExitClicked()

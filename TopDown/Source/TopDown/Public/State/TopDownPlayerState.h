@@ -64,7 +64,12 @@ private:
 	UPROPERTY()
 	FCharacterState CharacterState;
 
+	UPROPERTY(VisibleAnywhere)
+	FString SaveSlotName = TEXT("Player");
+
 public:
 
 	FORCEINLINE FCharacterState GetCharacterState() { return CharacterState; }
+	FORCEINLINE FString GetSaveSlotName() const { return SaveSlotName; }
+	void SaveCharacterState(FCharacterState SaveCharacterState);
 };

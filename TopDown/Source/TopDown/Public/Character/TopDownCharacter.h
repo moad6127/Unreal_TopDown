@@ -102,6 +102,9 @@ private:
 	ATopDownCharacterController* TopDownController;
 
 	UPROPERTY()
+	ATopDownPlayerState* TopDownPlayerState;
+
+	UPROPERTY()
 	UTopDownOverlay* TopDownOverlay;
 
 	UPROPERTY(EditAnywhere, Category = "Projectile Class")

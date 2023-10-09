@@ -35,9 +35,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
 	int32 Gold;
 
-	UPROPERTY(VisibleAnywhere)
-	FString SaveSlotName = TEXT("Player");
-
 public:	
 
 	void ReceiveDamage(float Damage);
@@ -55,5 +52,4 @@ public:
 	FORCEINLINE float GetEXP() const { return EXP; }
 	FORCEINLINE float GetMaxEXP() const { return MaxEXP; }
 	FORCEINLINE int32 GetGold() const { return Gold; }
-	FORCEINLINE FString GetSaveSlotName() const { return SaveSlotName; }
 };
