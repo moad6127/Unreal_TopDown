@@ -7,7 +7,7 @@
 
 void ATopDownPlayerState::SaveCharacterState(FCharacterState SaveCharacterState)
 {
-	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(GetSaveSlotName(), 0));
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, 0));
 	if (TopDownSaveGame == nullptr)
 	{
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
@@ -15,7 +15,7 @@ void ATopDownPlayerState::SaveCharacterState(FCharacterState SaveCharacterState)
 
 	TopDownSaveGame->CharacterState = SaveCharacterState;
 
-	if (UGameplayStatics::SaveGameToSlot(TopDownSaveGame,GetSaveSlotName(), 0))
+	if (UGameplayStatics::SaveGameToSlot(TopDownSaveGame, SaveSlotName, 0))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("SaveData"));
 	}

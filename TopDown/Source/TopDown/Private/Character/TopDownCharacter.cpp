@@ -346,7 +346,6 @@ int32 ATopDownCharacter::GetPlayerGold()
 
 void ATopDownCharacter::InitPlayerData()
 {
-	UE_LOG(LogTemp, Warning, TEXT("InitData"));
 	TopDownPlayerState = TopDownPlayerState == nullptr ? Cast<ATopDownPlayerState>(GetPlayerState()) : TopDownPlayerState;
 	if (TopDownPlayerState == nullptr)
 	{

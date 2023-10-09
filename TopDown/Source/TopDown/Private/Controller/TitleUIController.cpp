@@ -15,11 +15,6 @@ void ATitleUIController::BeginPlay()
 		if (UIWidgetInstance)
 		{
 			UIWidgetInstance->AddToViewport();
-
-			FInputModeUIOnly Mode;
-			Mode.SetWidgetToFocus(UIWidgetInstance->TakeWidget());
-			Mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-			SetInputMode(Mode);
 			bShowMouseCursor = true;
 		}
 	}

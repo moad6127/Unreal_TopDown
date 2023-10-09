@@ -74,7 +74,10 @@ void UTitleWidget::OnUpgradeClicked()
 {
 	CharacterState.LevelUp();
 	ATopDownPlayerState* PlayerState = Cast<ATopDownPlayerState>(GetOwningPlayerState());
-	PlayerState->SaveCharacterState(CharacterState);
+	if (PlayerState)
+	{
+		PlayerState->SaveCharacterState(CharacterState);
+	}
 }
 
 void UTitleWidget::OnExitClicked()
