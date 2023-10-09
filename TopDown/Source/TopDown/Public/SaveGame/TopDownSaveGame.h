@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
+#include "State/TopDownPlayerState.h"
 #include "TopDownSaveGame.generated.h"
 
 /**
@@ -19,6 +20,9 @@ public:
 
 	UPROPERTY()
 	int32 Gold;
+
+	UPROPERTY()
+	FCharacterState CharacterState;
 
 	FString PlayerName;
 };

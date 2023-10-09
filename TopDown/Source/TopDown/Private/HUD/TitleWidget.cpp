@@ -46,6 +46,7 @@ void UTitleWidget::NativeConstruct()
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
 	}
 	Gold = TopDownSaveGame->Gold;
+	CharacterState = TopDownSaveGame->CharacterState;
 	SetGoldText();
 }
 
@@ -66,6 +67,7 @@ void UTitleWidget::OnStartClicked()
 
 void UTitleWidget::OnUpgradeClicked()
 {
+	CharacterState.LevelUp();
 }
 
 void UTitleWidget::OnExitClicked()

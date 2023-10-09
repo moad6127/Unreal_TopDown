@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "State/TopDownPlayerState.h"
 #include "TitleWidget.generated.h"
 
 /**
@@ -43,6 +44,9 @@ private:
 
 	UPROPERTY()
 	int32 Gold;
+
+	UPROPERTY()
+	FCharacterState CharacterState;
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* GoldTextBlock;

@@ -127,6 +127,7 @@ void ATopDownCharacter::LevelUp()
 		Attributes->SetMaxEXP(nowMaxEXP * 1.5f);
 		TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
 		TopDownOverlay->SetLevel(PlayerLevel);
+		CharacterState.LevelUp();
 	}
 }
 
@@ -250,7 +251,7 @@ void ATopDownCharacter::SpawnProjectile()
 			if (SpawnProjectile)
 			{
 				SpawnProjectile->SetLifeSpan(10.f);
-				SpawnProjectile->SetDamage(AttackDamage);
+				SpawnProjectile->SetDamage(AttackDamage * CharacterState.DamageLevel);
 			}
 		}
 	}
@@ -355,8 +356,8 @@ void ATopDownCharacter::InitPlayerData()
 	{
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
 	}
+	CharacterState = TopDownSaveGame->CharacterState;
 	UE_LOG(LogTemp, Warning, TEXT("InitData"));
-	SaveGame();
 }
 
 void ATopDownCharacter::SaveGame()

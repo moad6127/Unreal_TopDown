@@ -13,6 +13,16 @@ USTRUCT()
 struct FCharacterState
 {
 	GENERATED_USTRUCT_BODY()
+public:
+
+	FCharacterState() :
+		DamageLevel(1),
+		HealthLevel(1),
+		HealthRegenLevel(1),
+		ArmorLevel(1),
+		AttackSpeedLevel(1),
+		SpeedLevel(1)
+	{};
 
 	UPROPERTY(EditAnywhere)
 	int32 DamageLevel;
@@ -32,6 +42,17 @@ struct FCharacterState
 	UPROPERTY(EditAnywhere)
 	int32 SpeedLevel;
 
+	void LevelUp()
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LevelUp"));
+
+		DamageLevel++;
+		HealthLevel++;
+		HealthRegenLevel++;
+		ArmorLevel++;
+		AttackSpeedLevel++;
+		SpeedLevel++;
+	}
 };
 
 UCLASS()
