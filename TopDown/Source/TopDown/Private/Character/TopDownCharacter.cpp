@@ -130,6 +130,7 @@ void ATopDownCharacter::LevelUp()
 		TopDownOverlay->SetLevel(PlayerLevel);
 		CharacterState.LevelUp();
 		MaxHealthLevelUp();
+		MaxSpeedLevelUp();
 	}
 }
 
@@ -138,6 +139,14 @@ void ATopDownCharacter::MaxHealthLevelUp()
 	if (Attributes)
 	{
 		Attributes->SetMaxHealth(Attributes->GetMaxHealth() + (CharacterState.HealthLevel * 20.f));
+	}
+}
+
+void ATopDownCharacter::MaxSpeedLevelUp()
+{
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->MaxWalkSpeed += (CharacterState.SpeedLevel * 15.f);
 	}
 }
 
@@ -287,7 +296,7 @@ void ATopDownCharacter::StartAttackTimer()
 		AttackTimer,
 		this,
 		&ATopDownCharacter::AttackTimerFinished,
-		AttackDelay
+		AttackDelay - (CharacterState.AttackSpeedLevel * 0.1f)
 	);
 }
 

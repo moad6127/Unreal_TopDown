@@ -36,7 +36,7 @@ private:
 	int32 Gold;
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
-	float HeatlhRegen;
+	float HealthRegen;
 
 public:	
 
@@ -49,6 +49,7 @@ public:
 	void SetGold(int32 GoldCount);
 	void SetMaxHealth(float SetMaxHealth);
 	void SetMaxEXP(float SetMaxEXP);
+	void SetHealthRegen(float SetHealing);
 
 	FORCEINLINE float GetHealth() const { return Health; }
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }

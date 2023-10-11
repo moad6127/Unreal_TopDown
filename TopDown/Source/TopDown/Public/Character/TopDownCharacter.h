@@ -38,6 +38,7 @@ public:
 
 	void LevelUp();
 	void MaxHealthLevelUp();
+	void MaxSpeedLevelUp();
 
 	void InitPlayerData();
 	void SaveGame();

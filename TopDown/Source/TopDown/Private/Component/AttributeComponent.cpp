@@ -63,6 +63,11 @@ void UAttributeComponent::SetMaxEXP(float SetMaxEXP)
 	EXP = 0.f;
 }
 
+void UAttributeComponent::SetHealthRegen(float SetHealing)
+{
+	HealthRegen = FMath::Clamp(HealthRegen + SetHealing, 0.f, 2.f);
+}
+
 
 void UAttributeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
