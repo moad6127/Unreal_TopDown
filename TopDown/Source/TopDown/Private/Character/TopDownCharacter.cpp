@@ -79,18 +79,19 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 float ATopDownCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	float ReceivedDamage = DamageAmount - (CharacterState.ArmorLevel * 1.f);
 	if (Attributes &&TopDownOverlay)
 	{
-		Attributes->ReceiveDamage(DamageAmount);
+		Attributes->ReceiveDamage(ReceivedDamage);
 		if (!Attributes->IsAlive())
 		{
 			Die();
 		}
 		TopDownOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
 		TopDownOverlay->SetHealth(Attributes->GetHealth());
-		UE_LOG(LogTemp, Warning, TEXT("CharacterTakeDamage : %f"), DamageAmount);
+		UE_LOG(LogTemp, Warning, TEXT("CharacterTakeDamage : %f"), ReceivedDamage);
 	}
-	return DamageAmount;
+	return ReceivedDamage;
 }
 
 
@@ -128,6 +129,15 @@ void ATopDownCharacter::LevelUp()
 		TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
 		TopDownOverlay->SetLevel(PlayerLevel);
 		CharacterState.LevelUp();
+		MaxHealthLevelUp();
+	}
+}
+
+void ATopDownCharacter::MaxHealthLevelUp()
+{
+	if (Attributes)
+	{
+		Attributes->SetMaxHealth(Attributes->GetMaxHealth() + (CharacterState.HealthLevel * 20.f));
 	}
 }
 

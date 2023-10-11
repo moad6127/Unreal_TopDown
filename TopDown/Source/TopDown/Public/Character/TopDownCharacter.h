@@ -35,11 +35,15 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	void GetEXPPoint(float EXPPoint);
 	void GetGold(int32 GoldCount);
+
 	void LevelUp();
+	void MaxHealthLevelUp();
 
 	void InitPlayerData();
 	void SaveGame();
 	void Die();
+
+
 
 protected:
 	virtual void BeginPlay() override;
@@ -150,5 +154,6 @@ private:
 
 public:	
 	int32 GetPlayerGold();
+
 
 };

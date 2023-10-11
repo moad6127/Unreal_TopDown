@@ -35,6 +35,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
 	int32 Gold;
 
+	UPROPERTY(EditAnywhere, Category = "Actor Attributes")
+	float HeatlhRegen;
+
 public:	
 
 	void ReceiveDamage(float Damage);
