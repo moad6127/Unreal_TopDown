@@ -9,9 +9,19 @@
 /**
  * 
  */
+class UUpgrade;
 UCLASS()
 class TOPDOWN_API AUpgradeUIController : public APlayerController
 {
 	GENERATED_BODY()
 	
+protected:
+
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UUpgrade> UpgradeWidgetClass;
+
+	UPROPERTY()
+	UUpgrade* UpgradeWidgetInstance;
 };
