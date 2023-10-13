@@ -72,12 +72,7 @@ void UTitleWidget::OnStartClicked()
 
 void UTitleWidget::OnUpgradeClicked()
 {
-	CharacterState.LevelUp();
-	ATopDownPlayerState* PlayerState = Cast<ATopDownPlayerState>(GetOwningPlayerState());
-	if (PlayerState)
-	{
-		PlayerState->SaveCharacterState(CharacterState);
-	}
+	UGameplayStatics::OpenLevel(this, TEXT("UpgradeMap"));
 }
 
 void UTitleWidget::OnExitClicked()
