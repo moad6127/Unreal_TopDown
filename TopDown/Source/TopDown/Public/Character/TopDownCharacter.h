@@ -41,6 +41,7 @@ public:
 	void MaxSpeedLevelUp();
 
 	void InitPlayerData();
+	void SetPlayerData();
 	void SaveGame();
 	void Die();
 
@@ -118,7 +119,7 @@ private:
 	/*
 	* CharacterState
 	*/
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	FCharacterState CharacterState;
 
 	UPROPERTY(EditAnywhere, Category = Combat)

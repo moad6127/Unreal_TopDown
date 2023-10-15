@@ -136,9 +136,15 @@ void ATopDownCharacter::LevelUp()
 
 void ATopDownCharacter::MaxHealthLevelUp()
 {
-	if (Attributes)
+	if (Attributes && TopDownOverlay)
 	{
-		Attributes->SetMaxHealth(Attributes->GetMaxHealth() + (CharacterState.HealthLevel * 20.f));
+		float BaseMaxHealth{ 100.f };
+		float MaxHealth = BaseMaxHealth + (CharacterState.HealthLevel * 20.f);
+		Attributes->SetMaxHealth(MaxHealth);
+		TopDownOverlay->SetMaxHealt(MaxHealth);
+		TopDownOverlay->SetHealth(Attributes->GetHealth());
+		UE_LOG(LogTemp, Warning, TEXT("MaxHealthLevelup"));
+
 	}
 }
 
@@ -146,7 +152,8 @@ void ATopDownCharacter::MaxSpeedLevelUp()
 {
 	if (GetCharacterMovement())
 	{
-		GetCharacterMovement()->MaxWalkSpeed += (CharacterState.SpeedLevel * 15.f);
+		float BaseMaxWalkSpeed{600.f};
+		GetCharacterMovement()->MaxWalkSpeed = BaseMaxWalkSpeed + (CharacterState.SpeedLevel * 15.f);
 	}
 }
 
@@ -169,6 +176,7 @@ void ATopDownCharacter::BeginPlay()
 	InitPlayerData();
 	ShowMouseCurser();
 	InitializeTopDownOverlay();
+	SetPlayerData();
 }
 
 void ATopDownCharacter::InitializeTopDownOverlay()
@@ -377,6 +385,12 @@ void ATopDownCharacter::InitPlayerData()
 	}
 	CharacterState = TopDownSaveGame->CharacterState;
 	UE_LOG(LogTemp, Warning, TEXT("InitData"));
+}
+
+void ATopDownCharacter::SetPlayerData()
+{
+	MaxHealthLevelUp();
+	MaxSpeedLevelUp();
 }
 
 void ATopDownCharacter::SaveGame()
