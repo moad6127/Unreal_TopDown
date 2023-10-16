@@ -23,11 +23,11 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void OnPossess(APawn* aPawn) override;
 	void ShowResultWidget();
-
+	void GamePause();
 protected:
 	virtual void SetupInputComponent() override;
 private:
-	void GamePause();
+
 
 	UPROPERTY(EditAnywhere, Category = HUD)
 	TSubclassOf<class UUserWidget> GamePauseWidgetClass;

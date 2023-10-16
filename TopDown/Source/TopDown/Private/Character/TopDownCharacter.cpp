@@ -73,6 +73,7 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	{
 		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Move);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::Attack);
+		EnhancedInputComponent->BindAction(GamePauseAction, ETriggerEvent::Triggered, this, &ATopDownCharacter::GamePause);
 	}
 
 }
@@ -242,6 +243,15 @@ void ATopDownCharacter::Attack()
 		StartAttackTimer();
 		SetCombatTarget();
 		SpawnProjectile();
+	}
+}
+
+void ATopDownCharacter::GamePause()
+{
+	TopDownController = TopDownController == nullptr ? Cast<ATopDownCharacterController>(GetController()) : TopDownController;
+	if (TopDownController)
+	{
+		TopDownController->GamePause();
 	}
 }
 

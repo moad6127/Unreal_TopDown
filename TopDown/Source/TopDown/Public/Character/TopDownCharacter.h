@@ -69,6 +69,7 @@ protected:
 	void ShowMouseCurser();
 
 	void Attack();
+	void GamePause();
 	void SpawnProjectile();
 
 	void SetTime();

@@ -34,7 +34,7 @@ void ATopDownCharacterController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	InputComponent->BindAction(TEXT("GamePause"), EInputEvent::IE_Pressed, this, &ATopDownCharacterController::GamePause);
+//	InputComponent->BindAction(TEXT("GamePause"), EInputEvent::IE_Pressed, this, &ATopDownCharacterController::GamePause);
 }
 
 void ATopDownCharacterController::GamePause()
