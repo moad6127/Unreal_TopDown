@@ -9,6 +9,20 @@
 /**
  * 
  */
+UENUM()
+enum class ECharacterState : uint8
+{
+	ECS_DamageLevel UMETA(DisplayName = DamageLevel),
+	ECS_HealtLevel UMETA(DisplayName = HealtLevel),
+	ECS_HealthRegenLevel UMETA(DisplayName = HealthRegenLevel),
+	ECS_ArmorLevel UMETA(DisplayName = ArmorLevel),
+	ECS_AttackSpeedLevel UMETA(DisplayName = AttackSpeedLevel),
+	ECS_SpeedLevel UMETA(DisplayName = SpeedLevel),
+
+	ECS_DefaultMax UMETA(DisplaySnme = DefaultMax)
+};
+
+
 USTRUCT()
 struct FCharacterState
 {
@@ -52,6 +66,38 @@ public:
 		ArmorLevel++;
 		AttackSpeedLevel++;
 		SpeedLevel++;
+	}
+	void LevelUp(ECharacterState Oper)
+	{
+		switch (Oper)
+		{
+		case ECharacterState::ECS_DamageLevel:
+			UE_LOG(LogTemp, Warning, TEXT("DamageLevelUp"));
+			DamageLevel++;
+			break;
+		case ECharacterState::ECS_HealtLevel:
+			UE_LOG(LogTemp, Warning, TEXT("HealthLevelUp"));
+			HealthLevel++;
+			break;
+		case ECharacterState::ECS_HealthRegenLevel:
+			UE_LOG(LogTemp, Warning, TEXT("HealthRegenLevelUp"));
+			HealthRegenLevel++;
+			break;
+		case ECharacterState::ECS_ArmorLevel:
+			UE_LOG(LogTemp, Warning, TEXT("ArmorLevelUp"));
+			ArmorLevel++;
+			break;
+		case ECharacterState::ECS_AttackSpeedLevel:
+			UE_LOG(LogTemp, Warning, TEXT("AttackSpeedLevelUp"));
+			AttackSpeedLevel++;
+			break;
+		case ECharacterState::ECS_SpeedLevel:
+			UE_LOG(LogTemp, Warning, TEXT("SpeedLevelUp"));
+			SpeedLevel++;
+			break;
+		default:
+			break;
+		}
 	}
 };
 

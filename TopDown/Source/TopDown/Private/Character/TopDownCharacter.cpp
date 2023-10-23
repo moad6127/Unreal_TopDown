@@ -125,11 +125,14 @@ void ATopDownCharacter::LevelUp()
 	PlayerLevel = FMath::Clamp(PlayerLevel + 1, 1, 1000);
 	if (Attributes && TopDownOverlay)
 	{
+		ECharacterState RandomLevelUp;
+		uint8 Rand = FMath::RandRange(0, 5);
+		RandomLevelUp = (ECharacterState)(Rand);
 		const float nowMaxEXP = Attributes->GetMaxEXP();
 		Attributes->SetMaxEXP(nowMaxEXP * 1.5f);
 		TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
 		TopDownOverlay->SetLevel(PlayerLevel);
-		CharacterState.LevelUp();
+		CharacterState.LevelUp(RandomLevelUp);
 		MaxHealthLevelUp();
 		MaxSpeedLevelUp();
 	}
@@ -144,8 +147,6 @@ void ATopDownCharacter::MaxHealthLevelUp()
 		Attributes->SetMaxHealth(MaxHealth);
 		TopDownOverlay->SetMaxHealt(MaxHealth);
 		TopDownOverlay->SetHealth(Attributes->GetHealth());
-		UE_LOG(LogTemp, Warning, TEXT("MaxHealthLevelup"));
-
 	}
 }
 
