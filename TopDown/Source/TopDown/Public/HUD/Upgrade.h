@@ -34,6 +34,8 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	UButton* CancelButton;
 
+
+
 	//DamageBox
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* DMNLevel;
@@ -93,6 +95,15 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* SpeedLevelupButton;
+
+	void SetWidgets();
+	void SetDamageBox();
+	void SetHealthBox();
+	void SetHealthRegenBox();
+	void SetArmorBox();
+	void SetAttackSpeedBox();
+	void SetSpeedBox();
+	void SetTextBlock(UTextBlock* TextBlock);
 
 	FCharacterState CharacterState;
 

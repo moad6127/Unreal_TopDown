@@ -29,6 +29,8 @@ void UUpgrade::NativeConstruct()
 	{
 		CancelButton->OnClicked.AddDynamic(this, &UUpgrade::OnCancleButtonClicked);
 	}
+
+	SetWidgets();
 }
 
 void UUpgrade::OnSaveButtonClicked()
@@ -43,4 +45,42 @@ void UUpgrade::OnSaveButtonClicked()
 void UUpgrade::OnCancleButtonClicked()
 {
 	UGameplayStatics::OpenLevel(this, TEXT("TitleMap"));
+}
+
+void UUpgrade::SetWidgets()
+{
+	SetDamageBox();
+	SetHealthBox();
+	SetHealthRegenBox();
+	SetArmorBox();
+	SetAttackSpeedBox();
+	SetSpeedBox();
+}
+
+void UUpgrade::SetDamageBox()
+{
+}
+
+void UUpgrade::SetHealthBox()
+{
+}
+
+void UUpgrade::SetHealthRegenBox()
+{
+}
+
+void UUpgrade::SetArmorBox()
+{
+}
+
+void UUpgrade::SetAttackSpeedBox()
+{
+}
+
+void UUpgrade::SetSpeedBox()
+{
+}
+
+void UUpgrade::SetTextBlock(UTextBlock* TextBlock)
+{
 }
