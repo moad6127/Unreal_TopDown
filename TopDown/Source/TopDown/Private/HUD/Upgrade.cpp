@@ -61,26 +61,44 @@ void UUpgrade::SetWidgets()
 
 void UUpgrade::SetDamageBox()
 {
+	int32 NeedCoins = CharacterState.DamageLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(DMNLevel, CharacterState.DamageLevel);
+	SetTextBlock(DMNCoin, NeedCoins);
 }
 
 void UUpgrade::SetHealthBox()
 {
+	int32 NeedCoins = CharacterState.HealthLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(HNLevel, CharacterState.HealthLevel);
+	SetTextBlock(HNCoin, NeedCoins);
 }
 
 void UUpgrade::SetHealthRegenBox()
 {
+	int32 NeedCoins = CharacterState.HealthRegenLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(HRNLevel, CharacterState.HealthRegenLevel);
+	SetTextBlock(HRNCoin, NeedCoins);
 }
 
 void UUpgrade::SetArmorBox()
 {
+	int32 NeedCoins = CharacterState.ArmorLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(ANLevel, CharacterState.ArmorLevel);
+	SetTextBlock(ANCoin, NeedCoins);
 }
 
 void UUpgrade::SetAttackSpeedBox()
 {
+	int32 NeedCoins = CharacterState.AttackSpeedLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(ASNLevel, CharacterState.AttackSpeedLevel);
+	SetTextBlock(ASNCoin, NeedCoins);
 }
 
 void UUpgrade::SetSpeedBox()
 {
+	int32 NeedCoins = CharacterState.SpeedLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(SNLevel, CharacterState.SpeedLevel);
+	SetTextBlock(SNCoin, NeedCoins);
 }
 
 void UUpgrade::SetGoldText()
