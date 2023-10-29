@@ -5,6 +5,7 @@
 #include "SaveGame/TopDownSaveGame.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/Button.h"
+#include "Components/TextBlock.h"
 
 void UUpgrade::NativeConstruct()
 {
@@ -20,7 +21,7 @@ void UUpgrade::NativeConstruct()
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
 	}
 	CharacterState = TopDownSaveGame->CharacterState;
-
+	Gold = TopDownSaveGame->Gold;
 	if (SaveButton)
 	{
 		SaveButton->OnClicked.AddDynamic(this, &UUpgrade::OnSaveButtonClicked);
@@ -29,7 +30,6 @@ void UUpgrade::NativeConstruct()
 	{
 		CancelButton->OnClicked.AddDynamic(this, &UUpgrade::OnCancleButtonClicked);
 	}
-
 	SetWidgets();
 }
 
@@ -49,12 +49,14 @@ void UUpgrade::OnCancleButtonClicked()
 
 void UUpgrade::SetWidgets()
 {
+	InitUpgradeBoxButton();
 	SetDamageBox();
 	SetHealthBox();
 	SetHealthRegenBox();
 	SetArmorBox();
 	SetAttackSpeedBox();
 	SetSpeedBox();
+	SetGoldText();
 }
 
 void UUpgrade::SetDamageBox()
@@ -81,6 +83,24 @@ void UUpgrade::SetSpeedBox()
 {
 }
 
-void UUpgrade::SetTextBlock(UTextBlock* TextBlock)
+void UUpgrade::SetGoldText()
 {
+	SetTextBlock(GoldTextBlock, Gold);
 }
+
+void UUpgrade::InitUpgradeBoxButton()
+{
+
+}
+
+void UUpgrade::SetTextBlock(UTextBlock* TextBlock, int nums)
+{
+	if (TextBlock)
+	{
+		const FString String = FString::Printf(TEXT("%d"), nums);
+		const FText Text = FText::FromString(String);
+		TextBlock->SetText(Text);
+	}
+}
+
+

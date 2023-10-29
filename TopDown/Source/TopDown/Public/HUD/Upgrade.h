@@ -34,6 +34,8 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	UButton* CancelButton;
 
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* GoldTextBlock;
 
 
 	//DamageBox
@@ -103,9 +105,16 @@ private:
 	void SetArmorBox();
 	void SetAttackSpeedBox();
 	void SetSpeedBox();
-	void SetTextBlock(UTextBlock* TextBlock);
+
+	void InitUpgradeBoxButton();
+	void SetTextBlock(UTextBlock* TextBlock,int nums);
+	void SetGoldText();
 
 	FCharacterState CharacterState;
+
+	int32 Gold;
+
+	int32 BaseUpgradeNeedCoins = 100;
 
 	UPROPERTY()
 	ATopDownPlayerState* PlayerCharacterState;
