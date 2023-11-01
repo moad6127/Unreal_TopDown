@@ -48,6 +48,9 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	UButton* DamageLevelupButton;
 
+	UFUNCTION()
+	void DamageLevelupButtonClicked();
+
 	//HealthBox
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* HNLevel;
@@ -57,6 +60,9 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* HealthLevelupButton;
+
+	UFUNCTION()
+	void HealthLevelupButtonClicked();
 	
 	//HealthRegenBox
 	UPROPERTY(meta = (BindWidget))
@@ -68,6 +74,9 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	UButton* HealthRegenLevelupButton;
 
+	UFUNCTION()
+	void HealthRegenLevelupButtonClicked();
+
 	//ArmorBox
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* ANLevel;
@@ -77,6 +86,9 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* ArmorLevelupButton;
+
+	UFUNCTION()
+	void ArmorLevelupButtonClicked();
 
 	//AttackSpeedBox
 	UPROPERTY(meta = (BindWidget))
@@ -88,6 +100,9 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	UButton* AttackSpeedLevelupButton;
 
+	UFUNCTION()
+	void AttackSpeedLevelupButtonClicked();
+
 	//SpeedBox
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* SNLevel;
@@ -97,6 +112,9 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* SpeedLevelupButton;
+
+	UFUNCTION()
+	void SpeedLevelupButtonClicked();
 
 	void SetWidgets();
 	void SetDamageBox();

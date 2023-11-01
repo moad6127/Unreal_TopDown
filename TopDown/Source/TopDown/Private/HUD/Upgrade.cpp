@@ -30,6 +30,7 @@ void UUpgrade::NativeConstruct()
 	{
 		CancelButton->OnClicked.AddDynamic(this, &UUpgrade::OnCancleButtonClicked);
 	}
+	InitUpgradeBoxButton();
 	SetWidgets();
 }
 
@@ -47,9 +48,37 @@ void UUpgrade::OnCancleButtonClicked()
 	UGameplayStatics::OpenLevel(this, TEXT("TitleMap"));
 }
 
+void UUpgrade::InitUpgradeBoxButton()
+{
+	UE_LOG(LogTemp, Warning, TEXT("InitUpgradeBoxButton"));
+	if (DamageLevelupButton)
+	{
+		DamageLevelupButton->OnClicked.AddDynamic(this, &UUpgrade::DamageLevelupButtonClicked);
+	}
+	if (HealthLevelupButton)
+	{
+		HealthLevelupButton->OnClicked.AddDynamic(this, &UUpgrade::HealthLevelupButtonClicked);
+	}
+	if (HealthRegenLevelupButton)
+	{
+		HealthRegenLevelupButton->OnClicked.AddDynamic(this, &UUpgrade::HealthRegenLevelupButtonClicked);
+	}
+	if (ArmorLevelupButton)
+	{
+		ArmorLevelupButton->OnClicked.AddDynamic(this, &UUpgrade::ArmorLevelupButtonClicked);
+	}
+	if (AttackSpeedLevelupButton)
+	{
+		AttackSpeedLevelupButton->OnClicked.AddDynamic(this, &UUpgrade::AttackSpeedLevelupButtonClicked);
+	}
+	if (SpeedLevelupButton)
+	{
+		SpeedLevelupButton->OnClicked.AddDynamic(this, &UUpgrade::SpeedLevelupButtonClicked);
+	}
+}
+
 void UUpgrade::SetWidgets()
 {
-	InitUpgradeBoxButton();
 	SetDamageBox();
 	SetHealthBox();
 	SetHealthRegenBox();
@@ -106,10 +135,40 @@ void UUpgrade::SetGoldText()
 	SetTextBlock(GoldTextBlock, Gold);
 }
 
-void UUpgrade::InitUpgradeBoxButton()
+void UUpgrade::DamageLevelupButtonClicked()
 {
+	int32 NeedCoins = CharacterState.DamageLevel * BaseUpgradeNeedCoins;
 
+	UE_LOG(LogTemp, Warning, TEXT("DamageButtonClicked"));
+	if (NeedCoins <= Gold)
+	{
+		Gold = FMath::Clamp(Gold - NeedCoins, 0, 999999);
+		CharacterState.LevelUp(ECharacterState::ECS_DamageLevel);
+		SetDamageBox();
+		SetGoldText();
+	}
 }
+
+void UUpgrade::HealthLevelupButtonClicked()
+{
+}
+
+void UUpgrade::HealthRegenLevelupButtonClicked()
+{
+}
+
+void UUpgrade::ArmorLevelupButtonClicked()
+{
+}
+
+void UUpgrade::AttackSpeedLevelupButtonClicked()
+{
+}
+
+void UUpgrade::SpeedLevelupButtonClicked()
+{
+}
+
 
 void UUpgrade::SetTextBlock(UTextBlock* TextBlock, int nums)
 {
