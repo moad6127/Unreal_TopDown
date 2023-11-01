@@ -48,7 +48,7 @@ bool UAttributeComponent::IsLevelUp()
 
 void UAttributeComponent::SetGold(int32 GoldCount)
 {
-	Gold = FMath::Clamp(Gold + GoldCount, 0, 9999);
+	Gold = FMath::Clamp(Gold + GoldCount, 0, 99999);
 }
 
 void UAttributeComponent::SetMaxHealth(float SetMaxHealth)

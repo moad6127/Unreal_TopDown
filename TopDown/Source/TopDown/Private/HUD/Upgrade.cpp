@@ -50,7 +50,6 @@ void UUpgrade::OnCancleButtonClicked()
 
 void UUpgrade::InitUpgradeBoxButton()
 {
-	UE_LOG(LogTemp, Warning, TEXT("InitUpgradeBoxButton"));
 	if (DamageLevelupButton)
 	{
 		DamageLevelupButton->OnClicked.AddDynamic(this, &UUpgrade::DamageLevelupButtonClicked);
@@ -138,8 +137,6 @@ void UUpgrade::SetGoldText()
 void UUpgrade::DamageLevelupButtonClicked()
 {
 	int32 NeedCoins = CharacterState.DamageLevel * BaseUpgradeNeedCoins;
-
-	UE_LOG(LogTemp, Warning, TEXT("DamageButtonClicked"));
 	if (NeedCoins <= Gold)
 	{
 		Gold = FMath::Clamp(Gold - NeedCoins, 0, 999999);
@@ -151,22 +148,62 @@ void UUpgrade::DamageLevelupButtonClicked()
 
 void UUpgrade::HealthLevelupButtonClicked()
 {
+	int32 NeedCoins = CharacterState.HealthLevel * BaseUpgradeNeedCoins;
+	if (NeedCoins <= Gold)
+	{
+		Gold = FMath::Clamp(Gold - NeedCoins, 0, 999999);
+		CharacterState.LevelUp(ECharacterState::ECS_HealtLevel);
+		SetHealthBox();
+		SetGoldText();
+	}
 }
 
 void UUpgrade::HealthRegenLevelupButtonClicked()
 {
+	int32 NeedCoins = CharacterState.HealthRegenLevel * BaseUpgradeNeedCoins;
+	if (NeedCoins <= Gold)
+	{
+		Gold = FMath::Clamp(Gold - NeedCoins, 0, 999999);
+		CharacterState.LevelUp(ECharacterState::ECS_HealthRegenLevel);
+		SetHealthRegenBox();
+		SetGoldText();
+	}
 }
 
 void UUpgrade::ArmorLevelupButtonClicked()
 {
+	int32 NeedCoins = CharacterState.ArmorLevel * BaseUpgradeNeedCoins;
+	if (NeedCoins <= Gold)
+	{
+		Gold = FMath::Clamp(Gold - NeedCoins, 0, 999999);
+		CharacterState.LevelUp(ECharacterState::ECS_ArmorLevel);
+		SetArmorBox();
+		SetGoldText();
+	}
 }
 
 void UUpgrade::AttackSpeedLevelupButtonClicked()
 {
+	int32 NeedCoins = CharacterState.AttackSpeedLevel * BaseUpgradeNeedCoins;
+	if (NeedCoins <= Gold)
+	{
+		Gold = FMath::Clamp(Gold - NeedCoins, 0, 999999);
+		CharacterState.LevelUp(ECharacterState::ECS_AttackSpeedLevel);
+		SetAttackSpeedBox();
+		SetGoldText();
+	}
 }
 
 void UUpgrade::SpeedLevelupButtonClicked()
 {
+	int32 NeedCoins = CharacterState.SpeedLevel * BaseUpgradeNeedCoins;
+	if (NeedCoins <= Gold)
+	{
+		Gold = FMath::Clamp(Gold - NeedCoins, 0, 999999);
+		CharacterState.LevelUp(ECharacterState::ECS_SpeedLevel);
+		SetSpeedBox();
+		SetGoldText();
+	}
 }
 
 
