@@ -396,6 +396,24 @@ void ATopDownCharacter::SetCombatTarget()
 	CombatTarget = ClosestEnemy;
 }
 
+TArray<ECharacterState> ATopDownCharacter::ChooseRandomState()
+{
+	FRandomStream RandomStream;
+	TArray<ECharacterState> Result;
+	while (Result.Num() < 3)
+	{
+		int32 RandomValue = RandomStream.RandRange(0, static_cast<int32>(ECharacterState::ECS_DefaultMax) - 1);
+		ECharacterState RandEnumMember = static_cast<ECharacterState>(RandomValue);
+
+		if (!Result.Contains(RandEnumMember))
+		{
+			Result.Add(RandEnumMember);
+		}
+	}
+
+	return Result;
+}
+
 int32 ATopDownCharacter::GetPlayerGold()
 {
 	if (Attributes)
