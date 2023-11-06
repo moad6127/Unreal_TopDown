@@ -55,7 +55,6 @@ void UAttributeComponent::SetGold(int32 GoldCount)
 void UAttributeComponent::SetMaxHealth(float SetMaxHealth)
 {
 	MaxHealth = SetMaxHealth;
-	Health = MaxHealth;
 }
 
 void UAttributeComponent::SetMaxEXP(float SetMaxEXP)
