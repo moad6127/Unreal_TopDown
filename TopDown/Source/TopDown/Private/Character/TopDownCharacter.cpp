@@ -78,6 +78,15 @@ void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 }
 
+void ATopDownCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	if (Attributes)
+	{
+		Attributes->Character = this;
+	}
+}
+
 float ATopDownCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	float ReceivedDamage = DamageAmount - (CharacterState.ArmorLevel * 1.f);
@@ -157,6 +166,20 @@ void ATopDownCharacter::MaxSpeedLevelUp()
 		float BaseMaxWalkSpeed{600.f};
 		GetCharacterMovement()->MaxWalkSpeed = BaseMaxWalkSpeed + (CharacterState.SpeedLevel * 15.f);
 	}
+}
+
+void ATopDownCharacter::SetHealthRegen()
+{
+	if (Attributes)
+	{
+		Attributes->SetHealthRegen(CharacterState.HealthRegenLevel * 0.1f);
+	}
+}
+
+void ATopDownCharacter::SetHUDHealth()
+{
+	TopDownOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
+	TopDownOverlay->SetHealth(Attributes->GetHealth());
 }
 
 void ATopDownCharacter::BeginPlay()
@@ -402,6 +425,7 @@ void ATopDownCharacter::SetPlayerData()
 {
 	MaxHealthLevelUp();
 	MaxSpeedLevelUp();
+	SetHealthRegen();
 }
 
 void ATopDownCharacter::SaveGame()

@@ -1,6 +1,7 @@
 
 
 #include "Component/AttributeComponent.h"
+#include "Character/TopDownCharacter.h"
 
 UAttributeComponent::UAttributeComponent()
 {
@@ -68,10 +69,20 @@ void UAttributeComponent::SetHealthRegen(float SetHealing)
 	HealthRegen = FMath::Clamp(HealthRegen + SetHealing, 0.f, 2.f);
 }
 
+void UAttributeComponent::TickHealthRegen(float DeltaTime)
+{
+	if (Character == nullptr)
+	{
+		return;
+	}
+	const float HealThisFrame = HealthRegen * DeltaTime;
+	Health = FMath::Clamp(Health + HealThisFrame, 0.f, MaxHealth);
+	Character->SetHUDHealth();
+}
 
 void UAttributeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	TickHealthRegen(DeltaTime);
 }
 
