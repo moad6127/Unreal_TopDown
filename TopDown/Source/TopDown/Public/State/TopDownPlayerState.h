@@ -99,6 +99,74 @@ public:
 			break;
 		}
 	}
+
+	int32 ReturnStateLevel(ECharacterState Oper)
+	{
+		switch (Oper)
+		{
+		case ECharacterState::ECS_DamageLevel:
+			return DamageLevel;
+			break;
+		case ECharacterState::ECS_HealtLevel:
+			return HealthLevel;
+			break;
+		case ECharacterState::ECS_HealthRegenLevel:
+			return HealthRegenLevel;
+			break;
+		case ECharacterState::ECS_ArmorLevel:
+			return ArmorLevel;
+			break;
+		case ECharacterState::ECS_AttackSpeedLevel:
+			return AttackSpeedLevel;
+			break;
+		case ECharacterState::ECS_SpeedLevel:
+			return SpeedLevel;
+			break;
+		case ECharacterState::ECS_DefaultMax:
+			break;
+		}
+	}
+
+	FText ReturnStateName(ECharacterState Oper)
+	{
+		FString TextStrnig;
+		FText Text; 
+		switch (Oper)
+		{
+		case ECharacterState::ECS_DamageLevel:
+			TextStrnig = FString(TEXT("Damage"));
+			Text = FText::FromString(TextStrnig);
+			return Text;
+			break;
+		case ECharacterState::ECS_HealtLevel:
+			TextStrnig = FString(TEXT("Health"));
+			Text = FText::FromString(TextStrnig);
+			return Text;
+			break;
+		case ECharacterState::ECS_HealthRegenLevel:
+			TextStrnig = FString(TEXT("HealthRegen"));
+			Text = FText::FromString(TextStrnig);
+			return Text;
+			break;
+		case ECharacterState::ECS_ArmorLevel:
+			TextStrnig = FString(TEXT("Armor"));
+			Text = FText::FromString(TextStrnig);
+			return Text;
+			break;
+		case ECharacterState::ECS_AttackSpeedLevel:
+			TextStrnig = FString(TEXT("AttackSpped"));
+			Text = FText::FromString(TextStrnig);
+			return Text;
+			break;
+		case ECharacterState::ECS_SpeedLevel:
+			TextStrnig = FString(TEXT("Speed"));
+			Text = FText::FromString(TextStrnig);
+			return Text;
+			break;
+		case ECharacterState::ECS_DefaultMax:
+			break;
+		}
+	}
 };
 
 UCLASS()
