@@ -157,10 +157,9 @@ private:
 
 	void SetCombatTarget();
 
-	TArray<ECharacterState> ChooseRandomState();
 
 public:	
 	int32 GetPlayerGold();
-
+	FORCEINLINE FCharacterState GetCharacterState() { return CharacterState; }
 
 };

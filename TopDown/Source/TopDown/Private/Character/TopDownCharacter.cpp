@@ -132,18 +132,15 @@ void ATopDownCharacter::GetGold(int32 GoldCount)
 void ATopDownCharacter::LevelUp()
 {
 	PlayerLevel = FMath::Clamp(PlayerLevel + 1, 1, 1000);
-	if (Attributes && TopDownOverlay)
+	TopDownController = TopDownController == nullptr ? Cast<ATopDownCharacterController>(GetController()) : TopDownController;
+
+	if (Attributes && TopDownOverlay && TopDownController)
 	{
-		ECharacterState RandomLevelUp;
-		uint8 Rand = FMath::RandRange(0, 5);
-		RandomLevelUp = (ECharacterState)(Rand);
 		const float nowMaxEXP = Attributes->GetMaxEXP();
 		Attributes->SetMaxEXP(nowMaxEXP * 1.5f);
 		TopDownOverlay->SetMAXEXP(Attributes->GetMaxEXP());
 		TopDownOverlay->SetLevel(PlayerLevel);
-		CharacterState.LevelUp(RandomLevelUp);
-		MaxHealthLevelUp();
-		MaxSpeedLevelUp();
+		TopDownController->LevelUp();
 	}
 }
 
@@ -160,7 +157,7 @@ void ATopDownCharacter::MaxHealthLevelUp()
 		float MaxHealth = BaseMaxHealth + (CharacterState.HealthLevel * 20.f);
 		Attributes->SetMaxHealth(MaxHealth);
 		TopDownOverlay->SetMaxHealt(MaxHealth);
-		TopDownOverlay->SetHealth(Attributes->GetHealth());
+		SetHUDHealth();
 	}
 }
 
@@ -399,24 +396,6 @@ void ATopDownCharacter::SetCombatTarget()
 		}
 	}
 	CombatTarget = ClosestEnemy;
-}
-
-TArray<ECharacterState> ATopDownCharacter::ChooseRandomState()
-{
-	FRandomStream RandomStream;
-	TArray<ECharacterState> Result;
-	while (Result.Num() < 3)
-	{
-		int32 RandomValue = RandomStream.RandRange(0, static_cast<int32>(ECharacterState::ECS_DefaultMax) - 1);
-		ECharacterState RandEnumMember = static_cast<ECharacterState>(RandomValue);
-
-		if (!Result.Contains(RandEnumMember))
-		{
-			Result.Add(RandEnumMember);
-		}
-	}
-
-	return Result;
 }
 
 int32 ATopDownCharacter::GetPlayerGold()

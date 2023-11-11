@@ -13,7 +13,7 @@
 class UButton;
 class UTextBlock;
 class ULevelUpWidget;
-
+class ATopDownCharacter;
 UCLASS()
 class TOPDOWN_API ULevelUpSubSlotWidget : public UUserWidget
 {
@@ -39,6 +39,9 @@ protected:
 
 	UPROPERTY()
 	ULevelUpWidget* ParentWidget;
+
+	UPROPERTY()
+	ATopDownCharacter* Character;
 
 public:
 

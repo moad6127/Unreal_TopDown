@@ -10,6 +10,7 @@ void ULevelUpWidget::SetPanel(TArray<ECharacterState> LevelupState)
 {
 	if (LevelupSubSlot)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("SetPanel!!"));
 		LevelUpPanel->ClearChildren();
 		for (auto e : LevelupState)
 		{
