@@ -14,4 +14,5 @@ class TOPDOWN_API ULevelUpSubSlotWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
+protected:
 };
