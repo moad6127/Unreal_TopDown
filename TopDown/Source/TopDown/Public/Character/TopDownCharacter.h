@@ -38,6 +38,7 @@ public:
 	void GetGold(int32 GoldCount);
 
 	void LevelUp();
+	void StateLevelUp(ECharacterState Oper);
 	void MaxHealthLevelUp();
 	void MaxSpeedLevelUp();
 	void SetHealthRegen();

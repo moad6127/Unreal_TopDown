@@ -23,15 +23,13 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UWrapBox* LevelUpPanel;
 
-	TArray<ECharacterState> CharacterState;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ULevelUpSubSlotWidget> LevelupSubSlot;
 
-	virtual void NativeConstruct() override;
 
-	void SetPanel();
+
 
 public:
-	FORCEINLINE void SetCharacterState(TArray<ECharacterState> State) { CharacterState = State; }
+	void SetPanel(TArray<ECharacterState> LevelupState);
 };

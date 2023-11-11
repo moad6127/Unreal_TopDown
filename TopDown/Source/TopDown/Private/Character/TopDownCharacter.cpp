@@ -147,6 +147,11 @@ void ATopDownCharacter::LevelUp()
 	}
 }
 
+void ATopDownCharacter::StateLevelUp(ECharacterState Oper)
+{
+	CharacterState.LevelUp(Oper);
+}
+
 void ATopDownCharacter::MaxHealthLevelUp()
 {
 	if (Attributes && TopDownOverlay)

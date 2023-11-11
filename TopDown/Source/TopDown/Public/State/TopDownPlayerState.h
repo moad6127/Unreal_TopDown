@@ -125,6 +125,7 @@ public:
 		case ECharacterState::ECS_DefaultMax:
 			break;
 		}
+		return 0;
 	}
 
 	FText ReturnStateName(ECharacterState Oper)
@@ -166,7 +167,9 @@ public:
 		case ECharacterState::ECS_DefaultMax:
 			break;
 		}
+		return Text;
 	}
+
 };
 
 UCLASS()
