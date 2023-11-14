@@ -51,10 +51,6 @@ TArray<ECharacterState> ATopDownCharacterController::ChooseRandomState()
 			Result.Add(RandEnumMember);
 		}
 	}
-	for (auto e : Result)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%d"),e);
-	}
 	return Result;
 }
 

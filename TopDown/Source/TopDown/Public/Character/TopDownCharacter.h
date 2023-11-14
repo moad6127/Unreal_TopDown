@@ -20,6 +20,7 @@ class AEnemy;
 class UAttributeComponent;
 class UTopDownOverlay;
 class ATopDownCharacterController;
+class UEnemySpawnComponent;
 
 UCLASS()
 class TOPDOWN_API ATopDownCharacter : public ACharacter
@@ -92,6 +93,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UAttributeComponent* Attributes;
+
+	UPROPERTY(VisibleAnywhere)
+	UEnemySpawnComponent* EnemySpawnComp;
 
 	/*
 	* SaveGame

@@ -12,6 +12,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Component/AttributeComponent.h"
+#include "Component/EnemySpawnComponent.h"
 #include "HUD/TopDownHUD.h"
 #include "HUD/TopDownOverlay.h"
 #include "Interface/PickupInterface.h"
@@ -57,6 +58,7 @@ ATopDownCharacter::ATopDownCharacter()
 	PickupSphereComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 
 	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributesComponent"));
+	EnemySpawnComp = CreateDefaultSubobject<UEnemySpawnComponent>(TEXT("EnemySpawnComponent"));
 }
 
 void ATopDownCharacter::Tick(float DeltaTime)
@@ -84,6 +86,10 @@ void ATopDownCharacter::PostInitializeComponents()
 	if (Attributes)
 	{
 		Attributes->Character = this;
+	}
+	if (EnemySpawnComp)
+	{
+		EnemySpawnComp->Character = this;
 	}
 }
 
