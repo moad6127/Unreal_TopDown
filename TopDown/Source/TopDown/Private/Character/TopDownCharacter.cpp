@@ -210,6 +210,7 @@ void ATopDownCharacter::BeginPlay()
 	ShowMouseCurser();
 	InitializeTopDownOverlay();
 	SetPlayerData();
+	StartSpawnEnemyTimer();
 }
 
 void ATopDownCharacter::InitializeTopDownOverlay()
@@ -402,6 +403,29 @@ void ATopDownCharacter::SetCombatTarget()
 		}
 	}
 	CombatTarget = ClosestEnemy;
+}
+
+void ATopDownCharacter::SpawnEnemyTimerFinished()
+{
+	if (EnemySpawnComp)
+	{
+		EnemySpawnComp->GetSpawnLocation();
+		StartSpawnEnemyTimer();
+	}
+}
+
+void ATopDownCharacter::StartSpawnEnemyTimer()
+{
+
+	GetWorldTimerManager().ClearTimer(EnemySpawnTimer);
+
+	const float SpawnTime = FMath::FRandRange(SpawnEnemyTimeMin, SpawnEnemyTimeMax);
+	GetWorldTimerManager().SetTimer(
+		EnemySpawnTimer,
+		this,
+		&ATopDownCharacter::SpawnEnemyTimerFinished,
+		SpawnTime
+	);
 }
 
 int32 ATopDownCharacter::GetPlayerGold()

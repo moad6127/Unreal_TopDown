@@ -160,8 +160,21 @@ private:
 	virtual void EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	void SetCombatTarget();
+	/*
+	* EnemySpawn
+	*/
+	FTimerHandle EnemySpawnTimer;
 
+	UPROPERTY(EditAnywhere)
+	float SpawnEnemyTimeMin;
 
+	UPROPERTY(EditAnywhere)
+	float SpawnEnemyTimeMax;
+
+	void SpawnEnemyTimerFinished();
+
+	UFUNCTION()
+	void StartSpawnEnemyTimer();
 public:	
 	int32 GetPlayerGold();
 	FORCEINLINE FCharacterState GetCharacterState() { return CharacterState; }

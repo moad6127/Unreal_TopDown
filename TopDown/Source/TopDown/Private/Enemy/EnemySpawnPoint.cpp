@@ -35,7 +35,7 @@ void AEnemySpawnPoint::SpawnEnemy()
 	{
 		int32 Selection = FMath::RandRange(0, NumEnemyClasses - 1);
 		SpawnedEnemy = GetWorld()->SpawnActor<AEnemy>(EnemyClasses[Selection], GetActorTransform());
-		SpawnedEnemy->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+		//SpawnedEnemy->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 		SpawnedEnemy->OnSpawn();
 
 		InRangeActor.AddUnique(SpawnedEnemy);

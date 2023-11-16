@@ -13,14 +13,37 @@ UEnemySpawnComponent::UEnemySpawnComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UEnemySpawnComponent::CheckTime(int32 Time)
-{
 
+void UEnemySpawnComponent::GetSpawnLocation()
+{
+	if (FindSpotEQS)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("GetSpawnLocation!!"));
+
+		FEnvQueryRequest QueryRequest(FindSpotEQS, GetOwner());
+		QueryRequest.Execute(EEnvQueryRunMode::AllMatching, FQueryFinishedSignature::CreateUObject(this, &UEnemySpawnComponent::SpawnEnemy));
+	}
 }
 
-void UEnemySpawnComponent::SpawnEnemy()
+void UEnemySpawnComponent::SpawnEnemy(TSharedPtr<FEnvQueryResult> result)
 {
-
+	if (result->IsSuccessful())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SpawnEnemy!!"));
+		int32 NumEnemyClasses = EnemyClasses.Num();
+		if (NumEnemyClasses > 0)
+		{
+			TArray<FVector> OutLocaitons;
+			result->GetAllAsLocations(OutLocaitons);
+			int32 RandLocaitonIndex = FMath::RandRange(0, OutLocaitons.Num() - 1);
+			FVector SpawnLocation = OutLocaitons[RandLocaitonIndex];
+			FTransform Transform(SpawnLocation);
+			int32 Selection = FMath::RandRange(0, NumEnemyClasses - 1);
+			SpawnedEnemy = GetWorld()->SpawnActor<AEnemy>(EnemyClasses[Selection], Transform);
+			//SpawnedEnemy->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+			SpawnedEnemy->OnSpawn();
+		}
+	}
 }
 
 
@@ -28,14 +51,12 @@ void UEnemySpawnComponent::SpawnEnemy()
 void UEnemySpawnComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
 }
+
 
 
 void UEnemySpawnComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 }
 

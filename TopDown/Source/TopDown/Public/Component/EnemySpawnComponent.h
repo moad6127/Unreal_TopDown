@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "EnemySpawnComponent.generated.h"
 
 class ATopDownCharacter;
@@ -19,12 +20,12 @@ public:
 	UEnemySpawnComponent();
 	friend ATopDownCharacter;
 
-	void CheckTime(int32 Time);
-	void SpawnEnemy();
+
+	void GetSpawnLocation();
+	void SpawnEnemy(TSharedPtr<FEnvQueryResult> result);
 
 protected:
 	virtual void BeginPlay() override;
-
 
 
 private:
