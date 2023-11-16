@@ -2,11 +2,25 @@
 
 
 #include "Component/EnemySpawnComponent.h"
+#include "Enemy/Enemy.h"
+#include "Character/TopDownCharacter.h"
+#include "EnvironmentQuery/EnvQuery.h"
+
 
 UEnemySpawnComponent::UEnemySpawnComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 }
+
+void UEnemySpawnComponent::CheckTime(int32 Time)
+{
+
+}
+
+void UEnemySpawnComponent::SpawnEnemy()
+{
+}
+
 
 
 void UEnemySpawnComponent::BeginPlay()
