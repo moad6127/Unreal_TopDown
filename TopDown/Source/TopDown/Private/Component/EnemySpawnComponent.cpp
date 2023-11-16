@@ -5,6 +5,7 @@
 #include "Enemy/Enemy.h"
 #include "Character/TopDownCharacter.h"
 #include "EnvironmentQuery/EnvQuery.h"
+#include "EnvironmentQuery/EnvQueryManager.h"
 
 
 UEnemySpawnComponent::UEnemySpawnComponent()
@@ -19,6 +20,7 @@ void UEnemySpawnComponent::CheckTime(int32 Time)
 
 void UEnemySpawnComponent::SpawnEnemy()
 {
+
 }
 
 
