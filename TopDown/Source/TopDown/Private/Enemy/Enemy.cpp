@@ -185,6 +185,23 @@ void AEnemy::SpawnDrop()
 	}
 }
 
+void AEnemy::ShowHitNumer()
+{
+	AController* PlayerContrller = UGameplayStatics::GetPlayerController(GetWorld(),0);
+
+	if (HitNumberWidgetClass)
+	{
+		HitNumberWidget = CreateWidget<UUserWidget>(GetWorld(), HitNumberWidgetClass);
+		if (HitNumberWidget)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("HitNumberText"));
+			FVector2D Location(GetActorLocation().X,GetActorLocation().Y);
+			HitNumberWidget->SetPositionInViewport(Location);
+			HitNumberWidget->AddToViewport();
+		}
+	}
+}
+
 void AEnemy::StartAttackTimer()
 {
 	if (CombatTarget)
@@ -240,6 +257,7 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 	{
 		HealthBarWidget->SetVisibility(true);
 	}
+	ShowHitNumer();
 	if (Attributes && Attributes->IsAlive())
 	{
 		PlayHitReactMontage();
@@ -257,6 +275,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	{
 		Attributes->ReceiveDamage(DamageAmount);
 		HealthBarWidget->SetHealthPercent(Attributes->GetHealthPercent());
+
 	}
 	return DamageAmount;
 }

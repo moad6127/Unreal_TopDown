@@ -16,6 +16,7 @@ class UEnemyHealthBarComponent;
 class USphereComponent;
 class AEXPItem;
 class AGoldItem;
+class UUserWidget;
 
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
@@ -48,6 +49,9 @@ protected:
 	void SpawnGold();
 	void SpawnDrop();
 
+	void ShowHitNumer();
+
+	
 	/**
 	* AI Controll
 	*/
@@ -77,6 +81,13 @@ private:
 	UPROPERTY(EditAnywhere, Category = DropItem)
 	TSubclassOf<AGoldItem> GoldClass;
 
+
+	UPROPERTY(EditAnywhere, Category = HUD)
+	TSubclassOf<UUserWidget> HitNumberWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* HitNumberWidget;
+
 	UPROPERTY(EditAnywhere, Category = DropItem)
 	float EnemyEXP = 30.f;
 
@@ -97,8 +108,6 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	float AttackDamage = 15.f;
-
-
 
 	FTimerHandle AttackTimer;
 	bool bCanAttack = true;

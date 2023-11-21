@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "Interface/HitInterface.h"
 #include "Kismet/Gameplaystatics.h"
+#include "Enemy/Enemy.h"
 
 AProjectile::AProjectile()
 {
@@ -43,7 +44,6 @@ void AProjectile::CollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, 
 {
 	IHitInterface* HitInterface = Cast<IHitInterface>(OtherActor);
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
-
 	if (OtherActor->ActorHasTag("Enemy"))
 	{
 		if (OwnerCharacter)
