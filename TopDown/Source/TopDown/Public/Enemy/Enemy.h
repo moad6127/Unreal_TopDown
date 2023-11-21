@@ -50,7 +50,7 @@ protected:
 	void SpawnDrop();
 
 	void ShowHitNumer();
-
+	void StoreHitNumber(UUserWidget* HitNumber, FVector Location);
 	
 	/**
 	* AI Controll
@@ -81,12 +81,16 @@ private:
 	UPROPERTY(EditAnywhere, Category = DropItem)
 	TSubclassOf<AGoldItem> GoldClass;
 
-
+	//floating Damage
 	UPROPERTY(EditAnywhere, Category = HUD)
 	TSubclassOf<UUserWidget> HitNumberWidgetClass;
 
 	UPROPERTY()
 	UUserWidget* HitNumberWidget;
+
+	UPROPERTY(VisibleAnywhere)
+	TMap<UUserWidget*, FVector> HitNumbers;
+
 
 	UPROPERTY(EditAnywhere, Category = DropItem)
 	float EnemyEXP = 30.f;

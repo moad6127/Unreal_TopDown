@@ -187,19 +187,30 @@ void AEnemy::SpawnDrop()
 
 void AEnemy::ShowHitNumer()
 {
-	AController* PlayerContrller = UGameplayStatics::GetPlayerController(GetWorld(),0);
-
 	if (HitNumberWidgetClass)
 	{
 		HitNumberWidget = CreateWidget<UUserWidget>(GetWorld(), HitNumberWidgetClass);
 		if (HitNumberWidget)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("HitNumberText"));
-			FVector2D Location(GetActorLocation().X,GetActorLocation().Y);
-			HitNumberWidget->SetPositionInViewport(Location);
-			HitNumberWidget->AddToViewport();
+
+			APlayerController* PlayerContrller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+			FVector WorldLocation = GetActorLocation();
+			FVector2D ScreenLocaiton;
+
+			if (PlayerContrller && PlayerContrller->ProjectWorldLocationToScreen(WorldLocation, ScreenLocaiton))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("HitNumberText"));
+				HitNumberWidget->SetPositionInViewport(ScreenLocaiton);
+				HitNumberWidget->AddToViewport();
+				StoreHitNumber(HitNumberWidget, WorldLocation);
+			}
 		}
 	}
+}
+
+void AEnemy::StoreHitNumber(UUserWidget* HitNumber, FVector Location)
+{
+	HitNumbers.Add(HitNumber, Location);
 }
 
 void AEnemy::StartAttackTimer()
