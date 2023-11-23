@@ -54,6 +54,8 @@ protected:
 
 	UFUNCTION()
 	void DestroyHitNumber(UUserWidget* HitNumber);
+
+	void UpdateHitNumbers();
 	
 	/**
 	* AI Controll
