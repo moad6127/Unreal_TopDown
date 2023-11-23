@@ -51,6 +51,9 @@ protected:
 
 	void ShowHitNumer();
 	void StoreHitNumber(UUserWidget* HitNumber, FVector Location);
+
+	UFUNCTION()
+	void DestroyHitNumber(UUserWidget* HitNumber);
 	
 	/**
 	* AI Controll
@@ -90,6 +93,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TMap<UUserWidget*, FVector> HitNumbers;
+
+	UPROPERTY(EditAnywhere)
+	float HitNumberDestroyTime = 1.5f;
 
 
 	UPROPERTY(EditAnywhere, Category = DropItem)

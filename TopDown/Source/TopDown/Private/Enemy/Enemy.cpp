@@ -10,6 +10,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Component/AttributeComponent.h"
 #include "HUD/EnemyHealthBarComponent.h"
+#include "HUD/HitNumberWidget.h"
 #include "Item/EXPItem.h"
 #include "Item/GoldItem.h"
 #include "DrawDebugHelpers.h"
@@ -211,6 +212,23 @@ void AEnemy::ShowHitNumer()
 void AEnemy::StoreHitNumber(UUserWidget* HitNumber, FVector Location)
 {
 	HitNumbers.Add(HitNumber, Location);
+
+	FTimerHandle HitNumberTimer;
+	FTimerDelegate HitNumberDelegate;
+
+	HitNumberDelegate.BindUFunction(this, FName("DestroyHitNumber"), HitNumber);
+
+	GetWorld()->GetTimerManager().SetTimer(
+		HitNumberTimer,
+		HitNumberDelegate,
+		HitNumberDestroyTime,
+		false);
+}
+
+void AEnemy::DestroyHitNumber(UUserWidget* HitNumber)
+{
+	HitNumbers.Remove(HitNumber);
+	HitNumber->RemoveFromParent();
 }
 
 void AEnemy::StartAttackTimer()
