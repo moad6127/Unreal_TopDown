@@ -16,7 +16,7 @@ class UEnemyHealthBarComponent;
 class USphereComponent;
 class AEXPItem;
 class AGoldItem;
-class UUserWidget;
+class UHitNumberWidget;
 
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
@@ -50,10 +50,10 @@ protected:
 	void SpawnDrop();
 
 	void ShowHitNumer();
-	void StoreHitNumber(UUserWidget* HitNumber, FVector Location);
+	void StoreHitNumber(UHitNumberWidget* HitNumber, FVector Location);
 
 	UFUNCTION()
-	void DestroyHitNumber(UUserWidget* HitNumber);
+	void DestroyHitNumber(UHitNumberWidget* HitNumber);
 
 	void UpdateHitNumbers();
 	
@@ -88,13 +88,13 @@ private:
 
 	//floating Damage
 	UPROPERTY(EditAnywhere, Category = HUD)
-	TSubclassOf<UUserWidget> HitNumberWidgetClass;
+	TSubclassOf<UHitNumberWidget> HitNumberWidgetClass;
 
 	UPROPERTY()
-	UUserWidget* HitNumberWidget;
+	UHitNumberWidget* HitNumberWidget;
 
 	UPROPERTY(VisibleAnywhere)
-	TMap<UUserWidget*, FVector> HitNumbers;
+	TMap<UHitNumberWidget*, FVector> HitNumbers;
 
 	UPROPERTY(EditAnywhere)
 	float HitNumberDestroyTime = 1.5f;

@@ -190,26 +190,22 @@ void AEnemy::ShowHitNumer()
 {
 	if (HitNumberWidgetClass)
 	{
-		HitNumberWidget = CreateWidget<UUserWidget>(GetWorld(), HitNumberWidgetClass);
+		HitNumberWidget = CreateWidget<UHitNumberWidget>(GetWorld(), HitNumberWidgetClass);
 		if (HitNumberWidget)
 		{
-
-			APlayerController* PlayerContrller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 			FVector WorldLocation = GetActorLocation();
 			FVector2D ScreenLocaiton;
 
-			if (PlayerContrller && PlayerContrller->ProjectWorldLocationToScreen(WorldLocation, ScreenLocaiton))
-			{
-				UE_LOG(LogTemp, Warning, TEXT("HitNumberText"));
-				HitNumberWidget->SetPositionInViewport(ScreenLocaiton);
-				HitNumberWidget->AddToViewport();
-				StoreHitNumber(HitNumberWidget, WorldLocation);
-			}
+			UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), WorldLocation, ScreenLocaiton);
+			HitNumberWidget->SetPositionInViewport(ScreenLocaiton);
+			HitNumberWidget->AddToViewport();
+			StoreHitNumber(HitNumberWidget, WorldLocation);
+			
 		}
 	}
 }
 
-void AEnemy::StoreHitNumber(UUserWidget* HitNumber, FVector Location)
+void AEnemy::StoreHitNumber(UHitNumberWidget* HitNumber, FVector Location)
 {
 	HitNumbers.Add(HitNumber, Location);
 
@@ -225,7 +221,7 @@ void AEnemy::StoreHitNumber(UUserWidget* HitNumber, FVector Location)
 		false);
 }
 
-void AEnemy::DestroyHitNumber(UUserWidget* HitNumber)
+void AEnemy::DestroyHitNumber(UHitNumberWidget* HitNumber)
 {
 	HitNumbers.Remove(HitNumber);
 	HitNumber->RemoveFromParent();
@@ -235,7 +231,7 @@ void AEnemy::UpdateHitNumbers()
 {
 	for (auto& HitPair : HitNumbers)
 	{
-		UUserWidget* HitNumber{ HitPair.Key };
+		UHitNumberWidget* HitNumber{ HitPair.Key };
 		const FVector Location{ HitPair.Value };
 		FVector2D ScreenPosition;
 
