@@ -200,6 +200,7 @@ void AEnemy::ShowHitNumer(int32 Damage)
 			HitNumberWidget->SetPositionInViewport(ScreenLocaiton);
 			HitNumberWidget->SetHitNumberText(Damage);
 			HitNumberWidget->AddToViewport();
+			HitNumberWidget->PlayHitAnimation();
 			StoreHitNumber(HitNumberWidget, WorldLocation);
 			
 		}

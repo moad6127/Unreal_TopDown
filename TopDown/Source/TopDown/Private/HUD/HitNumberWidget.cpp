@@ -13,3 +13,8 @@ void UHitNumberWidget::SetHitNumberText(int32 Damage)
 		HitNumberText->SetText(Text);
 	}
 }
+
+void UHitNumberWidget::PlayHitAnimation()
+{
+	PlayAnimation(HitNumberAnimation);
+}

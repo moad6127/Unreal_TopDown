@@ -10,6 +10,7 @@
  * 
  */
 class UTextBlock;
+class UWidgetAnimation;
 
 UCLASS()
 class TOPDOWN_API UHitNumberWidget : public UUserWidget
@@ -17,9 +18,12 @@ class TOPDOWN_API UHitNumberWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	void SetHitNumberText(int32 Damage);
-
+	void PlayHitAnimation();
 private:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* HitNumberText;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidgetAnim), Transient)
+	UWidgetAnimation* HitNumberAnimation;
 };
