@@ -49,7 +49,7 @@ protected:
 	void SpawnGold();
 	void SpawnDrop();
 
-	void ShowHitNumer();
+	void ShowHitNumer(int32 Damage);
 	void StoreHitNumber(UHitNumberWidget* HitNumber, FVector Location);
 
 	UFUNCTION()

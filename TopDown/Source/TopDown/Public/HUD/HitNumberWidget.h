@@ -9,9 +9,17 @@
 /**
  * 
  */
+class UTextBlock;
+
 UCLASS()
 class TOPDOWN_API UHitNumberWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
+public:
+	void SetHitNumberText(int32 Damage);
+
+private:
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* HitNumberText;
 };

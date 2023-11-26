@@ -186,7 +186,7 @@ void AEnemy::SpawnDrop()
 	}
 }
 
-void AEnemy::ShowHitNumer()
+void AEnemy::ShowHitNumer(int32 Damage)
 {
 	if (HitNumberWidgetClass)
 	{
@@ -198,6 +198,7 @@ void AEnemy::ShowHitNumer()
 
 			UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), WorldLocation, ScreenLocaiton);
 			HitNumberWidget->SetPositionInViewport(ScreenLocaiton);
+			HitNumberWidget->SetHitNumberText(Damage);
 			HitNumberWidget->AddToViewport();
 			StoreHitNumber(HitNumberWidget, WorldLocation);
 			
@@ -296,7 +297,6 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 	{
 		HealthBarWidget->SetVisibility(true);
 	}
-	ShowHitNumer();
 	if (Attributes && Attributes->IsAlive())
 	{
 		PlayHitReactMontage();
@@ -314,7 +314,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	{
 		Attributes->ReceiveDamage(DamageAmount);
 		HealthBarWidget->SetHealthPercent(Attributes->GetHealthPercent());
-
+		ShowHitNumer(DamageAmount);
 	}
 	return DamageAmount;
 }
