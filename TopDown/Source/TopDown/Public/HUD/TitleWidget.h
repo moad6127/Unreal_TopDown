@@ -19,9 +19,6 @@ class TOPDOWN_API UTitleWidget : public UUserWidget
 
 protected:
 	virtual bool Initialize() override;
-	virtual void NativeDestruct() override;
-	virtual void NativeConstruct() override;
-	void SetGoldText();
 private:
 	UFUNCTION()
 	void OnStartClicked();
@@ -41,13 +38,4 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* ExitButton;
-
-	UPROPERTY()
-	int32 Gold;
-
-	UPROPERTY()
-	FCharacterState CharacterState;
-
-	UPROPERTY(meta = (BindWidget))
-	UTextBlock* GoldTextBlock;
 };

@@ -30,41 +30,6 @@ bool UTitleWidget::Initialize()
 	return true;
 }
 
-void UTitleWidget::NativeDestruct()
-{
-	Super::NativeDestruct();
-}
-
-void UTitleWidget::NativeConstruct()
-{
-	Super::NativeConstruct();
-
-	ATopDownPlayerState* PlayerCharacterState = Cast<ATopDownPlayerState>(GetOwningPlayerState());
-	if (PlayerCharacterState == nullptr)
-	{
-		return;
-	}
-
-	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(PlayerCharacterState->GetSaveSlotName(), 0));
-	if (TopDownSaveGame == nullptr)
-	{
-		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
-	}
-	Gold = TopDownSaveGame->Gold;
-	CharacterState = TopDownSaveGame->CharacterState;
-	SetGoldText();
-}
-
-void UTitleWidget::SetGoldText()
-{
-	if (GoldTextBlock)
-	{
-		const FString String = FString::Printf(TEXT("%d"), Gold);
-		const FText Text = FText::FromString(String);
-		GoldTextBlock->SetText(Text);
-	}
-}
-
 void UTitleWidget::OnStartClicked()
 {
 	UGameplayStatics::OpenLevel(this, TEXT("TopDownMap"));
