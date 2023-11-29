@@ -30,6 +30,17 @@
 </p>
 </details>
 
+<details><summary> Title 맵의 Controller</summary>
+<p>
+  
+![TopDownGame_TitleController](https://github.com/moad6127/Unreal_TopDown/assets/101626318/1fd9e498-08bf-4139-9565-eb256d910657)
+![TopDownGame_TitleController_cpp](https://github.com/moad6127/Unreal_TopDown/assets/101626318/69f77317-41b8-40a8-96a1-5f0d11767a63)
+
+> 맵으로 이동했을때 Controller의 BeginPlay를 통해서 Title의 Widget이 나타나도록 만들기 위해서 만들어진 컨트롤러로 단순히 Widget을 생성하고 화면에 띄우는 역할을 한다
+
+----------------------------------------------------------------------------------------------------
+</p>
+</details>
 
 
 ## *강화 화면*
@@ -54,12 +65,36 @@
 
 > DamageUpgardeBox에 필요한 변수들과 함수들을 나타낸 것으로 버튼을 누르면 게임에서 얻은 재화가 강화에 필요한 재화보다 크거나 같을경우 능력치를 증가 시킨다.
 
-
+![TopDownGame_Upgrade_saveNCanButton](https://github.com/moad6127/Unreal_TopDown/assets/101626318/479e6f2a-a8cb-42d7-96ad-d866f39e6a85)
+> 저장버튼을 누르는 경우에만 Save를 하도록 설정하기
   
 ----------------------------------------------------------------------------------------------------
 </p>
 </details>
 
-## *Title맵과 강화 맵에서의 컨트롤러들*
+
+<details><summary> Title 맵의 Controller</summary>
+<p>
+  
+![TopDownGame_UpgradeController_h](https://github.com/moad6127/Unreal_TopDown/assets/101626318/729db67e-a3dd-4b18-b013-93b23d318f50)
+![TopDownGame_UpgradeController_cpp](https://github.com/moad6127/Unreal_TopDown/assets/101626318/4bf41dc3-4654-40d2-8a85-c66c44da7d6a)
+
+
+> 맵으로 이동했을때 Controller의 BeginPlay를 통해서 Upgrade의 Widget이 나타나도록 만들기 위해서 만들어진 컨트롤러로 단순히 Widget을 생성하고 화면에 띄우는 역할을 한다
+
+----------------------------------------------------------------------------------------------------
+</p>
+</details>
+
+
+# *Character*
+
+> 플레이어가 조종하는 Character로 EnhancedInput기능을 사용하며 ActorComponent를 활용해 캐릭터의 체력및 경험치를 조절하고 Enemy를 Spawn하는 역할까지 한다.
+
+- [헤더파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Public/Character/TopDownCharacter.h)
+- [CPP파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Private/Character/TopDownCharacter.cpp)
+
+![TopDownGame_Character](https://github.com/moad6127/Unreal_TopDown/assets/101626318/cdd46026-28ca-4c1f-81ed-e9489f231475)
+
 
 
