@@ -15,7 +15,8 @@ void UUpgrade::NativeConstruct()
 		return;
 	}
 
-	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(PlayerCharacterState->GetSaveSlotName(), 0));
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(
+		UGameplayStatics::LoadGameFromSlot(PlayerCharacterState->GetSaveSlotName(), 0));
 	if (TopDownSaveGame == nullptr)
 	{
 		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
@@ -94,46 +95,6 @@ void UUpgrade::SetDamageBox()
 	SetTextBlock(DMNCoin, NeedCoins);
 }
 
-void UUpgrade::SetHealthBox()
-{
-	int32 NeedCoins = CharacterState.HealthLevel * BaseUpgradeNeedCoins;
-	SetTextBlock(HNLevel, CharacterState.HealthLevel);
-	SetTextBlock(HNCoin, NeedCoins);
-}
-
-void UUpgrade::SetHealthRegenBox()
-{
-	int32 NeedCoins = CharacterState.HealthRegenLevel * BaseUpgradeNeedCoins;
-	SetTextBlock(HRNLevel, CharacterState.HealthRegenLevel);
-	SetTextBlock(HRNCoin, NeedCoins);
-}
-
-void UUpgrade::SetArmorBox()
-{
-	int32 NeedCoins = CharacterState.ArmorLevel * BaseUpgradeNeedCoins;
-	SetTextBlock(ANLevel, CharacterState.ArmorLevel);
-	SetTextBlock(ANCoin, NeedCoins);
-}
-
-void UUpgrade::SetAttackSpeedBox()
-{
-	int32 NeedCoins = CharacterState.AttackSpeedLevel * BaseUpgradeNeedCoins;
-	SetTextBlock(ASNLevel, CharacterState.AttackSpeedLevel);
-	SetTextBlock(ASNCoin, NeedCoins);
-}
-
-void UUpgrade::SetSpeedBox()
-{
-	int32 NeedCoins = CharacterState.SpeedLevel * BaseUpgradeNeedCoins;
-	SetTextBlock(SNLevel, CharacterState.SpeedLevel);
-	SetTextBlock(SNCoin, NeedCoins);
-}
-
-void UUpgrade::SetGoldText()
-{
-	SetTextBlock(GoldTextBlock, Gold);
-}
-
 void UUpgrade::DamageLevelupButtonClicked()
 {
 	int32 NeedCoins = CharacterState.DamageLevel * BaseUpgradeNeedCoins;
@@ -144,6 +105,13 @@ void UUpgrade::DamageLevelupButtonClicked()
 		SetDamageBox();
 		SetGoldText();
 	}
+}
+
+void UUpgrade::SetHealthBox()
+{
+	int32 NeedCoins = CharacterState.HealthLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(HNLevel, CharacterState.HealthLevel);
+	SetTextBlock(HNCoin, NeedCoins);
 }
 
 void UUpgrade::HealthLevelupButtonClicked()
@@ -158,6 +126,14 @@ void UUpgrade::HealthLevelupButtonClicked()
 	}
 }
 
+
+void UUpgrade::SetHealthRegenBox()
+{
+	int32 NeedCoins = CharacterState.HealthRegenLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(HRNLevel, CharacterState.HealthRegenLevel);
+	SetTextBlock(HRNCoin, NeedCoins);
+}
+
 void UUpgrade::HealthRegenLevelupButtonClicked()
 {
 	int32 NeedCoins = CharacterState.HealthRegenLevel * BaseUpgradeNeedCoins;
@@ -168,6 +144,13 @@ void UUpgrade::HealthRegenLevelupButtonClicked()
 		SetHealthRegenBox();
 		SetGoldText();
 	}
+}
+
+void UUpgrade::SetArmorBox()
+{
+	int32 NeedCoins = CharacterState.ArmorLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(ANLevel, CharacterState.ArmorLevel);
+	SetTextBlock(ANCoin, NeedCoins);
 }
 
 void UUpgrade::ArmorLevelupButtonClicked()
@@ -182,6 +165,13 @@ void UUpgrade::ArmorLevelupButtonClicked()
 	}
 }
 
+void UUpgrade::SetAttackSpeedBox()
+{
+	int32 NeedCoins = CharacterState.AttackSpeedLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(ASNLevel, CharacterState.AttackSpeedLevel);
+	SetTextBlock(ASNCoin, NeedCoins);
+}
+
 void UUpgrade::AttackSpeedLevelupButtonClicked()
 {
 	int32 NeedCoins = CharacterState.AttackSpeedLevel * BaseUpgradeNeedCoins;
@@ -192,6 +182,13 @@ void UUpgrade::AttackSpeedLevelupButtonClicked()
 		SetAttackSpeedBox();
 		SetGoldText();
 	}
+}
+
+void UUpgrade::SetSpeedBox()
+{
+	int32 NeedCoins = CharacterState.SpeedLevel * BaseUpgradeNeedCoins;
+	SetTextBlock(SNLevel, CharacterState.SpeedLevel);
+	SetTextBlock(SNCoin, NeedCoins);
 }
 
 void UUpgrade::SpeedLevelupButtonClicked()
@@ -206,6 +203,10 @@ void UUpgrade::SpeedLevelupButtonClicked()
 	}
 }
 
+void UUpgrade::SetGoldText()
+{
+	SetTextBlock(GoldTextBlock, Gold);
+}
 
 void UUpgrade::SetTextBlock(UTextBlock* TextBlock, int nums)
 {
