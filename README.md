@@ -97,6 +97,70 @@
 ![TopDownGame_Character](https://github.com/moad6127/Unreal_TopDown/assets/101626318/cdd46026-28ca-4c1f-81ed-e9489f231475)
 
 
+### *이동*
+
+
+![TopDownGame_Character_Input](https://github.com/moad6127/Unreal_TopDown/assets/101626318/1b2077f7-dd64-4ff7-bab2-b0b442986a27)
+![TopDownGame_Character_Move_Context](https://github.com/moad6127/Unreal_TopDown/assets/101626318/8c3f2eab-b2bf-4b51-9d71-2904a47a1f9f)
+
+> EnhancedInput을 사용하기 위해서 InputAction과 InputContext를 만든후 Character에 변수로 추가해준다음 블루프린트로 설정해준 모습이다.
+
+![TopDownGame_Character_PlayerInputComponent](https://github.com/moad6127/Unreal_TopDown/assets/101626318/6e5e8a55-d266-4e62-8c40-ed86d93aa588)
+
+> SetupPlayerInputComponent 함수에서 EnhancedInput으로 Action을 바인딩해 필요한 함수와 연결한다.
+
+![TopDownGame_Character_MoveFunc](https://github.com/moad6127/Unreal_TopDown/assets/101626318/6b0d2645-40af-4c45-8c9a-8fa9cad99e65)
+
+> Character의 Move함수로 WASD로 움직이며 각각의 움직임이 발동되면 해당 함수를 불러와서 캐릭터를 이동 시킨다.
+
+
+------------------------------------------------------------------------
+
+### *공격*
+
+> Character의 공격은 **단순한 발사체** 를 구현해서 발사하는 형식으로 만들어져 있다.
+
+
+<details><summary> 발사체 </summary>
+<p>
+  
+#### *발사체*
+
+플레이어가 공격을 할때 사용하는 발사체로 단순히 BoxComponent에 Enemy가 Overlap되면 데미지를 주고 사라지게 만들어져 있다.
+
+- [헤더파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Public/Attack/Projectile.h)
+- [CPP파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Private/Attack/Projectile.cpp)
+
+  
+![TopDownGame_Attack_Projectile](https://github.com/moad6127/Unreal_TopDown/assets/101626318/4a2b619f-d555-4f48-9f73-ca83c131c294)
+
+![TopDownGame_Attack_Projectile_CollisionOverlap](https://github.com/moad6127/Unreal_TopDown/assets/101626318/eb2375b9-6ce4-47ba-8cd3-7f839a3a2bfa)
+
+> BoxComponent에 Overlap되는 대상이 Enemy의 태그를 가지고 있는경우 ApplyDamage를 통해서 데미지를 가해지도록 만들었다.
+
+----------------------------------------------------------------------------------------------------
+</p>
+</details>
+
+![TopDownGame_Attack_Func](https://github.com/moad6127/Unreal_TopDown/assets/101626318/45fbe5d5-b8fb-45ab-b979-4ad2cef1e4f9)
+
+>Character클래스의 Attack함수이다. 타이머를 작동시키고 공격할 대상을 지정한다음 발사체를 구현해서 발사하도록 만들어져 있다.
+
+![TopDownGame_Attack_Timer](https://github.com/moad6127/Unreal_TopDown/assets/101626318/4bfd079b-3ae0-4acc-a507-1c2af42ec53c)
+
+> 공격 속도를 정하는 타이머로 타이머가 작동중일때는 공격하지 않도록 만들어져 있으며 타이머가 끝나면 다시 Attack함수를 호출한다
+>  **Upgarde** 창에서 공격속도를 증가시키도록 할수 있다.
+
+![TopDownGame_Attack_SetTarget](https://github.com/moad6127/Unreal_TopDown/assets/101626318/9ce6305c-d42f-4706-83a7-80f1f3fc79af)
+
+> 현재 플레이어에게서 가장 가까운 Enemy를 탐색해서 공격할 대상을 지정하는 함수이다
+
+![TopDownGame_Attack_SpawnProjectile](https://github.com/moad6127/Unreal_TopDown/assets/101626318/43907c8b-24ad-4440-85ed-c480c93f41e2)
+
+> 탐색된 대상을 향해 발사체를 발사하도록 하며 공격할 대상이 존재하지 않을경우 Character의 ForwardVector방향으로 발사체를 발사하도록 만들어져 있다.
+
+
+
 
 # *Enemy*
 
