@@ -46,6 +46,12 @@ private:
 	UPROPERTY(EditAnywhere)
 	UEnvQuery* FindSpotEQS;
 
+	UPROPERTY(EditAnywhere)
+	int32 MaxEnemySpawnCount = 50;
+
+	UPROPERTY(VisibleAnywhere)
+	TArray<AEnemy*> SpawnedEnemies;
+
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 

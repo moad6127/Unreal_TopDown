@@ -58,7 +58,7 @@ ATopDownCharacter::ATopDownCharacter()
 	PickupSphereComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 
 	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributesComponent"));
-	EnemySpawnComp = CreateDefaultSubobject<UEnemySpawnComponent>(TEXT("EnemySpawnComponent"));
+	EnemySpawnComponent = CreateDefaultSubobject<UEnemySpawnComponent>(TEXT("EnemySpawnComponent"));
 }
 
 void ATopDownCharacter::Tick(float DeltaTime)
@@ -87,9 +87,9 @@ void ATopDownCharacter::PostInitializeComponents()
 	{
 		Attributes->Character = this;
 	}
-	if (EnemySpawnComp)
+	if (EnemySpawnComponent)
 	{
-		EnemySpawnComp->Character = this;
+		EnemySpawnComponent->Character = this;
 	}
 }
 
@@ -407,16 +407,19 @@ void ATopDownCharacter::SetCombatTarget()
 
 void ATopDownCharacter::SpawnEnemyTimerFinished()
 {
-	if (EnemySpawnComp)
+	if (EnemySpawnComponent)
 	{
-		EnemySpawnComp->GetSpawnLocation();
+		if (EnemySpawnComponent->SpawnedEnemies.Num() < EnemySpawnComponent->MaxEnemySpawnCount)
+		{
+			EnemySpawnComponent->GetSpawnLocation();
+		}
+
 		StartSpawnEnemyTimer();
 	}
 }
 
 void ATopDownCharacter::StartSpawnEnemyTimer()
 {
-
 	GetWorldTimerManager().ClearTimer(EnemySpawnTimer);
 
 	const float SpawnTime = FMath::FRandRange(SpawnEnemyTimeMin, SpawnEnemyTimeMax);

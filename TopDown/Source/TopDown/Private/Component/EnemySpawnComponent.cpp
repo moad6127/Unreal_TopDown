@@ -42,6 +42,7 @@ void UEnemySpawnComponent::SpawnEnemy(TSharedPtr<FEnvQueryResult> result)
 			SpawnedEnemy = GetWorld()->SpawnActor<AEnemy>(EnemyClasses[Selection], Transform);
 			//SpawnedEnemy->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 			SpawnedEnemy->OnSpawn();
+			SpawnedEnemies.AddUnique(SpawnedEnemy);
 		}
 	}
 }

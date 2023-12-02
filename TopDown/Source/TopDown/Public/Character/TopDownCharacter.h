@@ -95,7 +95,7 @@ private:
 	UAttributeComponent* Attributes;
 
 	UPROPERTY(VisibleAnywhere)
-	UEnemySpawnComponent* EnemySpawnComp;
+	UEnemySpawnComponent* EnemySpawnComponent;
 
 	/*
 	* SaveGame
