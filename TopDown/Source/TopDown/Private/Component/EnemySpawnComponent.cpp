@@ -14,6 +14,16 @@ UEnemySpawnComponent::UEnemySpawnComponent()
 }
 
 
+void UEnemySpawnComponent::EnemyDeath(AEnemy* DeadEnemy)
+{
+	if (SpawnedEnemies.Contains(DeadEnemy))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("EnemyDeathFuncCall!!"));
+
+		SpawnedEnemies.Remove(DeadEnemy);
+	}
+}
+
 void UEnemySpawnComponent::GetSpawnLocation()
 {
 	if (FindSpotEQS)
@@ -41,8 +51,11 @@ void UEnemySpawnComponent::SpawnEnemy(TSharedPtr<FEnvQueryResult> result)
 			int32 Selection = FMath::RandRange(0, NumEnemyClasses - 1);
 			SpawnedEnemy = GetWorld()->SpawnActor<AEnemy>(EnemyClasses[Selection], Transform);
 			//SpawnedEnemy->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-			SpawnedEnemy->OnSpawn();
-			SpawnedEnemies.AddUnique(SpawnedEnemy);
+			if (SpawnedEnemy)
+			{
+				SpawnedEnemy->OnSpawn();
+				SpawnedEnemies.AddUnique(SpawnedEnemy);
+			}
 		}
 	}
 }
@@ -52,6 +65,9 @@ void UEnemySpawnComponent::SpawnEnemy(TSharedPtr<FEnvQueryResult> result)
 void UEnemySpawnComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	OnEnemyDeath.AddDynamic(this, &UEnemySpawnComponent::EnemyDeath);
+
 }
 
 

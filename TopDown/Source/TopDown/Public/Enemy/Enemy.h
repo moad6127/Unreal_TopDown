@@ -17,6 +17,7 @@ class USphereComponent;
 class AEXPItem;
 class AGoldItem;
 class UHitNumberWidget;
+class UEnemySpawnComponent;
 
 UCLASS()
 class TOPDOWN_API AEnemy : public ACharacter , public IHitInterface
@@ -32,6 +33,7 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	void OnSpawn();
 	void SetController(AController* InputController);
+
 protected:
 	virtual void BeginPlay() override;
 

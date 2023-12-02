@@ -11,6 +11,8 @@ class ATopDownCharacter;
 class AEnemy;
 class UEnvQuery;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnemyDeathEvent,  AEnemy*, DeadEnemy);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TOPDOWN_API UEnemySpawnComponent : public UActorComponent
 {
@@ -20,6 +22,12 @@ public:
 	UEnemySpawnComponent();
 	friend ATopDownCharacter;
 
+
+	UPROPERTY(BlueprintAssignable)
+	FEnemyDeathEvent OnEnemyDeath;
+
+	UFUNCTION()
+	void EnemyDeath(AEnemy* DeadEnemy);
 
 	void GetSpawnLocation();
 	void SpawnEnemy(TSharedPtr<FEnvQueryResult> result);

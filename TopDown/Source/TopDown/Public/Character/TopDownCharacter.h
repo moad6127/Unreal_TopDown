@@ -178,5 +178,5 @@ private:
 public:	
 	int32 GetPlayerGold();
 	FORCEINLINE FCharacterState GetCharacterState() { return CharacterState; }
-
+	FORCEINLINE UEnemySpawnComponent* GetEnemySpawnComponent() { return EnemySpawnComponent; }
 };

@@ -9,6 +9,7 @@
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Component/AttributeComponent.h"
+#include "Component/EnemySpawnComponent.h"
 #include "HUD/EnemyHealthBarComponent.h"
 #include "HUD/HitNumberWidget.h"
 #include "Item/EXPItem.h"
@@ -55,6 +56,10 @@ void AEnemy::BeginPlay()
 
 void AEnemy::Die()
 {
+	if (PlayerCharacter == nullptr)
+	{
+		PlayerCharacter = Cast<ATopDownCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	}
 	PlayDeathMontage();
 	if (EnemyController)
 	{
@@ -69,6 +74,12 @@ void AEnemy::Die()
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	AttackDamageRange->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SpawnDrop();
+	if (PlayerCharacter)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BroadCastEnemyDeath!!"));
+		PlayerCharacter->GetEnemySpawnComponent()->OnEnemyDeath.Broadcast(this);
+	}
+
 	SetLifeSpan(2.f);
 }
 
