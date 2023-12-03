@@ -279,13 +279,37 @@ void ATopDownCharacter::Attack()
 	}
 }
 
-void ATopDownCharacter::GamePause()
+void ATopDownCharacter::StartAttackTimer()
 {
-	TopDownController = TopDownController == nullptr ? Cast<ATopDownCharacterController>(GetController()) : TopDownController;
-	if (TopDownController)
+	GetWorldTimerManager().SetTimer(
+		AttackTimer,
+		this,
+		&ATopDownCharacter::AttackTimerFinished,
+		AttackDelay - (CharacterState.AttackSpeedLevel * 0.1f)
+	);
+}
+
+void ATopDownCharacter::AttackTimerFinished()
+{
+	bCanAttack = true;
+	Attack();
+}
+
+void ATopDownCharacter::SetCombatTarget()
+{
+	const FVector Location = GetActorLocation();
+	FVector ClosestEnmeyLocationDistance(1000.f);
+	AActor* ClosestEnemy{};
+	for (auto Enemy : EnemyInRange)
 	{
-		TopDownController->GamePause();
+		FVector DistanceToEnemy = Location - Enemy->GetActorLocation();
+		if (DistanceToEnemy.Length() < ClosestEnmeyLocationDistance.Length())
+		{
+			ClosestEnemy = Enemy;
+			ClosestEnmeyLocationDistance = DistanceToEnemy;
+		}
 	}
+	CombatTarget = ClosestEnemy;
 }
 
 void ATopDownCharacter::SpawnProjectile()
@@ -296,7 +320,7 @@ void ATopDownCharacter::SpawnProjectile()
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
 		SpawnParams.Instigator = InstigatorPawn;
-		
+
 		FVector StartPoint = GetTransform().GetLocation();
 		FRotator AttackRotation;
 		if (CombatTarget)
@@ -308,7 +332,7 @@ void ATopDownCharacter::SpawnProjectile()
 		{
 			AttackRotation = GetActorForwardVector().Rotation();
 		}
-		
+
 		UWorld* World = GetWorld();
 		if (World)
 		{
@@ -317,7 +341,7 @@ void ATopDownCharacter::SpawnProjectile()
 				StartPoint,
 				AttackRotation,
 				SpawnParams
-				);
+			);
 			if (SpawnProjectile)
 			{
 				SpawnProjectile->SetLifeSpan(10.f);
@@ -326,6 +350,17 @@ void ATopDownCharacter::SpawnProjectile()
 		}
 	}
 }
+
+
+void ATopDownCharacter::GamePause()
+{
+	TopDownController = TopDownController == nullptr ? Cast<ATopDownCharacterController>(GetController()) : TopDownController;
+	if (TopDownController)
+	{
+		TopDownController->GamePause();
+	}
+}
+
 
 void ATopDownCharacter::SetTime()
 {
@@ -341,22 +376,7 @@ void ATopDownCharacter::SetTime()
 	CountDownInt = MatchTime;
 }
 
-void ATopDownCharacter::StartAttackTimer()
-{
-	GetWorldTimerManager().SetTimer(
-		AttackTimer,
-		this,
-		&ATopDownCharacter::AttackTimerFinished,
-		AttackDelay - (CharacterState.AttackSpeedLevel * 0.1f)
-	);
-}
 
-void ATopDownCharacter::AttackTimerFinished()
-{
-	bCanAttack = true;
-	Attack();
-
-}
 
 void ATopDownCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -388,22 +408,7 @@ void ATopDownCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	}
 }
 
-void ATopDownCharacter::SetCombatTarget()
-{
-	const FVector Location = GetActorLocation();
-	FVector ClosestEnmeyLocationDistance(1000.f);
-	AActor* ClosestEnemy{};
-	for (auto Enemy : EnemyInRange)
-	{
-		FVector DistanceToEnemy = Location - Enemy->GetActorLocation();
-		if (DistanceToEnemy.Length() < ClosestEnmeyLocationDistance.Length())
-		{
-			ClosestEnemy = Enemy;
-			ClosestEnmeyLocationDistance = DistanceToEnemy;
-		}
-	}
-	CombatTarget = ClosestEnemy;
-}
+
 
 void ATopDownCharacter::SpawnEnemyTimerFinished()
 {
