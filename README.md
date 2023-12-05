@@ -160,6 +160,46 @@
 > 탐색된 대상을 향해 발사체를 발사하도록 하며 공격할 대상이 존재하지 않을경우 Character의 ForwardVector방향으로 발사체를 발사하도록 만들어져 있다.
 
 
+### *LevelUp*
+
+![TopDownGame_LevelUpHUD](https://github.com/moad6127/Unreal_TopDown/assets/101626318/0a9b1b84-b5c2-492a-99af-3eea43b6c78c)
+
+플레이어가 Enemy를 제거하였을때 나오는 경험치아이템을 먹고 최대 경험치에 도달하였을때 발생되도록 만든 이벤트로 플레이어의 능력치중 하나를 이번 게임동안 올릴수 있게 만들었다.
+
+
+![TopDownGame_LevelUp_GetExP](https://github.com/moad6127/Unreal_TopDown/assets/101626318/c4f40af7-1def-4eaa-9fa7-9d287da764a4)
+
+> 플레이어가 경험치 아이템을 얻었을때 만약 Max에 도달하였을경우 LevelUp함수를 호출하도록 설정했다.
+
+![TopDownGame_LevelUp_Func](https://github.com/moad6127/Unreal_TopDown/assets/101626318/feb9564a-29f6-4b3c-bcb7-b39723566e33)
+
+> Character클래스의 LevelUp함수로 이전 Max경험치에 1.5배를 해서 현재레벨의 Max를 결정한후 Controller의 LevelUp함수를 호출하도록 만들었다.
+
+![TopDownGame_LevelUp_ControllerLevelUpFunc](https://github.com/moad6127/Unreal_TopDown/assets/101626318/e5fff50e-0440-4b0c-a7db-d829f0a092c9)
+
+> Controller의 LevelUp함수로 설정된 LevelUpWidget을 만든후 랜덤하게 뽑힌 3개의 능력치를 화면에 보여주도록 만들었으며 레벨업중에는 게임이 일시정지되도록 설정했다.
+
+![TopDownGame_LevelUP_ControllerRand](https://github.com/moad6127/Unreal_TopDown/assets/101626318/0216524c-9c56-4c46-9cc8-0f7ccf63913f)
+
+> 3가지의 랜덤한 능력치를 선택하게 하는 함수로 RandRange를 사용해 하나를 고르며 중복된게 없을경우 Array에 추가하도록 만들었다.
+
+
+<details><summary> LevelUpWidget </summary>
+<p>
+  
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+</p>
+</details>
+
+
+<details><summary> LevelUpSubWidget </summary>
+<p>
+  
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+</p>
+</details>
 
 
 # *Enemy*
