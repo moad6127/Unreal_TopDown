@@ -28,6 +28,7 @@ void ULevelUpSubSlotWidget::NativeConstruct()
 	{
 		NowLevelText->SetText(Text);
 	}
+
 	if (LevelUpButton)
 	{
 		LevelUpButton->OnClicked.AddDynamic(this, &ULevelUpSubSlotWidget::LevelUpButtonClicked);
