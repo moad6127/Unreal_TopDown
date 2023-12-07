@@ -24,3 +24,43 @@ void ATopDownPlayerState::SaveCharacterState(FCharacterState SaveCharacterState)
 		UE_LOG(LogTemp, Warning, TEXT("SaveDataFail!!!"));
 	}
 }
+
+void ATopDownPlayerState::SaveGold(int32 SaveGold)
+{
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, 0));
+	if (TopDownSaveGame == nullptr)
+	{
+		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
+	}
+
+	TopDownSaveGame->Gold = SaveGold;
+
+	if (UGameplayStatics::SaveGameToSlot(TopDownSaveGame, SaveSlotName, 0))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SaveData"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SaveDataFail!!!"));
+	}
+}
+
+void ATopDownPlayerState::SavePlayerGold(int32 SaveGold)
+{
+	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, 0));
+	if (TopDownSaveGame == nullptr)
+	{
+		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
+	}
+
+	TopDownSaveGame->Gold += SaveGold;
+
+	if (UGameplayStatics::SaveGameToSlot(TopDownSaveGame, SaveSlotName, 0))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SaveData"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SaveDataFail!!!"));
+	}
+}

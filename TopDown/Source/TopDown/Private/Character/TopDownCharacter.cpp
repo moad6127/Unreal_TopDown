@@ -281,11 +281,12 @@ void ATopDownCharacter::Attack()
 
 void ATopDownCharacter::StartAttackTimer()
 {
+	const float AttackDelayTime = FMath::Clamp(AttackDelay - (CharacterState.AttackSpeedLevel * 0.1f), 0.1f, 2.f);
 	GetWorldTimerManager().SetTimer(
 		AttackTimer,
 		this,
 		&ATopDownCharacter::AttackTimerFinished,
-		AttackDelay - (CharacterState.AttackSpeedLevel * 0.1f)
+		AttackDelayTime
 	);
 }
 
@@ -476,20 +477,9 @@ void ATopDownCharacter::SaveGame()
 	{
 		return;
 	}
-	auto TopDownSaveGame = Cast<UTopDownSaveGame>(UGameplayStatics::LoadGameFromSlot(TopDownPlayerState->GetSaveSlotName(), 0));
-	if (TopDownSaveGame == nullptr)
+	if (Attributes)
 	{
-		TopDownSaveGame = GetMutableDefault<UTopDownSaveGame>();
-	}
-	TopDownSaveGame->Gold += Attributes->GetGold();
-	UE_LOG(LogTemp, Warning, TEXT("SaveGold : %d "), TopDownSaveGame->Gold);
-	if (UGameplayStatics::SaveGameToSlot(TopDownSaveGame, TopDownPlayerState->GetSaveSlotName(), 0))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("SaveData"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("SaveDataFail!!!"));
+		TopDownPlayerState->SavePlayerGold(Attributes->GetGold());
 	}
 }
 

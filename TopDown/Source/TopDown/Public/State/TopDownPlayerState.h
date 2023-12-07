@@ -189,4 +189,6 @@ public:
 	FORCEINLINE FCharacterState GetCharacterState() { return CharacterState; }
 	FORCEINLINE FString GetSaveSlotName() const { return SaveSlotName; }
 	void SaveCharacterState(FCharacterState SaveCharacterState);
+	void SaveGold(int32 SaveGold);
+	void SavePlayerGold(int32 SaveGold);
 };

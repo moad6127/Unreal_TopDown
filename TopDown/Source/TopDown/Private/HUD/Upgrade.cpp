@@ -40,6 +40,7 @@ void UUpgrade::OnSaveButtonClicked()
 	if (PlayerCharacterState)
 	{
 		PlayerCharacterState->SaveCharacterState(CharacterState);
+		PlayerCharacterState->SaveGold(Gold);
 		UGameplayStatics::OpenLevel(this, TEXT("TitleMap"));
 	}
 }
