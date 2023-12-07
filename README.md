@@ -186,7 +186,21 @@
 
 <details><summary> LevelUpWidget </summary>
 <p>
+
+- [헤더파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Public/HUD/LevelUpWidget.h)
+- [CPP파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Private/HUD/LevelUpWidget.cpp)
+
+레벨업 이벤트가 발생할때 화면에 보여지는 Widget으로 단순한 WrapBox으로 이루어져 있으며 WrapBox에 SubWidget을 넣어서 화면을 구성하도록 만들었다.
+
   
+ ![TopDownGame_LevelUp_LevelUpWidget_h](https://github.com/moad6127/Unreal_TopDown/assets/101626318/b26df3e1-c124-4c94-8bea-8cf2b18891a4)
+
+ > SubWidgetClass와 WrapBox로 이루어져 있다.
+> 
+![TopDownGame_LevelUp_LevelUpWidget_cpp](https://github.com/moad6127/Unreal_TopDown/assets/101626318/5108eb99-d021-407f-9207-dd3b90665dd0)
+
+> SubWidget을 Create한다음 필요한 정보들을 넘긴후 AddChild를 사용해 화면에 나타내도록 만들었다.
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 </p>
@@ -195,7 +209,20 @@
 
 <details><summary> LevelUpSubWidget </summary>
 <p>
-  
+
+- [헤더파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Public/HUD/LevelUpSubSlotWidget.h)
+- [CPP파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Private/HUD/LevelUpSubSlotWidget.cpp)
+
+LevelUpWidget의 WrapBox에 Child로 구성되는 SubWidget으로 LevelUpWidget에서 넘어온 정보들을 활용해서 TextBox를 설정하도록 만들었다.
+
+![TopDownGame_LevelUpSubWidget_NativeConstruct](https://github.com/moad6127/Unreal_TopDown/assets/101626318/d8671aa7-db5c-47b4-a9c5-6b601eb5083d)
+
+> NativeConstruct함수로 LevelUpWidget에서 넘어온 CharacterState를 TextBox로 표시하도록 한다.
+
+![TopDownGame_LevelUpSubWidget_ButtonClick](https://github.com/moad6127/Unreal_TopDown/assets/101626318/2b9aade4-5819-476e-82db-be701ae78eb0)
+
+>LevelUpButton을 클릭했을때 나오는 이벤트로 해당 CharacterState의 Level을 올리고 LevelUpWidget을 제거한후 다시 게임을 이어나가도록 만들었다.
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 </p>
