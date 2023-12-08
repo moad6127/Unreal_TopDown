@@ -228,6 +228,45 @@ LevelUpWidget의 WrapBox에 Child로 구성되는 SubWidget으로 LevelUpWidget�
 </p>
 </details>
 
+### *GameResult*
+
+![TopDownGame_GameResult](https://github.com/moad6127/Unreal_TopDown/assets/101626318/3b3312f1-c0d4-4dc4-bc55-f7b46e5d0728)
+
+플레이어가 Enemy에게 데미지를 입어 체력이 0이 되면 나오는 결과화면으로 플레이중 획득한 Gold를 저장하고 타이틀 화면으로 돌아가도록 만들었다.
+
+![TopDownGame_GameResult_CharacterTakeDamage](https://github.com/moad6127/Unreal_TopDown/assets/101626318/8563ab15-b04b-4a2b-88a9-28a44175e7f7)
+
+> 플레이어가 Enemy에게 Damage를 받았을때 호출되는 함수로 체력이 0이 되면 Die함수가 호출되도록 만들었다.
+
+![TopDownGame_GameResult_Die](https://github.com/moad6127/Unreal_TopDown/assets/101626318/6b9929a1-018b-4ecf-b56a-fa1647c5c368)
+
+> Charater가 죽었을경우 호출되는 함수로 단순히 Controller에서 결과화면을 만들어내는 함수를 호출하도록 만든 함수이다.
+
+![TopDownGame_GameResult_ControllerFunc](https://github.com/moad6127/Unreal_TopDown/assets/101626318/1647e7ce-6a73-4832-94fb-06133b2a1f7d)
+
+> Controller에 변수로 저장된 GameResultWidget을 생성한후 화면에 표시하고 게임을 중단시키는 함수이다.
+
+
+<details><summary> GameResultWidget </summary>
+<p>
+
+- [헤더파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Public/HUD/GameResultMenu.h)
+- [CPP파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Private/HUD/GameResultMenu.cpp)
+
+GameResultWidget클래스로 단순한 버튼과 텍스트로 이루어져 있으며 버튼을 누르면 Title로 돌아가도록 만들었다.
+
+![TopDownGame_GameResult_h](https://github.com/moad6127/Unreal_TopDown/assets/101626318/919629ad-f52a-4faa-bb76-51aea867b490)
+![TopDownGame_GameResult_cpp](https://github.com/moad6127/Unreal_TopDown/assets/101626318/748c9692-ee59-4149-95a9-fcd408eeacbf)
+
+> NativeConstruct함수에서 버튼의 클릭에 대한 이벤트를 처리한후 플레이중 획득한 Gold를 표시하고 Save하도록 만들어져 있다.
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+</p>
+</details>
+
+
 
 # *Enemy*
 
