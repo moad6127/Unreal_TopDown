@@ -31,7 +31,9 @@ void UEnemySpawnComponent::GetSpawnLocation()
 		UE_LOG(LogTemp, Warning, TEXT("GetSpawnLocation!!"));
 
 		FEnvQueryRequest QueryRequest(FindSpotEQS, GetOwner());
-		QueryRequest.Execute(EEnvQueryRunMode::AllMatching, FQueryFinishedSignature::CreateUObject(this, &UEnemySpawnComponent::SpawnEnemy));
+		QueryRequest.Execute(
+			EEnvQueryRunMode::AllMatching,
+			FQueryFinishedSignature::CreateUObject(this, &UEnemySpawnComponent::SpawnEnemy));
 	}
 }
 
@@ -67,7 +69,6 @@ void UEnemySpawnComponent::BeginPlay()
 	Super::BeginPlay();
 
 	OnEnemyDeath.AddDynamic(this, &UEnemySpawnComponent::EnemyDeath);
-
 }
 
 
