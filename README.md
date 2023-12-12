@@ -270,6 +270,44 @@ GameResultWidget클래스로 단순한 버튼과 텍스트로 이루어져 있�
 
 # *Enemy*
 
+> 플레이어가 공격해서 제거하는 대상으로 제거될때 경험치나 Gold를 생성하며 항상 플레이어를 향해 다가가도록 설정했다.
+
+- [헤더파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Public/Enemy/Enemy.h)
+- [CPP파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Private/Enemy/Enemy.cpp)
+
+![TopDownGame_Enemy](https://github.com/moad6127/Unreal_TopDown/assets/101626318/8277d893-b63d-4f82-9223-1cc88bb8fb9a)
+
+
+### *Enemy Spawn*
+
+> Character에 ActorComponent 를 추가해서 Enemy의 Spawn을 다루고 있으며 EQS를 사용해 Charcter와 일정거리의 최적의 장소를 찾아내 최적의 장소에서 Spawn할수 있도록 만들었다. 또한 최대로 소환할수 있는 Enemy를 제한해서 일정한 수의 Enemy를 소환하면 더이상 소환하지 않도록 설정했다.
+
+<details><summary> EnemySpawnComponent </summary>
+<p>
+
+- [헤더파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Public/Component/EnemySpawnComponent.h)
+- [CPP파일 주소](https://github.com/moad6127/Unreal_TopDown/blob/master/TopDown/Source/TopDown/Private/Component/EnemySpawnComponent.cpp)
+
+Character에 추가된 ActorComponent로 EnemySpawn에 대한 기능들이 들어있다.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+</p>
+</details>
+
+
+
+
+### *Enemy Move*
+
+
+### *Enemy Attack*
+
+
+### *Enemy Die*
+
+
+
+
 
 # *Item*
 
