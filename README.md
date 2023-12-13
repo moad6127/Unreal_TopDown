@@ -7,7 +7,7 @@
 <details><summary>목차</summary>
 <p>
 
- - [Title](#*title*)
+ - [Title](#title)
  - [Character](#character)
  - [Enemy](#enemy)
  - [Item](#item)
