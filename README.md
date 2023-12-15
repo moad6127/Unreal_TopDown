@@ -296,6 +296,8 @@ GameResultWidget클래스로 단순한 버튼과 텍스트로 이루어져 있�
 
 > Character에 ActorComponent 를 추가해서 Enemy의 Spawn을 다루고 있으며 EQS를 사용해 Charcter와 일정거리의 최적의 장소를 찾아내 최적의 장소에서 Spawn할수 있도록 만들었다. 또한 최대로 소환할수 있는 Enemy를 제한해서 일정한 수의 Enemy를 소환하면 더이상 소환하지 않도록 설정했다.
 
+
+
 <details><summary> EnemySpawnComponent </summary>
 <p>
 
@@ -308,7 +310,21 @@ Character에 추가된 ActorComponent로 EnemySpawn에 대한 기능들이 들�
 </p>
 </details>
 
+![TopDownGame_Enemy_Spawn_Character_SpawnTimerStart](https://github.com/moad6127/Unreal_TopDown/assets/101626318/a137d235-b897-440d-8919-346b7a6cb616)
+> BeginPlay에서 호출되며, EnemySpawn을 위한 타이머로 중복을 피하기위한 Clear를 먼저 해준후 랜덤한 시간으로 소환한다.
 
+![TopDownGame_Enemy_Spawn_Character_SpawnTimerFinish](https://github.com/moad6127/Unreal_TopDown/assets/101626318/440c9c40-4c3d-49bd-ab6d-f9b179062591)
+> Timer가 끝났을때 호출되는 함수로 현재 소환된 Enemy가 Max를 넘지 않았을때 Component에서 Spawn을 위한 함수를 호출하고 다시 TimerStart함수를 호출한다.
+
+![TopDownGame_EnemySpawn_EQS](https://github.com/moad6127/Unreal_TopDown/assets/101626318/343154f0-203d-40dc-8d42-7a88188f1e89)
+![TopDownGame_Enemy_Spawn_SpawnComponent_GetLocation](https://github.com/moad6127/Unreal_TopDown/assets/101626318/b5b7d48c-80d0-4104-8f98-c8037edbaecc)
+
+> Unreal엔진의 EQS를 사용해서 Enemy를 Spawn하기 위한 Location들을 획득한후 SpawnEnemy함수를 호출해서 넘어가게 된다.
+
+![TopDownGame_Enemy_Spawn_SpawnComponent_Spawn](https://github.com/moad6127/Unreal_TopDown/assets/101626318/f00a98a7-7100-4f65-95bc-f08db0d0106d)
+
+> EQS를 사용해서 얻은 result값을 통해 SpawnLocation을 얻고 획득한 Location중에서 한곳을 랜덤으로 선택하여 Enemy를 Spawn하는 함수이다.
+> Enemy의 종류가 여러가지일 경우도 생각해서 Enemy도 Random으로 소환하도록 만들었다.
 
 
 ### *Enemy Move*
