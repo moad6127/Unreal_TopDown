@@ -97,7 +97,12 @@ void AEnemy::Attack()
 	{
 		bCanAttack = false;
 		StartAttackTimer();
-		UGameplayStatics::ApplyDamage(CombatTarget, AttackDamage, GetController(), this, UDamageType::StaticClass());
+		UGameplayStatics::ApplyDamage(
+			CombatTarget,
+			AttackDamage,
+			GetController(),
+			this,
+			UDamageType::StaticClass());
 	}
 }
 
@@ -122,7 +127,6 @@ void AEnemy::PlayDeathMontage()
 
 void AEnemy::MoveToCharacter()
 {
-	SetAIController();
 	if (PlayerCharacter == nullptr)
 	{
 		PlayerCharacter = Cast<ATopDownCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
