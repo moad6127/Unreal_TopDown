@@ -329,9 +329,33 @@ Character에 추가된 ActorComponent로 EnemySpawn에 대한 기능들이 들�
 
 ### *Enemy Move*
 
+> Enemy는 Spawn된후 항상 플레이어를 향해 이동하도록 만들었다.
+
+![TopDownGame_EnemyMove_OnSpawn](https://github.com/moad6127/Unreal_TopDown/assets/101626318/1dfafa0d-ddea-41e5-b4f9-1311671b6848)
+
+> SpawnComponent에서 Enemy를 Spawn한후 호출되는 함수이다. AIController를 설정한후 플레이어를 향해 움직이도록 만들었다.
+
+![TopDownGame_EnemyMove_MoveToCharacter](https://github.com/moad6127/Unreal_TopDown/assets/101626318/46964def-41d8-4da8-8778-83bd43fb80bb)
+
+> 플레이어Character를 얻은후 플레이어를 향해 Focus를 향하게한다음 이동하도록 만들었다. Enemy의 Tick함수에서도 호출되게 만들어서 이동이 다된후에도 계속 플레이어를 추적하게 만들었다.
+
 
 ### *Enemy Attack*
 
+> Enemy의 Attack은 Enemy가 Character를 향해 움직이고 Enemy와 Character의 거리가 일정부분 가까워지면 자동으로 데미지를 가해지도록 만들었다.
+
+![TopDownGame_EnemyAttack_AEnemy](https://github.com/moad6127/Unreal_TopDown/assets/101626318/110f1cea-c0e2-49eb-9f0c-ba2fceb782d4)
+![TopDownGame_EnemyAttack_Overlap](https://github.com/moad6127/Unreal_TopDown/assets/101626318/330743fc-2af9-4a9b-b84f-db69f6c434ce)
+
+> Enemy의 생성자에서 SphereComponent를 생성한후 Overlap함수들을 만들어 이벤트로 등록해둔후 이벤트가 발생하면 Attack함수가 호출되도록 만들었다.
+
+![TopDownGame_EnemyAttack_Attack](https://github.com/moad6127/Unreal_TopDown/assets/101626318/dc6be03b-76bd-4d35-b2ee-3d0adb696ae8)
+
+> 타이머를 설정한후 ApplyDamage를 활용해서 Character에게 Damage를 주도록 만들었다.
+
+![TopDownGame_EnemyAttack_Timer](https://github.com/moad6127/Unreal_TopDown/assets/101626318/95491a72-88e5-4587-a097-00ec8dc33aef)
+
+> Timer가 끝나면 다시 Attack함수를 호출해 플레이어가 Enemy의 공격범위에 계속 들어있으면 데미지를 계속 주도록 만들었다.
 
 ### *Enemy Die*
 
