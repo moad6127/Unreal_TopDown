@@ -359,6 +359,29 @@ Character에 추가된 ActorComponent로 EnemySpawn에 대한 기능들이 들�
 
 ### *Enemy Die*
 
+> Enemy가 체력보다 많은 데미지를 입게되면 죽도록 만든후 경험치아이템이나 골드 아이템을 Drop하도록 만들었다.
+
+![TopDownGame_EnemyTakeDamage](https://github.com/moad6127/Unreal_TopDown/assets/101626318/69e6d699-26f9-4441-a9be-440748792cab)
+
+> 발사체에서 ApplyDamage함수의 이벤트를 통해서 호출되는 함수로 Enemy에게 Damage를 주고 HitNumber를 화면에 띄우도록 한다.
+
+![TopDownGame_EnemyGetHit](https://github.com/moad6127/Unreal_TopDown/assets/101626318/10f7d042-cb11-43e4-bd36-bec39ea747cb)
+
+> 만약 Enemy의 체력이 0보다 클경우 HitReaction애니메이션을 재생하고 Blood효과를 하도록 만들었으며 아닐경우 Die함수를 호출하도록 만들었다.
+
+![TopDownGame_EnemyDie](https://github.com/moad6127/Unreal_TopDown/assets/101626318/49aaced8-74c6-4152-a232-aeee0c2387aa)
+
+> Enemy Die함수로 Death애니메이션을 재생하고 모든 Collision을 제거한후 경험치 아이템이나 골드 아이템을 드롭하게 한다.
+> 또한 EnemySpawnComponent의 OnEnemyDeath이벤트를 호출해서 소환되는 Enemy의 수가 항상 일정하도록 만든다.
+
+![TopDownGame_Enemy_SpawnDrop](https://github.com/moad6127/Unreal_TopDown/assets/101626318/22a014ba-7053-4c0c-8c4a-96da05ced663)
+
+> 1에서 100까지의 랜덤한 숫자중에 하나를 골라서 일정부분이하이면 Gold를 Spawn하고 아닐경우 EXP를 Spawn하도록 만들었다.
+
+
+![TopDownGame_Enemy_Spawns](https://github.com/moad6127/Unreal_TopDown/assets/101626318/58d660f5-1d1e-44d9-bef3-a1fc836a29a1)
+
+> Gold와 EXP를 Spawn하는 함수들이다.
 
 
 
